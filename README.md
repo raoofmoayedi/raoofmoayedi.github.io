@@ -2,11 +2,11 @@
 
 A static academic website with a dark theme, selected research, a complete publication list, six research detail pages, and a printable CV.
 
-The repository is private and GitHub Pages is disabled as of September 29, 2026. Saving these files does not publish the website. There is no deployment workflow.
+The website is public at https://raoofmoayedi.github.io/. GitHub Pages publishes the main branch.
 
-## Preview privately
+## Offline preview
 
-Download `preview.html` and open the downloaded file in your browser. This single file includes all nine main pages, the styles, interactive figures, and bibliography download. It requires no server or internet connection to display the site. External paper and contact links still point to their original destinations.
+Download `preview.html` and open the downloaded file in your browser. This single file includes all nine main pages, the styles, publication filters, and bibliography download. It requires no server or internet connection to display the site. External paper and contact links still point to their original destinations.
 
 Alternatively, download the repository and open `index.html`. The normal pages work directly from disk.
 
@@ -16,15 +16,15 @@ Alternatively, download the repository and open `index.html`. The normal pages w
 2. Edit `build.py` for the introduction, research summaries, experience, education, and CV. The `SELECTED` dictionary sets the three homepage papers and their short explanations.
 3. Run `python3 build.py` to generate the ten HTML documents (nine main pages and a 404 page) and `papers.bib`.
 4. Run `python3 package_preview.py` to validate internal links and rebuild `preview.html` and the downloadable files in `dist/`.
-5. Commit the source, generated pages, and updated `preview.html` to the private repository.
+5. Commit the source, generated pages, and updated `preview.html` to the repository.
 
-No framework, package installation, build service, or external font service is required. Typography uses the visitor's system fonts. Styles are in `assets/site.css`; publication filters and diagrams are in `assets/site.js`.
+No framework, package installation, build service, or external font service is required. Typography uses the visitor's system fonts. Styles are in `assets/site.css`; publication filters and printing are in `assets/site.js`.
 
 ## Structure and design
 
 - `index.html`: introduction, three selected works, research experience, education, and contact.
 - `publications.html`: all seven papers, grouped into journal articles and preprints/manuscripts, with filters and BibTeX.
-- `research/`: six project explanations covering private synthetic data, private sampling, covariance estimation, robust distillation, SGD and spurious correlations, and physical systems. Conceptual diagrams accompany selected explanations.
+- `research/`: six project explanations covering private synthetic data, private sampling, covariance estimation, robust distillation, SGD and spurious correlations, and physical systems. Project pages use verified results, method summaries, and a labeled covariance block diagram.
 - `cv.html`: full academic record, including grades and audited courses, with print styling.
 - `preview.html`: a generated, self-contained offline snapshot of the nine main pages.
 
@@ -36,7 +36,7 @@ The source layouts of [Jon Barron's homepage](https://github.com/jonbarron/jonba
 
 The content follows the supplied CV and subsequent corrections. NTU is listed as a funded visiting research student position. Machine unlearning appears as an interest, without implying completed projects. Publication and review statuses follow the author's supplied information and should be updated as they change.
 
-The figures are conceptual illustrations, not experimental results. No portrait or unverified Google Scholar URL is included.
+The pages do not include simulated plots or decorative animations. Mathematical result blocks retain their assumptions; the covariance diagram and training schedule explain the problem and method. No portrait or unverified Google Scholar URL is included.
 
 Paper sources:
 

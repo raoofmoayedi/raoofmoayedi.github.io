@@ -64,13 +64,6 @@ def publication(p, prefix='', level=3, selected=False, include_project=True):
     return f'''<article class="pub{' selected-work' if selected else ''}" data-type="{'article' if p['type']=='article' else 'manuscript'}"><div class="pub-label">{label}</div><div class="pub-content"><h{level}>{title}</h{level}><p class="pub-authors">{authors}</p><p class="pub-meta">{meta}</p>{summary}<div class="pub-actions">{links}{citation}</div></div></article>'''
 
 
-def figure(scene, id, label, caption, heading='', small=False):
-    control=''
-    if not small:
-        lo,hi,value,output=(0,180,38,'38°') if scene=='geometry' else (0,100,50,'50')
-        control=f'<div class="figure-controls"><label for="{id}-control">{label}</label><input type="range" id="{id}-control" min="{lo}" max="{hi}" value="{value}"><output for="{id}-control">{output}</output></div>'
-    return f'''<canvas class="{'geometry-canvas' if not small else ''}" data-scene="{scene}" data-control="{id}-control" aria-label="{escape(caption,quote=True)}" role="img">{escape(caption)}</canvas>{control}'''
-
 positions=[
  ('August 2026 – present','EPFL','Research Intern · E3 Program','Prof. Olga Fink','Working on GNNs for long-term prediction of fluid dynamics, with the aim of reducing the cost of simulation.'),
  ('June 2025 – March 2026','University of Cambridge','Remote Research Assistant','Dr. Amir-Reza Asadi','Developed a differentially private synthetic data algorithm whose error bounds depend on the geometry of the data.'),
@@ -121,10 +114,6 @@ projects=[{'slug': 'private-data',
   'lead': 'How can the structure of a dataset improve the accuracy of differentially private synthetic data?',
   'role': 'Research with Dr. Amir-Reza Asadi',
   'setting': 'University of Cambridge · Remote',
-  'scene': 'geometry',
-  'control': 'Rotate the view',
-  'caption': 'Conceptual illustration of intrinsic and ambient dimension: a two-dimensional surface in '
-             'three-dimensional space.',
   'body': '<h2>Adapting to data geometry</h2><p>Data in a high-dimensional space often lie on a much '
           'simpler, lower-dimensional set. We use this structure to generate synthetic data on '
           '[0,1]<sup>d</sup> under pure differential privacy. Our method privately selects the resolution of '
@@ -137,47 +126,51 @@ projects=[{'slug': 'private-data',
   'after': '<h2>Other work on differential privacy</h2><p>I also study <a class="text-link" '
            'href="private-covariance.html">covariance estimation across separate data holders</a> and <a '
            'class="text-link" href="private-sampling.html">private Gaussian sampling</a>. The latter is the '
-           'subject of my master’s thesis.</p>'},
+           'subject of my master’s thesis.</p>',
+  'insight': '<section class="paper-insight" aria-labelledby="geometry-result"><h2 id="geometry-result">How '
+             'geometry changes the error rate</h2><div class="rate-comparison"><div><span>Worst-case ambient '
+             'dimension <i>d</i></span><p '
+             'class="result-math">(εn)<sup>−1/d</sup></p></div><div><span>Packing-growth dimension '
+             '<i>k</i></span><p class="result-math">(εn)<sup>−1/k</sup></p></div></div><p '
+             'class="insight-note">Asymptotic expected 1-Wasserstein error, for <i>d</i> ≥ 2, fixed positive '
+             'privacy budget, and fixed geometry. The second rate requires <i>k</i> &gt; 1 and the paper’s '
+             'multiscale packing-growth assumptions; <i>n</i> is the number of input records.</p></section>'},
  {'slug': 'robust-learning',
   'category': 'Robust machine learning',
   'title': 'Transferring robustness',
   'lead': 'How can a student model retain a teacher’s adversarial robustness during knowledge distillation?',
   'role': 'Research with Prof. Yew-Soon Ong',
   'setting': 'Nanyang Technological University',
-  'scene': 'robustness',
-  'control': 'Perturbation size',
-  'caption': 'Conceptual illustration: adversarial and inverse adversarial perturbations move an input in '
-             'opposite directions relative to a decision boundary.',
   'body': '<h2>Learning from inverse adversarial examples</h2><p>We study how to transfer adversarial '
           'robustness from a large teacher model to a smaller student. Simply copying the teacher’s '
           'predictions can pass on its mistakes. Our method trains the student using inverse adversarial '
-          'examples, formed by reversing the direction of adversarial perturbations.</p><p>Our analysis '
-          'connects robustness transfer to input-gradient information, motivating gradient matching between '
-          'the models. We also jointly perturb the teacher’s and student’s weights to find directions that '
-          'improve robustness transfer.</p><h2>Results</h2><p>Across the evaluated datasets, the method '
-          'improves both accuracy on clean inputs and robustness under attack compared with the tested '
-          'distillation methods. The paper also examines gains from generated training data and extensions '
-          'to multimodal models.</p>',
+          'examples, formed by reversing the direction of adversarial '
+          'perturbations.</p><h2>Results</h2><p>Across the evaluated datasets, the method improves both '
+          'accuracy on clean inputs and robustness under attack compared with the tested distillation '
+          'methods. The paper also examines gains from generated training data and extensions to multimodal '
+          'models.</p>',
   'paper': 'Junhao_raoof',
   'after': '<h2>Data and training dynamics</h2><p>At Imperial College London, I investigated data pruning '
            'and input-space geometry across model architectures. In separate work, we study <a '
            'class="text-link" href="sgd-robustness.html">when SGD reduces reliance on spurious '
-           'correlations</a> and how a short small-batch warmup can improve worst-group accuracy.</p>'},
+           'correlations</a> and how a short small-batch warmup can improve worst-group accuracy.</p>',
+  'insight': '<section class="paper-insight" aria-labelledby="distillation-method"><h2 '
+             'id="distillation-method">What passes from teacher to student</h2><dl '
+             'class="method-facts"><div><dt>Training inputs</dt><dd>Inverse adversarial examples, obtained '
+             'by reversing adversarial perturbations.</dd></div><div><dt>Model alignment</dt><dd>Match '
+             'input-gradient information between the robust teacher and the smaller '
+             'student.</dd></div><div><dt>Weight perturbations</dt><dd>Jointly perturb both models to find '
+             'directions that improve robustness transfer.</dd></div></dl></section>'},
  {'slug': 'scientific-learning',
   'category': 'Scientific machine learning',
   'title': 'CuPINN: learning smoother residuals',
   'lead': 'Improving physics-informed neural networks by controlling the curvature of the equation residual.',
   'role': 'With Mostafa Abbaszadeh and Mehdi Dehghan',
   'setting': 'Computer Methods in Applied Mechanics and Engineering · 2025',
-  'scene': 'mesh',
-  'control': 'Illustrative time step',
-  'caption': 'A synthetic signal on a graph. The slider changes its phase. This is an illustration, not a '
-             'fluid simulation.',
   'body': '<h2>Controlling the residual’s curvature</h2><p>Physics-informed neural networks learn solutions '
           'to differential equations by penalizing violations of those equations. In this work, we also '
           'penalize the curvature of that residual across the input domain. CuPINN and its variants '
-          'encourage a flatter residual surface, using Hutchinson’s trace estimator and finite differences '
-          'to avoid forming the full Hessian. We also combine this approach with gradient-enhanced '
+          'encourage a flatter residual surface. We also combine this approach with gradient-enhanced '
           'PINNs.</p><h2>Results</h2><p>Across seven PDE benchmarks, including linear and nonlinear '
           'problems, the methods improve solution accuracy and residual error over the tested PINN and GPINN '
           'baselines. The experiments also show benefits when relatively few training points are '
@@ -186,7 +179,14 @@ projects=[{'slug': 'private-data',
           'is to incorporate physical knowledge into these models to reduce computational cost compared with '
           'traditional simulations.</p>',
   'paper': 'raoofzareCU',
-  'after': ''},
+  'after': '',
+  'insight': '<section class="paper-insight" aria-labelledby="cupinn-method"><h2 id="cupinn-method">What '
+             'CuPINN adds to training</h2><dl class="method-facts"><div><dt>Equation '
+             'residual</dt><dd>Penalize violations of the differential equation.</dd></div><div><dt>Residual '
+             'curvature</dt><dd>Also discourage sharp changes in the residual across the input '
+             'domain.</dd></div><div><dt>Computation</dt><dd>Use trace estimation and finite differences '
+             'without constructing the full Hessian.</dd></div></dl><p class="insight-note">The curvature is '
+             'measured with respect to the inputs, not the model parameters.</p></section>'},
  {'slug': 'private-sampling',
   'category': 'Differential privacy',
   'title': 'Private Gaussian sampling',
@@ -200,7 +200,17 @@ projects=[{'slug': 'private-data',
           'input size up to logarithmic factors for any fixed error level between zero and one. Our '
           'algorithm and matching lower bound show when generating a batch from shared data is more '
           'efficient than running separate private samplers.</p>',
-  'after': ''},
+  'after': '',
+  'insight': '<section class="paper-insight" aria-labelledby="sampling-result"><h2 '
+             'id="sampling-result">Optimal input size, up to logarithmic factors</h2><div '
+             'class="equation-scroll"><math display="block" aria-label="n equals soft Theta sub alpha of m '
+             'plus the minimum of d square root m over epsilon plus delta, and m over '
+             'delta"><mrow><mi>n</mi><mo>=</mo><msub><mover><mi>Θ</mi><mo>~</mo></mover><mi>α</mi></msub><mo>(</mo><mi>m</mi><mo>+</mo><mi '
+             'mathvariant="normal">min</mi><mo>{</mo><mfrac><mrow><mi>d</mi><msqrt><mi>m</mi></msqrt></mrow><mrow><mi>ε</mi><mo>+</mo><mi>δ</mi></mrow></mfrac><mo>,</mo><mfrac><mi>m</mi><mi>δ</mi></mfrac><mo>}</mo><mo>)</mo></mrow></math></div><p '
+             'class="insight-note"><i>n</i> input records, dimension <i>d</i>, and batch size <i>m</i>. For '
+             'fixed 0 &lt; α &lt; 1, 0 ≤ ε ≤ 1, and 0 &lt; δ &lt; 1. Here α is the total-variation error '
+             'tolerance. The hidden constants may depend on α.</p><p class="result-takeaway">Accuracy is '
+             'measured for the whole batch against <i>m</i> independent Gaussian draws.</p></section>'},
  {'slug': 'private-covariance',
   'category': 'Differential privacy',
   'title': 'Private covariance estimation across separate data holders',
@@ -214,7 +224,18 @@ projects=[{'slug': 'private-data',
           'upper and lower error bounds up to logarithmic factors among noninteractive protocols. The bounds '
           'identify each party’s privacy cost and remain sharp when the parties hold very different numbers '
           'of features or use different privacy budgets.</p>',
-  'after': ''},
+  'after': '',
+  'insight': '<section class="paper-insight" aria-labelledby="covariance-difficulty"><h2 '
+             'id="covariance-difficulty">The information neither party observes alone</h2><div '
+             'class="covariance-blocks" role="group" aria-label="Blocks of the full covariance '
+             'matrix"><div><strong>Σ<sub>XX</sub></strong><span>Features held by X</span></div><div '
+             'class="cross-block"><strong>Σ<sub>XY</sub></strong><span>Cross-party '
+             'covariance</span></div><div '
+             'class="cross-block"><strong>Σ<sub>YX</sub></strong><span>Cross-party '
+             'covariance</span></div><div><strong>Σ<sub>YY</sub></strong><span>Features held by '
+             'Y</span></div></div><p class="insight-note">Both parties hold the same matched records, split '
+             'by features. Neither can form the matched cross-products alone. An analyst estimates all four '
+             'blocks from their separate pure-DP releases.</p></section>'},
  {'slug': 'sgd-robustness',
   'category': 'Robust machine learning',
   'title': 'When SGD reduces reliance on spurious correlations',
@@ -228,16 +249,27 @@ projects=[{'slug': 'private-data',
           'small batches, then switch to larger ones. Across several benchmarks and architectures, this '
           'improves worst-group accuracy, often recovering much of the robustness of full small-batch '
           'training while retaining most of the efficiency of large-batch training.</p>',
-  'after': ''}]
+  'after': '',
+  'insight': '<section class="paper-insight" aria-labelledby="warmup-schedule"><h2 '
+             'id="warmup-schedule">Small-batch warmup</h2><ol class="training-schedule"><li><span '
+             'class="phase-label">Early training</span><strong>Use small batches</strong><p>At a fixed '
+             'learning rate, smaller batches increase the learning-rate-to-batch-size '
+             'ratio.</p></li><li><span class="phase-label">After warmup</span><strong>Switch to larger '
+             'batches</strong><p>Continue with standard large-batch optimization to retain its computational '
+             'efficiency.</p></li></ol><p class="insight-note">The schedule targets the early period when '
+             'implicit regularization is strongest in the paper’s analysis.</p></section>'}]
 for project in projects:
     page=head(project['title']+' | '+NAME,project['lead'],'../','research/'+project['slug']+'.html')
     page+=f'''<main id="main" class="wrap"><header class="project-hero"><a class="back" href="../publications.html">Back to publications</a><p class="eyebrow">{project['category']}</p><h1>{project['title']}</h1><p class="lead">{project['lead']}</p></header><div class="project-body">'''
     if project.get('setting'):
         page+=f'''<div class="project-context"><p>{project['setting']}</p><p>{project['role']}</p></div>'''
-    page+=f'<article class="project-copy">{project["body"]}'
-    if project.get('scene'):
-        page+='<figure class="project-figure">'+figure(project['scene'],'project',project['control'],project['caption'])
-        page+=f'<figcaption>{project["caption"]}</figcaption></figure>'
+    body=project['body']
+    insight=project.get('insight','')
+    if '<h2>Results</h2>' in body:
+        body=body.replace('<h2>Results</h2>',insight+'<h2>Results</h2>',1)
+    else:
+        body+=insight
+    page+=f'<article class="project-copy">{body}'
     page+=project['after']+'<h2>Related paper</h2>'+publication(next(p for p in PAPERS if p['id']==project['paper']),'../',include_project=False)+'</article></div></main>'+footer('../')
     (ROOT/'research'/f'{project["slug"]}.html').write_text(page)
 
