@@ -1,36 +1,21 @@
 (() => {
-  document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
-    const filter = button.dataset.filter;
-    document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-    document.querySelectorAll('[data-publication-group]').forEach(group => {
-      group.hidden = filter !== 'all' && group.dataset.publicationGroup !== filter;
-    });
-    let count = 0;
-    document.querySelectorAll('.pub-list .pub').forEach(p => { p.hidden = filter !== 'all' && p.dataset.type !== filter; if (!p.hidden) count++; });
-    const status = document.getElementById('filter-status'); if (status) status.textContent = `${count} papers shown`;
-  }));
+  document.querySelectorAll('[data-publications]').forEach(scope => {
+    scope.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      scope.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+      scope.querySelectorAll('[data-publication-group]').forEach(group => {
+        group.hidden = filter !== 'all' && group.dataset.publicationGroup !== filter;
+      });
+      let count = 0;
+      scope.querySelectorAll('.pub-list .pub').forEach(paper => {
+        paper.hidden = filter !== 'all' && paper.dataset.type !== filter;
+        if (!paper.hidden) count++;
+      });
+      const status = scope.querySelector('[data-filter-status]');
+      if (status) status.textContent = `${count} ${count === 1 ? 'paper' : 'papers'} shown`;
+    }));
+  });
   document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => window.print()));
-  const sectionLinks = [...document.querySelectorAll('a[data-section]')];
-  const sections = ['publications', 'experience', 'research', 'education']
-    .map(id => document.getElementById(id)).filter(Boolean);
-  if (sectionLinks.length && sections.length && 'IntersectionObserver' in window) {
-    const visibleSections = new Set();
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) visibleSections.add(entry.target);
-        else visibleSections.delete(entry.target);
-      });
-      const current = [...visibleSections].sort((a, b) =>
-        Math.abs(a.getBoundingClientRect().top - window.innerHeight * .15) -
-        Math.abs(b.getBoundingClientRect().top - window.innerHeight * .15)
-      )[0];
-      sectionLinks.forEach(link => {
-        if (current && link.dataset.section === current.id) link.setAttribute('aria-current', 'location');
-        else link.removeAttribute('aria-current');
-      });
-    }, { rootMargin: '-15% 0px -55% 0px', threshold: 0 });
-    sections.forEach(section => observer.observe(section));
-  }
   const point = (x, y, z, angle, w, h) => {
     const c = Math.cos(angle), s = Math.sin(angle);
     const xx = x*c+z*s, zz = -x*s+z*c;
@@ -57,20 +42,42 @@
         }
         dots.sort((a,b)=>a[2]-b[2]);dots.forEach(p=>{ctx.fillStyle=`rgba(153,184,255,${.52+(p[2]+1.6)/6})`;ctx.beginPath();ctx.arc(p[0],p[1],Math.max(1.5,w/210)+(p[2]+1)*.2,0,Math.PI*2);ctx.fill();});
       } else if (scene === 'robustness') {
-        const strength = range ? Number(range.value)/100 : .55;
-        const margin=w*.12;
-        ctx.strokeStyle='#36434e';ctx.lineWidth=1;
-        ctx.beginPath();ctx.moveTo(margin,h*.85);ctx.lineTo(w-margin,h*.85);ctx.moveTo(margin,h*.15);ctx.lineTo(margin,h*.85);ctx.stroke();
-        // A geometric illustration only: two classes and a movable linear boundary.
-        const boundary = x => h*.5+(x-w/2)*(.65*strength-.325);
-        ctx.strokeStyle='#94a4b4';ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(margin,boundary(margin));ctx.lineTo(w-margin,boundary(w-margin));ctx.stroke();ctx.setLineDash([]);
-        for(let i=0;i<74;i++){
-          const cls=i%2;const t=((i*47)%97)/97; const jitter=Math.sin(i*6.8)*.1;
-          const x=margin+(w-2*margin)*(.08+.84*t);
-          const y=h*(cls?.68:.32)+jitter*h;
-          ctx.fillStyle=cls?'#99b8ff':'#e4ae84';ctx.beginPath();
-          if(cls)ctx.arc(x,y,3.2,0,Math.PI*2);else ctx.rect(x-3,y-3,6,6);ctx.fill();
-        }
+        // Conceptual directions for one input, not model output or an experiment.
+        // Both perturbations have the same size; the decision boundary stays fixed.
+        const strength = range ? Math.max(0,Math.min(1,Number(range.value)/100)) : .55;
+        const left=w*.05, right=w*.95, boundary=w*.60, input=w*.45;
+        const top=h*.23, bottom=h*.70, y=h*.47, distance=w*.31*strength;
+        const inverse='#99b8ff', adversarial='#e4ae84';
+        ctx.fillStyle='rgba(153,184,255,.045)';ctx.fillRect(left,top,boundary-left,bottom-top);
+        ctx.fillStyle='rgba(228,174,132,.045)';ctx.fillRect(boundary,top,right-boundary,bottom-top);
+        ctx.strokeStyle='#82919f';ctx.lineWidth=1;ctx.setLineDash([5,5]);
+        ctx.beginPath();ctx.moveTo(boundary,top);ctx.lineTo(boundary,bottom);ctx.stroke();ctx.setLineDash([]);
+
+        ctx.font='12px system-ui, sans-serif';ctx.fillStyle='#b6c0cb';ctx.textAlign='center';
+        ctx.fillText('Decision boundary',boundary,h*.15);
+        ctx.textAlign='left';ctx.fillText('Class A',left+9,top+21);
+        ctx.textAlign='right';ctx.fillText('Class B',right-9,top+21);
+
+        const arrow = (end, color) => {
+          // At zero there is only the unperturbed input; short arrows scale cleanly.
+          const length=Math.abs(end-input);if(length<1)return;
+          const direction=Math.sign(end-input),head=Math.min(7,length*.4);
+          ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;
+          ctx.beginPath();ctx.moveTo(input,y);ctx.lineTo(end,y);ctx.stroke();
+          ctx.beginPath();ctx.moveTo(end,y);ctx.lineTo(end-direction*head,y-head*.55);
+          ctx.lineTo(end-direction*head,y+head*.55);ctx.closePath();ctx.fill();
+        };
+        arrow(input-distance,inverse);arrow(input+distance,adversarial);
+        ctx.fillStyle='#eef2f6';ctx.beginPath();ctx.arc(input,y,5,0,Math.PI*2);ctx.fill();
+        ctx.font='12px system-ui, sans-serif';ctx.textAlign='center';ctx.fillText('Input',input,y+24);
+
+        // Fixed labels remain readable when arrows shrink or the view is narrow.
+        ctx.font='600 12px system-ui, sans-serif';ctx.textAlign='left';ctx.fillStyle=inverse;
+        ctx.fillText('Inverse adversarial',left,h*.84);
+        ctx.textAlign='right';ctx.fillStyle=adversarial;ctx.fillText('Adversarial',right,h*.84);
+        ctx.font='12px system-ui, sans-serif';ctx.fillStyle='#b6c0cb';
+        ctx.textAlign='left';ctx.fillText('Away from boundary',left,h*.84+19);
+        ctx.textAlign='right';ctx.fillText('Toward boundary',right,h*.84+19);
       } else if (scene === 'mesh') {
         const phase=range?Number(range.value)*Math.PI/50:state.phase;
         const nx=16,ny=10;const nodes=[];

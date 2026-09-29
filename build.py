@@ -12,21 +12,22 @@ ORIGIN = 'https://raoofmoayedi.github.io'
 
 def head(title, description, prefix='', path=''):
     research_current = ' aria-current="page"' if path.startswith('research/') else ''
+    publications_current = ' aria-current="page"' if path == 'publications.html' else ''
     cv_current = ' aria-current="page"' if path == 'cv.html' else ''
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(title)}</title><meta name="description" content="{escape(description, quote=True)}">
-<meta name="theme-color" content="#101418"><meta name="color-scheme" content="dark"><link rel="canonical" href="{ORIGIN}/{path}">
+<meta name="theme-color" content="#111618"><meta name="color-scheme" content="dark"><link rel="canonical" href="{ORIGIN}/{path}">
 <meta property="og:title" content="{escape(title, quote=True)}"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:type" content="website">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='20' fill='%239fbeed'/%3E%3Ctext x='20' y='29' fill='%23101418' font-size='29' text-anchor='middle' font-family='sans-serif'%3Er%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='20' fill='%23bdd3b4'/%3E%3Ctext x='20' y='29' fill='%23111618' font-size='29' text-anchor='middle' font-family='sans-serif'%3Er%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="{prefix}assets/site.css"><script src="{prefix}assets/site.js" defer></script></head><body>
 <a class="skip" href="#main">Skip to content</a><header class="header"><nav class="nav wrap" aria-label="Main navigation">
-<a class="brand" href="{prefix}index.html" aria-label="Raoof Zare Moayedi, home"><span class="brand-mark" aria-hidden="true">r</span><span class="brand-name">Raoof Zare Moayedi</span></a>
-<div class="nav-links"><a data-section="publications" href="{prefix}index.html#publications">Publications</a><a data-section="experience" href="{prefix}index.html#experience">Experience</a><a data-section="research"{research_current} href="{prefix}index.html#research">Research</a><a class="nav-cv"{cv_current} href="{prefix}cv.html">CV</a></div>
+<a class="brand" href="{prefix}index.html" aria-label="Raoof Zare Moayedi, home">Raoof Zare Moayedi</a>
+<div class="nav-links"><a{research_current} href="{prefix}index.html#research">Research</a><a{publications_current} href="{prefix}publications.html">Publications</a><a href="{prefix}index.html#experience">Experience</a><a{cv_current} href="{prefix}cv.html">CV</a></div>
 </nav></header>'''
 
 def footer(prefix=''):
-    return f'''<footer class="footer"><div class="wrap"><span>Raoof Zare Moayedi · {2026}</span><span><a href="{GITHUB}">GitHub</a> &nbsp; / &nbsp; <a href="mailto:{EMAIL}">Email</a> &nbsp; / &nbsp; <a href="{prefix}cv.html">CV</a></span></div></footer></body></html>'''
+    return f'''<footer class="footer"><div class="wrap"><span>Raoof Zare Moayedi</span><span>Last updated September 2026</span></div></footer></body></html>'''
 
 def bibtex(p):
     kind='article' if p['type']=='article' else 'misc' if p.get('arxiv') else 'unpublished'
@@ -38,7 +39,7 @@ def bibtex(p):
     if p['type']!='article': fields['note']=p['status'].replace(' · ','; ')
     return '@'+kind+'{'+p['id']+',\n'+',\n'.join('  '+k+' = {'+v+'}' for k,v in fields.items())+'\n}'
 
-def publication(p, prefix='', level=3):
+def publication(p, prefix='', level=3, selected=False, include_project=True):
     names=[]
     for a in p['authors']:
         text=escape(a.replace('*',''))
@@ -47,12 +48,20 @@ def publication(p, prefix='', level=3):
         names.append(text)
     authors=', '.join(names[:-1])+' and '+names[-1]
     title=escape(p['title'])
-    if p.get('url'): title=f'<a href="{p["url"]}" target="_blank" rel="noopener noreferrer">{title}</a>'
+    title_url = prefix+p['project'] if selected else p.get('url')
+    if title_url: title=f'<a href="{title_url}">{title}</a>'
     meta=f'<span class="venue">{escape(p["venue"])}</span>' if p['venue'] else escape(p['status'])
     links=''
-    if p.get('url'): links+=f'<a href="{p["url"]}" target="_blank" rel="noopener noreferrer">'+('arXiv' if p.get('arxiv') else 'Paper')+'</a>'
-    if p.get('project'): links+=f'<a href="{prefix}{p["project"]}">Research overview</a>'
-    return f'''<article class="pub" data-type="{'article' if p['type']=='article' else 'manuscript'}"><div class="pub-year">{p['year']}</div><div class="pub-content"><h{level}>{title}</h{level}><p class="pub-authors">{authors}</p><p class="pub-meta">{meta}</p><div class="pub-actions">{links}<details><summary>BibTeX</summary><pre>{escape(bibtex(p))}</pre></details></div></div></article>'''
+    if p.get('url'): links+=f'<a href="{p["url"]}">'+('arXiv' if p.get('arxiv') else 'Paper')+'</a>'
+    if p.get('project') and not selected and include_project: links+=f'<a href="{prefix}{p["project"]}">Research details</a>'
+    summary=''
+    label=f'<span class="pub-year">{p["year"]}</span>'
+    if selected:
+        topic,explanation=SELECTED[p['id']]
+        label=f'<span class="work-topic">{topic}</span><span class="pub-year">{p["year"]}</span>'
+        summary=f'<p class="pub-summary">{explanation}</p>'
+    citation='' if selected else f'<details><summary>BibTeX</summary><pre>{escape(bibtex(p))}</pre></details>'
+    return f'''<article class="pub{' selected-work' if selected else ''}" data-type="{'article' if p['type']=='article' else 'manuscript'}"><div class="pub-label">{label}</div><div class="pub-content"><h{level}>{title}</h{level}><p class="pub-authors">{authors}</p><p class="pub-meta">{meta}</p>{summary}<div class="pub-actions">{links}{citation}</div></div></article>'''
 
 
 def figure(scene, id, label, caption, heading='', small=False):
@@ -62,44 +71,60 @@ def figure(scene, id, label, caption, heading='', small=False):
         control=f'<div class="figure-controls"><label for="{id}-control">{label}</label><input type="range" id="{id}-control" min="{lo}" max="{hi}" value="{value}"><output for="{id}-control">{output}</output></div>'
     return f'''<canvas class="{'geometry-canvas' if not small else ''}" data-scene="{scene}" data-control="{id}-control" aria-label="{escape(caption,quote=True)}" role="img">{escape(caption)}</canvas>{control}'''
 
-def card(category,title,description,scene,url):
-    return f'''<a class="research-card" href="{url}"><div class="research-art">{figure(scene,'card-'+scene,'','Conceptual '+category+' illustration',small=True)}</div><div class="research-content"><span class="eyebrow">{category}</span><h3>{title}</h3><p>{description}</p><span class="card-link">Explore the research</span></div></a>'''
-
 positions=[
  ('August 2026 – present','EPFL','Research Intern · E3 Program','Prof. Olga Fink','Working on GNNs for long-term prediction of fluid dynamics, with the aim of reducing the cost of simulation.'),
  ('June 2025 – March 2026','University of Cambridge','Remote Research Assistant','Dr. Amir-Reza Asadi','Developed a differentially private synthetic data algorithm whose error bounds depend on the geometry of the data.'),
  ('January – June 2025','Nanyang Technological University','Funded Visiting Research Student','Prof. Yew-Soon Ong','Worked on robust knowledge distillation, superalignment, and task arithmetic. The distillation work led to a paper in IEEE TPAMI.'),
  ('June 2023 – June 2024','Imperial College London','Remote Research Assistant','Dr. Seyed-Mohsen Moosavi-Dezfooli','Studied how data pruning and input-space geometry affect robustness across model architectures.')]
 
-def institution_mark(school):
-    names={'EPFL':'EPFL','University of Cambridge':'CAM','Nanyang Technological University':'NTU','Imperial College London':'ICL','Sharif University of Technology':'SUT','Amirkabir University of Technology':'AUT'}
-    return f'<span class="institution-mark" aria-hidden="true">{names[school]}</span>'
+SELECTED={
+    'raoof_synthetic': ('Differential privacy', 'Private synthetic data on [0,1]<sup>d</sup>, with error guarantees that reflect the geometry of the data.'),
+    'Junhao_raoof': ('Robust learning', 'Using inverse adversarial examples to transfer robustness from a teacher model to a student.'),
+    'raoofzareCU': ('Scientific ML', 'Improving physics-informed neural networks by penalizing curvature in the equation residual.')
+}
 
-home=head(NAME+' | Machine Learning Research','Research interests in the foundations of machine learning, including privacy, robustness, and machine unlearning.')
-home+=f'''<main id="main" class="wrap home-layout"><aside class="profile" aria-label="Researcher profile"><p class="eyebrow">Machine learning research</p><h1>Raoof<br> Zare Moayedi</h1><p class="profile-role">M.Sc. student in Computer Science<br>Sharif University of Technology</p><div class="profile-links"><a href="mailto:{EMAIL}">Email</a><a href="{GITHUB}">GitHub</a><a href="cv.html">CV</a></div><div class="profile-interests"><h2>Research interests</h2><ul><li>Differential privacy</li><li>Robustness</li><li>Machine unlearning</li><li>Learning theory</li></ul></div><a class="profile-email" href="mailto:{EMAIL}">{EMAIL}</a></aside><div class="main-column"><section class="intro" id="about" aria-label="About"><p class="intro-lead">I am interested in fundamental questions in machine learning, especially privacy, robustness, and machine unlearning.</p><p>I want to understand the limits these requirements place on learning and design algorithms with provable guarantees. My work so far has focused on differential privacy and robust learning, including the role of data geometry and training dynamics.</p><p>I am a master's student in computer science at Sharif University of Technology, with a background in mathematics and computer science.</p></section><section id="publications" class="section"><div class="section-heading"><h2>Publications</h2></div><div class="filters" role="group" aria-label="Filter publications"><button class="filter" data-filter="all" aria-pressed="true">All</button><button class="filter" data-filter="article" aria-pressed="false">Published</button><button class="filter" data-filter="manuscript" aria-pressed="false">Preprints &amp; under review</button></div><p class="sr-only" id="filter-status" aria-live="polite">7 papers shown</p><div class="pub-list">'''
-for kind, label in [('article','Journal articles'),('manuscript','Preprints & manuscripts')]:
-    home+=f'<section class="pub-group" data-publication-group="{kind}" aria-label="{escape(label,quote=True)}"><h3 class="pub-group-heading">{escape(label)}</h3>'
-    home+=''.join(publication(p,level=4) for p in PAPERS if (p['type']=='article')==(kind=='article'))
-    home+='</section>'
-home+='''</div><p class="pub-footer">* Equal contribution. Last updated September 2026.</p></section><section id="experience" class="section"><div class="section-heading"><h2>Research experience</h2></div><div class="experience-list">'''
+home=head(NAME+' | Machine Learning Research','Fundamental questions in machine learning: privacy, robustness, and machine unlearning.')
+home+=f'''<main id="main" class="wrap">
+<header class="intro" id="about">
+<p class="eyebrow">Machine learning research</p><h1>{NAME}</h1>
+<p class="intro-lead">I study fundamental questions in machine learning, with a focus on <strong>privacy</strong> and <strong>robustness</strong>. I am also interested in <strong>machine unlearning</strong>.</p>
+<p class="intro-description">My work asks how the structure of data and the dynamics of training affect what learning algorithms can guarantee.</p>
+<p class="affiliation"><span class="degree">M.Sc. student in Computer Science</span><span class="affiliation-divider" aria-hidden="true">·</span><span>Sharif University of Technology</span></p>
+<div class="intro-links"><a href="mailto:{EMAIL}">Email</a><a href="{GITHUB}">GitHub</a><a href="cv.html">Curriculum vitae</a></div>
+</header>
+<section id="research" class="section"><div class="section-heading"><h2>Selected research</h2><a class="text-link" href="publications.html">All publications</a></div>
+<div class="selected-list">'''
+for key in SELECTED:
+    home+=publication(next(p for p in PAPERS if p['id']==key),selected=True)
+home+='''</div></section><section id="experience" class="section"><div class="section-heading"><h2>Research experience</h2></div><div class="experience-list">'''
 for date,school,role,supervisor,description in positions:
-    home+=f'<article class="institution-row">{institution_mark(school)}<div class="institution-content"><div class="institution-heading"><h3>{school}</h3><span class="position-date">{date}</span></div><p class="position-role">{role}</p><p class="position-description">{description}</p><p class="supervisor">Supervisor: {supervisor}</p></div></article>'
-home+='''</div></section><section id="education" class="section"><div class="section-heading"><h2>Education</h2></div><div class="education-list">'''
-home+=f'<article class="institution-row">{institution_mark("Sharif University of Technology")}<div class="institution-content"><div class="institution-heading"><h3>Sharif University of Technology</h3><span class="position-date">2024 – present</span></div><p class="position-role">M.Sc. in Computer Science</p><p class="education-detail">GPA: 19.7/20 · Ranked 1st in class (ongoing)</p></div></article>'
-home+=f'<article class="institution-row">{institution_mark("Amirkabir University of Technology")}<div class="institution-content"><div class="institution-heading"><h3>Amirkabir University of Technology</h3><span class="position-date">2018 – 2023</span></div><p class="position-role">B.Sc. in Computer Science · B.Sc. in Mathematics</p><p class="education-detail">Computer Science: 18.82/20 · Mathematics: 18.99/20</p></div></article>'
-home+='''</div></section><section id="research" class="section"><div class="section-heading"><h2>Research</h2></div><div class="research-notes"><a class="research-note" href="research/private-data.html"><span class="note-number">01</span><div><h3>Differential privacy</h3><p>Synthetic data, covariance estimation, and private sampling.</p></div></a><a class="research-note" href="research/robust-learning.html"><span class="note-number">02</span><div><h3>Robust machine learning</h3><p>Knowledge distillation and robustness to spurious correlations.</p></div></a><a class="research-note" href="research/scientific-learning.html"><span class="note-number">03</span><div><h3>Scientific machine learning</h3><p>Graph neural networks for fluid dynamics and physics-informed models.</p></div></a></div></section><section class="contact"><h2>Contact</h2><a href="mailto:'''+EMAIL+f'">{EMAIL}</a></section></div></main>'+footer()
+    home+=f'''<article class="institution-row"><div class="institution-heading"><h3>{school}</h3><p class="position-role">{role}</p><p class="position-date">{date}</p></div><div class="institution-description"><p>{description}</p><p class="supervisor">With {supervisor}</p></div></article>'''
+home+='''</div></section><section id="education" class="section"><div class="section-heading"><h2>Education</h2><a class="text-link" href="cv.html">Full CV</a></div><div class="education-list">
+<article class="education-row"><div><h3>Sharif University of Technology</h3><p>M.Sc. in Computer Science</p></div><p class="position-date">2024 – present</p></article>
+<article class="education-row"><div><h3>Amirkabir University of Technology</h3><p>B.Sc. in Computer Science · B.Sc. in Mathematics</p></div><p class="position-date">2018 – 2023</p></article>
+</div></section>
+<section class="contact"><h2>Contact</h2><a href="mailto:'''+EMAIL+f'">{EMAIL}</a></section></main>'+footer()
 (ROOT/'index.html').write_text(home)
 
+publications=head('Publications | '+NAME,'Journal articles, preprints, and manuscripts by Raoof Zare Moayedi.',path='publications.html')
+publications+='''<main id="main" class="wrap publication-page"><header class="page-hero"><p class="eyebrow">Research</p><h1>Publications</h1><p>Journal articles, preprints, and work under review.</p></header><div data-publications><div class="publication-tools"><div class="filters" role="group" aria-label="Filter publications"><button class="filter" data-filter="all" aria-pressed="true">All</button><button class="filter" data-filter="article" aria-pressed="false">Published</button><button class="filter" data-filter="manuscript" aria-pressed="false">Preprints &amp; manuscripts</button></div><a class="text-link bib-download" href="papers.bib" download>Download BibTeX</a></div><p class="sr-only" data-filter-status aria-live="polite">7 papers shown</p><div class="pub-list">'''
+for kind,label in [('article','Journal articles'),('manuscript','Preprints & manuscripts')]:
+    publications+=f'<section class="pub-group" data-publication-group="{kind}"><h2 class="pub-group-heading">{escape(label)}</h2>'
+    publications+=''.join(publication(p) for p in PAPERS if (p['type']=='article')==(kind=='article'))
+    publications+='</section>'
+publications+='</div><p class="pub-footer">* Equal contribution.</p></div></main>'+footer()
+(ROOT/'publications.html').write_text(publications)
+
 projects=[
- {'slug':'private-data','category':'Differential privacy','title':'Differential privacy','lead':'Generating private synthetic data by adapting to the geometry of the original data.','role':'Research with Dr. Amir-Reza Asadi','setting':'University of Cambridge · Remote','scene':'geometry','control':'Rotate the view','caption':'Conceptual illustration of intrinsic and ambient dimension: a two-dimensional surface in three-dimensional space.','body':'''<h2>The question</h2><p>Can the structure of a dataset help us generate more accurate synthetic data under differential privacy?</p><h2>The approach</h2><p>Our work on <em>Geometry-Adaptive Mechanisms for Private Synthetic Data</em> studies data on [0,1]<sup>d</sup>. The mechanism privately selects a resolution and builds a pruned spatial hierarchy.</p><p>Under the paper’s geometric assumptions, the Wasserstein error rate depends on a packing-growth dimension of the support, rather than only on the ambient dimension. The paper also establishes a corresponding lower bound within this framework.</p><h2>My work</h2><p>With Dr. Amir-Reza Asadi, I developed an algorithm for private synthetic data generation and studied how its error depends on the geometry of the data.</p>''','paper':'raoof_synthetic','after':'''<h2>Related questions</h2><p>I also work on private covariance estimation under vertical partitioning and private multi-sampling from Gaussian distributions. The latter is the subject of my master’s thesis.</p>'''},
- {'slug':'robust-learning','category':'Robust machine learning','title':'Robust machine learning','lead':'Transferring robustness between models and understanding how training affects it.','role':'Research with Prof. Yew-Soon Ong','setting':'Nanyang Technological University','scene':'robustness','control':'Boundary tilt','caption':'Conceptual illustration of two synthetic classes and an adjustable decision boundary.','body':'''<h2>The question</h2><p>How can a student model retain a teacher’s adversarial robustness during knowledge distillation?</p><h2>The paper</h2><p><em>Allies Teach Better Than Enemies</em> uses inverse adversarial examples: inputs adjusted in the opposite direction to adversarial perturbations. The method combines these examples with gradient matching and changes in weight space to align the teacher and student.</p><p>The experiments evaluate both ordinary classification accuracy and performance under attack. The paper was published in IEEE Transactions on Pattern Analysis and Machine Intelligence in 2026.</p><h2>My work</h2><p>At NTU, I worked on robust knowledge distillation, superalignment, and task arithmetic. I co-authored the TPAMI paper with Junhao Dong, Yew-Soon Ong, and Seyed-Mohsen Moosavi-Dezfooli.</p>''','paper':'Junhao_raoof','after':'''<h2>Other work on robustness</h2><p>At Imperial College London, I investigated data pruning and input-space geometry across model architectures. I am also a co-author of a manuscript on transient implicit regularization in SGD and robustness to spurious correlations.</p>'''},
- {'slug':'scientific-learning','category':'Scientific machine learning','title':'Scientific machine learning','lead':'Learning models for differential equations and fluid dynamics.','role':'E3 Research Intern · Prof. Olga Fink','setting':'EPFL · August 2026 – present','scene':'mesh','control':'Illustrative time step','caption':'A synthetic signal on a graph. The slider changes its phase. This is an illustration, not a fluid simulation.','body':'''<h2>Current work at EPFL</h2><p>I am working on graph neural networks (GNNs) to predict how fluid systems behave over long periods. The goal is to incorporate physical knowledge into these models to reduce computational cost compared with traditional simulations.</p><h2>Earlier work: CuPINN</h2><p>Physics-informed neural networks learn solutions to differential equations by reducing the equation residual. Our CuPINN work also penalizes curvature in the residual surface, encouraging smoother behavior across the input domain.</p><p>The paper studies this approach on linear and nonlinear differential equations. CuPINN was published in <em>Computer Methods in Applied Mechanics and Engineering</em> in 2025.</p>''','paper':'raoofzareCU','after':''}
+ {'slug':'private-data','category':'Differential privacy','title':'Private data and its geometry','lead':'How can the structure of a dataset improve the accuracy of differentially private synthetic data?','role':'Research with Dr. Amir-Reza Asadi','setting':'University of Cambridge · Remote','scene':'geometry','control':'Rotate the view','caption':'Conceptual illustration of intrinsic and ambient dimension: a two-dimensional surface in three-dimensional space.','body':'''<h2>Adapting to data geometry</h2><p>Our work on <em>Geometry-Adaptive Mechanisms for Private Synthetic Data</em> studies data on [0,1]<sup>d</sup>. The mechanism privately selects a resolution and builds a pruned spatial hierarchy.</p><p>Under the paper’s geometric assumptions, the Wasserstein error rate depends on a packing-growth dimension of the support, rather than only on the ambient dimension. The paper also establishes a corresponding lower bound within this framework.</p>''','paper':'raoof_synthetic','after':'''<h2>Covariance estimation and private sampling</h2><p>I also work on private covariance estimation under vertical partitioning and private multi-sampling from Gaussian distributions. The latter is the subject of my master’s thesis.</p>'''},
+ {'slug':'robust-learning','category':'Robust machine learning','title':'Transferring robustness','lead':'How can a student model retain a teacher’s adversarial robustness during knowledge distillation?','role':'Research with Prof. Yew-Soon Ong','setting':'Nanyang Technological University','scene':'robustness','control':'Perturbation size','caption':'Conceptual illustration: adversarial and inverse adversarial perturbations move an input in opposite directions relative to a decision boundary.','body':'''<h2>Learning from inverse adversarial examples</h2><p><em>Allies Teach Better Than Enemies</em> uses inverse adversarial examples: inputs adjusted in the opposite direction to adversarial perturbations. The method combines these examples with gradient matching and changes in weight space to align the teacher and student.</p><p>The experiments evaluate both ordinary classification accuracy and performance under attack. The paper was published in IEEE Transactions on Pattern Analysis and Machine Intelligence in 2026.</p><p>I worked on this project during my visiting research position at NTU, with Junhao Dong, Yew-Soon Ong, and Seyed-Mohsen Moosavi-Dezfooli.</p>''','paper':'Junhao_raoof','after':'''<h2>Data and training dynamics</h2><p>At Imperial College London, I investigated data pruning and input-space geometry across model architectures. I am also a co-author of a manuscript on transient implicit regularization in SGD and robustness to spurious correlations.</p>'''},
+ {'slug':'scientific-learning','category':'Scientific machine learning','title':'Learning physical systems','lead':'Neural models for differential equations and the long-term behavior of fluids.','role':'E3 Research Intern · Prof. Olga Fink','setting':'EPFL · August 2026 – present','scene':'mesh','control':'Illustrative time step','caption':'A synthetic signal on a graph. The slider changes its phase. This is an illustration, not a fluid simulation.','body':'''<h2>Current work at EPFL</h2><p>I am working on graph neural networks (GNNs) to predict how fluid systems behave over long periods. The goal is to incorporate physical knowledge into these models to reduce computational cost compared with traditional simulations.</p><h2>Earlier work: CuPINN</h2><p>Physics-informed neural networks learn solutions to differential equations by reducing the equation residual. Our CuPINN work also penalizes curvature in the residual surface, encouraging smoother behavior across the input domain.</p><p>The paper studies this approach on linear and nonlinear differential equations. CuPINN was published in <em>Computer Methods in Applied Mechanics and Engineering</em> in 2025.</p>''','paper':'raoofzareCU','after':''}
 ]
 for project in projects:
     page=head(project['title']+' | '+NAME,project['lead'],'../','research/'+project['slug']+'.html')
-    page+=f'''<main id="main" class="wrap"><header class="project-hero"><a class="back" href="../index.html#research">All research</a><p class="eyebrow blue">{project['category']}</p><h1>{project['title']}</h1><p class="lead">{project['lead']}</p></header><div class="project-body"><aside class="project-aside"><div><h2>Research context</h2><p>{project['setting']}</p></div><div><h2>Role &amp; supervision</h2><p>{project['role']}</p></div></aside><article class="project-copy">{project['body']}<figure class="project-figure">'''
+    page+=f'''<main id="main" class="wrap"><header class="project-hero"><a class="back" href="../index.html#research">Back to selected research</a><p class="eyebrow">{project['category']}</p><h1>{project['title']}</h1><p class="lead">{project['lead']}</p></header><div class="project-body"><div class="project-context"><p>{project['setting']}</p><p>{project['role']}</p></div><article class="project-copy">{project['body']}<figure class="project-figure">'''
     page+=figure(project['scene'],'project',project['control'],project['caption'])
-    page+=f'''<figcaption>{project['caption']}</figcaption></figure>{project['after']}<h2>Related paper</h2>'''+publication(next(p for p in PAPERS if p['id']==project['paper']),'../')+'</article></div></main>'+footer('../')
+    page+=f'''<figcaption>{project['caption']}</figcaption></figure>{project['after']}<h2>Related paper</h2>'''+publication(next(p for p in PAPERS if p['id']==project['paper']),'../',include_project=False)+'</article></div></main>'+footer('../')
     (ROOT/'research'/f'{project["slug"]}.html').write_text(page)
 
 cv=head('Curriculum Vitae | '+NAME,'Education, research experience, publications, teaching, and honors.','', 'cv.html')
@@ -112,4 +137,4 @@ cv+='''<p>* Equal contribution.</p><h2>Honors &amp; funding</h2><ul><li>EPFL Exc
 (ROOT/'cv.html').write_text(cv)
 (ROOT/'papers.bib').write_text('\n\n'.join(bibtex(p) for p in PAPERS)+'\n')
 (ROOT/'404.html').write_text(head('Page not found | '+NAME,'This page could not be found.')+'<main id="main" class="wrap"><section class="project-hero"><p class="eyebrow">404</p><h1>Page not found.</h1><p>The page may have moved. <a class="text-link" href="https://raoofmoayedi.github.io/">Return to the homepage</a>.</p></section></main>'+footer())
-print('Built homepage, three research pages, CV, bibliography and 404 page.')
+print('Built homepage, publications, three research pages, CV, bibliography and 404 page.')
