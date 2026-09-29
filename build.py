@@ -11,6 +11,8 @@ GITHUB = 'https://github.com/raoofmoayedi'
 ORIGIN = 'https://raoofmoayedi.github.io'
 
 def head(title, description, prefix='', path=''):
+    research_current = ' aria-current="page"' if path.startswith('research/') else ''
+    cv_current = ' aria-current="page"' if path == 'cv.html' else ''
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(title)}</title><meta name="description" content="{escape(description, quote=True)}">
@@ -20,7 +22,7 @@ def head(title, description, prefix='', path=''):
 <link rel="stylesheet" href="{prefix}assets/site.css"><script src="{prefix}assets/site.js" defer></script></head><body>
 <a class="skip" href="#main">Skip to content</a><header class="header"><nav class="nav wrap" aria-label="Main navigation">
 <a class="brand" href="{prefix}index.html" aria-label="Raoof Zare Moayedi, home"><span class="brand-mark" aria-hidden="true">r</span><span class="brand-name">Raoof Zare Moayedi</span></a>
-<div class="nav-links"><a data-section="publications" href="{prefix}index.html#publications">Publications</a><a data-section="experience" href="{prefix}index.html#experience">Experience</a><a data-section="research" href="{prefix}index.html#research">Research</a><a class="nav-cv" href="{prefix}cv.html">CV</a></div>
+<div class="nav-links"><a data-section="publications" href="{prefix}index.html#publications">Publications</a><a data-section="experience" href="{prefix}index.html#experience">Experience</a><a data-section="research"{research_current} href="{prefix}index.html#research">Research</a><a class="nav-cv"{cv_current} href="{prefix}cv.html">CV</a></div>
 </nav></header>'''
 
 def footer(prefix=''):
