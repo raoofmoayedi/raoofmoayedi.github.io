@@ -18,7 +18,7 @@ No build service, paid hosting, API key or external database is needed. Fonts lo
 
 ## Updating the site
 
-- Edit `publications.json` to update titles, authors, statuses and paper links.
+- Edit `publications.json` to update titles, authors, statuses and paper links. `authors` contains display names and equal-contribution markers; `bib_authors` contains full names in `Family, Given` format for BibTeX.
 - Edit `build.py` to change the biography, experience, project explanations and CV.
 - Run `python3 build.py`, then commit both source and generated HTML files.
 - Adjust colors and layout in `assets/site.css`; interactions are in `assets/site.js`.

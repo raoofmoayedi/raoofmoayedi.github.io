@@ -28,7 +28,7 @@ def footer(prefix=''):
 
 def bibtex(p):
     kind='article' if p['type']=='article' else 'misc' if p.get('arxiv') else 'unpublished'
-    names=[a.replace('*','') for a in p['authors']]
+    names=p['bib_authors']
     fields={'title':'{'+p['title']+'}', 'author':' and '.join(names),'year':str(p['year'])}
     if p.get('venue'): fields['journal']=p['venue']
     if p.get('doi'): fields['doi']=p['doi']
