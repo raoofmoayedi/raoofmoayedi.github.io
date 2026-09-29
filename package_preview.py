@@ -16,7 +16,10 @@ ROUTES = [
     'index.html',
     'publications.html',
     'research/private-data.html',
+    'research/private-sampling.html',
+    'research/private-covariance.html',
     'research/robust-learning.html',
+    'research/sgd-robustness.html',
     'research/scientific-learning.html',
     'cv.html',
 ]
@@ -259,4 +262,4 @@ with zipfile.ZipFile(out / 'raoof-website.zip', 'w', zipfile.ZIP_DEFLATED) as ar
     for file in sorted(ROOT.rglob('*')):
         if is_site_file(file):
             archive.write(file, Path('raoof-website') / file.relative_to(ROOT))
-print('Packaged the website and six-page interactive preview, with embedded downloads.')
+print(f'Packaged the website and {len(ROUTES)}-page interactive preview, with embedded downloads.')

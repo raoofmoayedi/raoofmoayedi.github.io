@@ -115,16 +115,130 @@ for kind,label in [('article','Journal articles'),('manuscript','Preprints & man
 publications+='</div><p class="pub-footer">* Equal contribution.</p></div></main>'+footer()
 (ROOT/'publications.html').write_text(publications)
 
-projects=[
- {'slug':'private-data','category':'Differential privacy','title':'Private data and its geometry','lead':'How can the structure of a dataset improve the accuracy of differentially private synthetic data?','role':'Research with Dr. Amir-Reza Asadi','setting':'University of Cambridge · Remote','scene':'geometry','control':'Rotate the view','caption':'Conceptual illustration of intrinsic and ambient dimension: a two-dimensional surface in three-dimensional space.','body':'''<h2>Adapting to data geometry</h2><p>Our work on <em>Geometry-Adaptive Mechanisms for Private Synthetic Data</em> studies data on [0,1]<sup>d</sup>. The mechanism privately selects a resolution and builds a pruned spatial hierarchy.</p><p>Under the paper’s geometric assumptions, the Wasserstein error rate depends on a packing-growth dimension of the support, rather than only on the ambient dimension. The paper also establishes a corresponding lower bound within this framework.</p>''','paper':'raoof_synthetic','after':'''<h2>Covariance estimation and private sampling</h2><p>I also work on private covariance estimation under vertical partitioning and private multi-sampling from Gaussian distributions. The latter is the subject of my master’s thesis.</p>'''},
- {'slug':'robust-learning','category':'Robust machine learning','title':'Transferring robustness','lead':'How can a student model retain a teacher’s adversarial robustness during knowledge distillation?','role':'Research with Prof. Yew-Soon Ong','setting':'Nanyang Technological University','scene':'robustness','control':'Perturbation size','caption':'Conceptual illustration: adversarial and inverse adversarial perturbations move an input in opposite directions relative to a decision boundary.','body':'''<h2>Learning from inverse adversarial examples</h2><p><em>Allies Teach Better Than Enemies</em> uses inverse adversarial examples: inputs adjusted in the opposite direction to adversarial perturbations. The method combines these examples with gradient matching and changes in weight space to align the teacher and student.</p><p>The experiments evaluate both ordinary classification accuracy and performance under attack. The paper was published in IEEE Transactions on Pattern Analysis and Machine Intelligence in 2026.</p><p>I worked on this project during my visiting research position at NTU, with Junhao Dong, Yew-Soon Ong, and Seyed-Mohsen Moosavi-Dezfooli.</p>''','paper':'Junhao_raoof','after':'''<h2>Data and training dynamics</h2><p>At Imperial College London, I investigated data pruning and input-space geometry across model architectures. I am also a co-author of a manuscript on transient implicit regularization in SGD and robustness to spurious correlations.</p>'''},
- {'slug':'scientific-learning','category':'Scientific machine learning','title':'Learning physical systems','lead':'Neural models for differential equations and the long-term behavior of fluids.','role':'E3 Research Intern · Prof. Olga Fink','setting':'EPFL · August 2026 – present','scene':'mesh','control':'Illustrative time step','caption':'A synthetic signal on a graph. The slider changes its phase. This is an illustration, not a fluid simulation.','body':'''<h2>Current work at EPFL</h2><p>I am working on graph neural networks (GNNs) to predict how fluid systems behave over long periods. The goal is to incorporate physical knowledge into these models to reduce computational cost compared with traditional simulations.</p><h2>Earlier work: CuPINN</h2><p>Physics-informed neural networks learn solutions to differential equations by reducing the equation residual. Our CuPINN work also penalizes curvature in the residual surface, encouraging smoother behavior across the input domain.</p><p>The paper studies this approach on linear and nonlinear differential equations. CuPINN was published in <em>Computer Methods in Applied Mechanics and Engineering</em> in 2025.</p>''','paper':'raoofzareCU','after':''}
-]
+projects=[{'slug': 'private-data',
+  'category': 'Differential privacy',
+  'title': 'Private data and its geometry',
+  'lead': 'How can the structure of a dataset improve the accuracy of differentially private synthetic data?',
+  'role': 'Research with Dr. Amir-Reza Asadi',
+  'setting': 'University of Cambridge · Remote',
+  'scene': 'geometry',
+  'control': 'Rotate the view',
+  'caption': 'Conceptual illustration of intrinsic and ambient dimension: a two-dimensional surface in '
+             'three-dimensional space.',
+  'body': '<h2>Adapting to data geometry</h2><p>Data in a high-dimensional space often lie on a much '
+          'simpler, lower-dimensional set. We use this structure to generate synthetic data on '
+          '[0,1]<sup>d</sup> under pure differential privacy. Our method privately selects the resolution of '
+          'a spatial hierarchy and prunes it to adapt to the data’s geometry.</p><p>Under multiscale '
+          'geometric assumptions, the expected Wasserstein error decreases at a rate governed by the '
+          'support’s intrinsic dimension rather than only the ambient dimension. We also prove a lower bound '
+          'showing that the dimension-dependent exponent is sharp under a corresponding geometric '
+          'condition.</p>',
+  'paper': 'raoof_synthetic',
+  'after': '<h2>Other work on differential privacy</h2><p>I also study <a class="text-link" '
+           'href="private-covariance.html">covariance estimation across separate data holders</a> and <a '
+           'class="text-link" href="private-sampling.html">private Gaussian sampling</a>. The latter is the '
+           'subject of my master’s thesis.</p>'},
+ {'slug': 'robust-learning',
+  'category': 'Robust machine learning',
+  'title': 'Transferring robustness',
+  'lead': 'How can a student model retain a teacher’s adversarial robustness during knowledge distillation?',
+  'role': 'Research with Prof. Yew-Soon Ong',
+  'setting': 'Nanyang Technological University',
+  'scene': 'robustness',
+  'control': 'Perturbation size',
+  'caption': 'Conceptual illustration: adversarial and inverse adversarial perturbations move an input in '
+             'opposite directions relative to a decision boundary.',
+  'body': '<h2>Learning from inverse adversarial examples</h2><p>We study how to transfer adversarial '
+          'robustness from a large teacher model to a smaller student. Simply copying the teacher’s '
+          'predictions can pass on its mistakes. Our method trains the student using inverse adversarial '
+          'examples, formed by reversing the direction of adversarial perturbations.</p><p>Our analysis '
+          'connects robustness transfer to input-gradient information, motivating gradient matching between '
+          'the models. We also jointly perturb the teacher’s and student’s weights to find directions that '
+          'improve robustness transfer.</p><h2>Results</h2><p>Across the evaluated datasets, the method '
+          'improves both accuracy on clean inputs and robustness under attack compared with the tested '
+          'distillation methods. The paper also examines gains from generated training data and extensions '
+          'to multimodal models.</p>',
+  'paper': 'Junhao_raoof',
+  'after': '<h2>Data and training dynamics</h2><p>At Imperial College London, I investigated data pruning '
+           'and input-space geometry across model architectures. In separate work, we study <a '
+           'class="text-link" href="sgd-robustness.html">when SGD reduces reliance on spurious '
+           'correlations</a> and how a short small-batch warmup can improve worst-group accuracy.</p>'},
+ {'slug': 'scientific-learning',
+  'category': 'Scientific machine learning',
+  'title': 'CuPINN: learning smoother residuals',
+  'lead': 'Improving physics-informed neural networks by controlling the curvature of the equation residual.',
+  'role': 'With Mostafa Abbaszadeh and Mehdi Dehghan',
+  'setting': 'Computer Methods in Applied Mechanics and Engineering · 2025',
+  'scene': 'mesh',
+  'control': 'Illustrative time step',
+  'caption': 'A synthetic signal on a graph. The slider changes its phase. This is an illustration, not a '
+             'fluid simulation.',
+  'body': '<h2>Controlling the residual’s curvature</h2><p>Physics-informed neural networks learn solutions '
+          'to differential equations by penalizing violations of those equations. In this work, we also '
+          'penalize the curvature of that residual across the input domain. CuPINN and its variants '
+          'encourage a flatter residual surface, using Hutchinson’s trace estimator and finite differences '
+          'to avoid forming the full Hessian. We also combine this approach with gradient-enhanced '
+          'PINNs.</p><h2>Results</h2><p>Across seven PDE benchmarks, including linear and nonlinear '
+          'problems, the methods improve solution accuracy and residual error over the tested PINN and GPINN '
+          'baselines. The experiments also show benefits when relatively few training points are '
+          'available.</p><h2>Current work at EPFL</h2><p>As an E3 research intern with Prof. Olga Fink, I am '
+          'working on graph neural networks to predict how fluid systems behave over long periods. The goal '
+          'is to incorporate physical knowledge into these models to reduce computational cost compared with '
+          'traditional simulations.</p>',
+  'paper': 'raoofzareCU',
+  'after': ''},
+ {'slug': 'private-sampling',
+  'category': 'Differential privacy',
+  'title': 'Private Gaussian sampling',
+  'lead': 'How much data is needed to privately generate several samples from an unknown Gaussian '
+          'distribution?',
+  'paper': 'raoof_private_sampling',
+  'body': '<h2>A guarantee for the whole batch</h2><p>We study this question without imposing bounds on the '
+          'mean or positive definite covariance. The guarantee concerns the whole batch: its joint '
+          'distribution must be close to that of independent Gaussian draws, even though the released '
+          'samples may be dependent.</p><p>Under approximate differential privacy, we determine the required '
+          'input size up to logarithmic factors for any fixed error level between zero and one. Our '
+          'algorithm and matching lower bound show when generating a batch from shared data is more '
+          'efficient than running separate private samplers.</p>',
+  'after': ''},
+ {'slug': 'private-covariance',
+  'category': 'Differential privacy',
+  'title': 'Private covariance estimation across separate data holders',
+  'lead': 'Estimating how features vary together when no single party sees a complete record.',
+  'paper': 'raoof_private_splt',
+  'body': '<h2>Different features, matched observations</h2><p>We study covariance estimation when two '
+          'parties hold different features of the same observations. Neither party sees complete records, '
+          'making relationships between their features difficult to estimate. We design separate releases '
+          'satisfying pure differential privacy that allow an analyst to estimate the full covariance matrix '
+          'without interaction between the parties.</p><p>For mean-zero sub-Gaussian data, we prove matching '
+          'upper and lower error bounds up to logarithmic factors among noninteractive protocols. The bounds '
+          'identify each party’s privacy cost and remain sharp when the parties hold very different numbers '
+          'of features or use different privacy budgets.</p>',
+  'after': ''},
+ {'slug': 'sgd-robustness',
+  'category': 'Robust machine learning',
+  'title': 'When SGD reduces reliance on spurious correlations',
+  'lead': 'Understanding the early training dynamics behind SGD’s robustness benefits.',
+  'paper': 'raoof_spurious',
+  'body': '<h2>Robustness early in training</h2><p>We study when stochastic gradient descent helps models '
+          'avoid shortcuts that work during training but fail when the data change. Our finite-time analysis '
+          'shows that, under the conditions we study, SGD’s implicit regularization is strongest early in '
+          'training and then weakens. Its strength depends on the learning-rate-to-batch-size '
+          'ratio.</p><h2>Small-batch warmup</h2><p>This motivates small-batch warmup: begin training with '
+          'small batches, then switch to larger ones. Across several benchmarks and architectures, this '
+          'improves worst-group accuracy, often recovering much of the robustness of full small-batch '
+          'training while retaining most of the efficiency of large-batch training.</p>',
+  'after': ''}]
 for project in projects:
     page=head(project['title']+' | '+NAME,project['lead'],'../','research/'+project['slug']+'.html')
-    page+=f'''<main id="main" class="wrap"><header class="project-hero"><a class="back" href="../index.html#research">Back to selected research</a><p class="eyebrow">{project['category']}</p><h1>{project['title']}</h1><p class="lead">{project['lead']}</p></header><div class="project-body"><div class="project-context"><p>{project['setting']}</p><p>{project['role']}</p></div><article class="project-copy">{project['body']}<figure class="project-figure">'''
-    page+=figure(project['scene'],'project',project['control'],project['caption'])
-    page+=f'''<figcaption>{project['caption']}</figcaption></figure>{project['after']}<h2>Related paper</h2>'''+publication(next(p for p in PAPERS if p['id']==project['paper']),'../',include_project=False)+'</article></div></main>'+footer('../')
+    page+=f'''<main id="main" class="wrap"><header class="project-hero"><a class="back" href="../publications.html">Back to publications</a><p class="eyebrow">{project['category']}</p><h1>{project['title']}</h1><p class="lead">{project['lead']}</p></header><div class="project-body">'''
+    if project.get('setting'):
+        page+=f'''<div class="project-context"><p>{project['setting']}</p><p>{project['role']}</p></div>'''
+    page+=f'<article class="project-copy">{project["body"]}'
+    if project.get('scene'):
+        page+='<figure class="project-figure">'+figure(project['scene'],'project',project['control'],project['caption'])
+        page+=f'<figcaption>{project["caption"]}</figcaption></figure>'
+    page+=project['after']+'<h2>Related paper</h2>'+publication(next(p for p in PAPERS if p['id']==project['paper']),'../',include_project=False)+'</article></div></main>'+footer('../')
     (ROOT/'research'/f'{project["slug"]}.html').write_text(page)
 
 cv=head('Curriculum Vitae | '+NAME,'Education, research experience, publications, teaching, and honors.','', 'cv.html')
@@ -137,4 +251,4 @@ cv+='''<p>* Equal contribution.</p><h2>Honors &amp; funding</h2><ul><li>EPFL Exc
 (ROOT/'cv.html').write_text(cv)
 (ROOT/'papers.bib').write_text('\n\n'.join(bibtex(p) for p in PAPERS)+'\n')
 (ROOT/'404.html').write_text(head('Page not found | '+NAME,'This page could not be found.')+'<main id="main" class="wrap"><section class="project-hero"><p class="eyebrow">404</p><h1>Page not found.</h1><p>The page may have moved. <a class="text-link" href="https://raoofmoayedi.github.io/">Return to the homepage</a>.</p></section></main>'+footer())
-print('Built homepage, publications, three research pages, CV, bibliography and 404 page.')
+print(f'Built homepage, publications, {len(projects)} research pages, CV, bibliography and 404 page.')

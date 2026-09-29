@@ -1,12 +1,12 @@
 # Raoof Zare Moayedi — research website
 
-A static academic website with a dark theme, selected research, a complete publication list, research detail pages, and a printable CV.
+A static academic website with a dark theme, selected research, a complete publication list, six research detail pages, and a printable CV.
 
 The repository is private and GitHub Pages is disabled as of September 29, 2026. Saving these files does not publish the website. There is no deployment workflow.
 
 ## Preview privately
 
-Download `preview.html` and open the downloaded file in your browser. This single file includes all six pages, the styles, interactive figures, and bibliography download. It requires no server or internet connection to display the site. External paper and contact links still point to their original destinations.
+Download `preview.html` and open the downloaded file in your browser. This single file includes all nine main pages, the styles, interactive figures, and bibliography download. It requires no server or internet connection to display the site. External paper and contact links still point to their original destinations.
 
 Alternatively, download the repository and open `index.html`. The normal pages work directly from disk.
 
@@ -14,7 +14,7 @@ Alternatively, download the repository and open `index.html`. The normal pages w
 
 1. Edit `publications.json` for paper metadata. `authors` contains display names and equal-contribution markers. `bib_authors` contains full names in `Family, Given` format.
 2. Edit `build.py` for the introduction, research summaries, experience, education, and CV. The `SELECTED` dictionary sets the three homepage papers and their short explanations.
-3. Run `python3 build.py` to generate the seven HTML documents and `papers.bib`.
+3. Run `python3 build.py` to generate the ten HTML documents (nine main pages and a 404 page) and `papers.bib`.
 4. Run `python3 package_preview.py` to validate internal links and rebuild `preview.html` and the downloadable files in `dist/`.
 5. Commit the source, generated pages, and updated `preview.html` to the private repository.
 
@@ -24,9 +24,9 @@ No framework, package installation, build service, or external font service is r
 
 - `index.html`: introduction, three selected works, research experience, education, and contact.
 - `publications.html`: all seven papers, grouped into journal articles and preprints/manuscripts, with filters and BibTeX.
-- `research/`: detailed explanations and interactive conceptual diagrams.
+- `research/`: six project explanations covering private synthetic data, private sampling, covariance estimation, robust distillation, SGD and spurious correlations, and physical systems. Conceptual diagrams accompany selected explanations.
 - `cv.html`: full academic record, including grades and audited courses, with print styling.
-- `preview.html`: a generated, self-contained offline snapshot of the six main pages.
+- `preview.html`: a generated, self-contained offline snapshot of the nine main pages.
 
 The homepage uses one reading area. Topic labels sit beside selected papers on larger screens and above them on smaller screens. University names are written out rather than represented by improvised logos. Titles, author names, metadata, and links have separate, consistent levels of emphasis.
 

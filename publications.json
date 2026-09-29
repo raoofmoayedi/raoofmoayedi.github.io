@@ -1,9 +1,154 @@
 [
-  {"id":"Junhao_raoof","type":"article","title":"Allies Teach Better Than Enemies: Inverse Adversaries for Robust Knowledge Distillation","authors":["J. Dong","R. Zare Moayedi","Y.-S. Ong","S.-M. Moosavi-Dezfooli"],"year":2026,"venue":"IEEE Transactions on Pattern Analysis and Machine Intelligence","status":"Published","doi":"10.1109/TPAMI.2026.3660863","url":"https://doi.org/10.1109/TPAMI.2026.3660863","project":"research/robust-learning.html","bib_authors":["Dong, Junhao","Zare Moayedi, Raoof","Ong, Yew-Soon","Moosavi-Dezfooli, Seyed-Mohsen"]},
-  {"id":"raoofzareCU","type":"article","title":"CuPINN: Optimizing PINNs through Curvature Minimization and Residual Landscape Flattening","authors":["R. Zare Moayedi","M. Abbaszadeh","M. Dehghan"],"year":2025,"venue":"Computer Methods in Applied Mechanics and Engineering","status":"Published","doi":"10.1016/j.cma.2025.118180","url":"https://doi.org/10.1016/j.cma.2025.118180","project":"research/scientific-learning.html","bib_authors":["Zare Moayedi, Raoof","Abbaszadeh, Mostafa","Dehghan, Mehdi"]},
-  {"id":"raoof_private_splt","type":"unpublished","title":"Fundamental Limits of Private Covariance Estimation under Vertical Partitioning","authors":["R. Zare Moayedi*","P. Halvachi*","A. Najafi","M. H. Yassaee"],"year":2026,"venue":"","status":"Preprint","bib_authors":["Zare Moayedi, Raoof","Halvachi, Paniz","Najafi, Amir","Yassaee, Mohammad Hossein"]},
-  {"id":"raoof_private_sampling","type":"unpublished","title":"Minimax-Optimal Private Multi-Sampling from Gaussian Distributions","authors":["R. Zare Moayedi","M. H. Yassaee","J. B. Ebrahimi"],"year":2026,"venue":"","status":"Preprint","bib_authors":["Zare Moayedi, Raoof","Yassaee, Mohammad Hossein","Ebrahimi, Javad B."]},
-  {"id":"raoof_synthetic","type":"unpublished","title":"Geometry-Adaptive Mechanisms for Private Synthetic Data","authors":["R. Zare Moayedi","A. R. Asadi","M. H. Yassaee","G. Aminian"],"year":2026,"venue":"","status":"Preprint · Under review","arxiv":"2609.33363","url":"https://arxiv.org/abs/2609.33363","project":"research/private-data.html","bib_authors":["Zare Moayedi, Raoof","Asadi, Amir R.","Yassaee, Mohammad Hossein","Aminian, Gholamali"]},
-  {"id":"raoof_spurious","type":"unpublished","title":"Transient Implicit Regularization in SGD: Understanding When SGD Improves Robustness to Spurious Correlations","authors":["N. Mirzaie*","R. Zare Moayedi*","H. Jafarinia","M. H. Rohban","M. Soleymani Baghshah"],"year":2026,"venue":"","status":"Under review","bib_authors":["Mirzaie, Nahal","Zare Moayedi, Raoof","Jafarinia, Hossein","Rohban, Mohammad Hossein","Soleymani Baghshah, Mahdieh"]},
-  {"id":"parsa2023where2start","type":"misc","title":"Where2Start: Leveraging Initial States for Robust and Sample-Efficient Reinforcement Learning","authors":["P. Parsa*","R. Zare Moayedi*","M. Bornosi","M. M. Bejani"],"year":2023,"venue":"","status":"Preprint","arxiv":"2311.15089","url":"https://arxiv.org/abs/2311.15089","bib_authors":["Parsa, Pouya","Zare Moayedi, Raoof","Bornosi, Mohammad","Bejani, Mohammad Mahdi"]}
+  {
+    "id": "Junhao_raoof",
+    "type": "article",
+    "title": "Allies Teach Better Than Enemies: Inverse Adversaries for Robust Knowledge Distillation",
+    "authors": [
+      "J. Dong",
+      "R. Zare Moayedi",
+      "Y.-S. Ong",
+      "S.-M. Moosavi-Dezfooli"
+    ],
+    "year": 2026,
+    "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+    "status": "Published",
+    "doi": "10.1109/TPAMI.2026.3660863",
+    "url": "https://doi.org/10.1109/TPAMI.2026.3660863",
+    "project": "research/robust-learning.html",
+    "bib_authors": [
+      "Dong, Junhao",
+      "Zare Moayedi, Raoof",
+      "Ong, Yew-Soon",
+      "Moosavi-Dezfooli, Seyed-Mohsen"
+    ]
+  },
+  {
+    "id": "raoofzareCU",
+    "type": "article",
+    "title": "CuPINN: Optimizing PINNs through Curvature Minimization and Residual Landscape Flattening",
+    "authors": [
+      "R. Zare Moayedi",
+      "M. Abbaszadeh",
+      "M. Dehghan"
+    ],
+    "year": 2025,
+    "venue": "Computer Methods in Applied Mechanics and Engineering",
+    "status": "Published",
+    "doi": "10.1016/j.cma.2025.118180",
+    "url": "https://doi.org/10.1016/j.cma.2025.118180",
+    "project": "research/scientific-learning.html",
+    "bib_authors": [
+      "Zare Moayedi, Raoof",
+      "Abbaszadeh, Mostafa",
+      "Dehghan, Mehdi"
+    ]
+  },
+  {
+    "id": "raoof_private_splt",
+    "type": "unpublished",
+    "title": "Fundamental Limits of Private Covariance Estimation under Vertical Partitioning",
+    "authors": [
+      "R. Zare Moayedi*",
+      "P. Halvachi*",
+      "A. Najafi",
+      "M. H. Yassaee"
+    ],
+    "year": 2026,
+    "venue": "",
+    "status": "Preprint",
+    "bib_authors": [
+      "Zare Moayedi, Raoof",
+      "Halvachi, Paniz",
+      "Najafi, Amir",
+      "Yassaee, Mohammad Hossein"
+    ],
+    "project": "research/private-covariance.html"
+  },
+  {
+    "id": "raoof_private_sampling",
+    "type": "unpublished",
+    "title": "Minimax-Optimal Private Multi-Sampling from Gaussian Distributions",
+    "authors": [
+      "R. Zare Moayedi",
+      "M. H. Yassaee",
+      "J. B. Ebrahimi"
+    ],
+    "year": 2026,
+    "venue": "",
+    "status": "Preprint",
+    "bib_authors": [
+      "Zare Moayedi, Raoof",
+      "Yassaee, Mohammad Hossein",
+      "Ebrahimi, Javad B."
+    ],
+    "project": "research/private-sampling.html"
+  },
+  {
+    "id": "raoof_synthetic",
+    "type": "unpublished",
+    "title": "Geometry-Adaptive Mechanisms for Private Synthetic Data",
+    "authors": [
+      "R. Zare Moayedi",
+      "A. R. Asadi",
+      "M. H. Yassaee",
+      "G. Aminian"
+    ],
+    "year": 2026,
+    "venue": "",
+    "status": "Preprint · Under review",
+    "arxiv": "2609.33363",
+    "url": "https://arxiv.org/abs/2609.33363",
+    "project": "research/private-data.html",
+    "bib_authors": [
+      "Zare Moayedi, Raoof",
+      "Asadi, Amir R.",
+      "Yassaee, Mohammad Hossein",
+      "Aminian, Gholamali"
+    ]
+  },
+  {
+    "id": "raoof_spurious",
+    "type": "unpublished",
+    "title": "Transient Implicit Regularization in SGD: Understanding When SGD Improves Robustness to Spurious Correlations",
+    "authors": [
+      "N. Mirzaie*",
+      "R. Zare Moayedi*",
+      "H. Jafarinia",
+      "M. H. Rohban",
+      "M. Soleymani Baghshah"
+    ],
+    "year": 2026,
+    "venue": "",
+    "status": "Under review",
+    "bib_authors": [
+      "Mirzaie, Nahal",
+      "Zare Moayedi, Raoof",
+      "Jafarinia, Hossein",
+      "Rohban, Mohammad Hossein",
+      "Soleymani Baghshah, Mahdieh"
+    ],
+    "project": "research/sgd-robustness.html"
+  },
+  {
+    "id": "parsa2023where2start",
+    "type": "misc",
+    "title": "Where2Start: Leveraging Initial States for Robust and Sample-Efficient Reinforcement Learning",
+    "authors": [
+      "P. Parsa*",
+      "R. Zare Moayedi*",
+      "M. Bornosi",
+      "M. M. Bejani"
+    ],
+    "year": 2023,
+    "venue": "",
+    "status": "Preprint",
+    "arxiv": "2311.15089",
+    "url": "https://arxiv.org/abs/2311.15089",
+    "bib_authors": [
+      "Parsa, Pouya",
+      "Zare Moayedi, Raoof",
+      "Bornosi, Mohammad",
+      "Bejani, Mohammad Mahdi"
+    ]
+  }
 ]
