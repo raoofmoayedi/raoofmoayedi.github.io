@@ -1,6 +1,6 @@
 # Raoof Zare Moayedi — research website
 
-A responsive static website for GitHub Pages, with interactive scientific illustrations, research pages, a filterable publication list, BibTeX citations and a print-friendly CV.
+A dark academic website for GitHub Pages, with a compact profile, grouped publications, aligned research experience and education, interactive research detail pages, BibTeX citations and a print-friendly CV.
 
 ## Preview
 
@@ -14,14 +14,15 @@ Open `index.html` in a browser. The figures and publication filters work without
 4. Select **main** and **/(root)**, then save.
 5. The intended public address is `https://raoofmoayedi.github.io/` once GitHub finishes publishing. It is not live merely because these files exist.
 
-No build service, paid hosting, API key or external database is needed. Fonts load from Google Fonts with system-font fallbacks. Interactive figures use browser canvas and remain usable without animation.
+No build service, paid hosting, API key or external database is needed. DM Sans and Manrope load from Google Fonts with system-font fallbacks. Interactive figures use browser canvas and remain usable without animation.
 
 ## Updating the site
 
 - Edit `publications.json` to update titles, authors, statuses and paper links. `authors` contains display names and equal-contribution markers; `bib_authors` contains full names in `Family, Given` format for BibTeX.
 - Edit `build.py` to change the biography, experience, project explanations and CV.
 - Run `python3 build.py`, then commit both source and generated HTML files.
-- Adjust colors and layout in `assets/site.css`; interactions are in `assets/site.js`.
+- Adjust colors, spacing, and the responsive type scale in `assets/site.css`; interactions are in `assets/site.js`.
+- The homepage uses flat publication rows and consistent text badges for institutions; illustrations are on the research pages. Print styling uses a light background.
 
 No JavaScript framework or Python packages are required. Serve the generated HTML directly. The `.nojekyll` file disables Jekyll processing.
 
