@@ -42,3 +42,18 @@ body{font-size:1.125rem;line-height:1.75}.wrap{width:min(1280px,calc(100% - 96px
 @media(max-width:900px){#interests{scroll-margin-top:100px}.sketch-panel{gap:22px}}
 @media(max-width:480px){.sketch-panel .art-tabs button{min-height:58px;font-size:1rem;padding:10px 9px}.sketch-panel #art-description{font-size:1rem;min-height:5em}}
 @media(prefers-reduced-motion:reduce){.sketch-panel .art-tabs button{transition:none}}
+
+/* Coursework and teaching records. */
+#coursework,#teaching{scroll-margin-top:110px}
+.academic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:start}
+.academic-panel{min-width:0;padding:30px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.academic-panel-heading{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.academic-panel-heading h3{margin:0;color:var(--ink);font-size:1.4rem;line-height:1.4;letter-spacing:-.025em}
+.academic-panel-heading>span{color:var(--muted);font-size:.875rem}
+.course-list{list-style:none;padding:0;margin:0}
+.course-list li{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin:0;padding:17px 0;font-size:1.0625rem;line-height:1.5;border-bottom:1px solid var(--line)}
+.course-list li:last-child{border-bottom:0;padding-bottom:0}
+.course-list li>span:first-child{min-width:0;color:var(--body)}
+.course-list .course-detail{flex-shrink:0;color:var(--accent);font-size:.9375rem;font-variant-numeric:tabular-nums}
+@media(max-width:760px){.academic-grid{grid-template-columns:1fr;gap:24px}.academic-panel{padding:24px}.academic-panel-heading h3{font-size:1.3rem}.course-list li{gap:14px;font-size:1rem}.course-list .course-detail{font-size:.875rem}}
+@media(max-width:380px){.academic-panel{padding:20px}.course-list li{flex-wrap:wrap;gap:4px 14px}.course-list .course-detail{margin-left:auto}}
