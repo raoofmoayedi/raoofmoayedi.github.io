@@ -74,3 +74,29 @@ body{font-size:1.125rem;line-height:1.75}.wrap{width:min(1280px,calc(100% - 96px
 .audited-courses ul{display:flex;flex-wrap:wrap;gap:10px 24px;list-style:none;padding:0;margin:0}
 .audited-courses li{margin:0;font-size:1rem;color:var(--body)}
 @media(max-width:760px){.coursework-grid .academic-panel{padding:22px}.coursework-grid .course-list li{font-size:1rem;flex-wrap:nowrap}.audited-courses{gap:12px}.audited-courses ul{gap:10px 20px}}
+
+/* Compact paper cards: three columns, smaller art, and tighter text spacing. */
+.work-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.work-card{padding:20px;border-radius:12px;min-width:0}
+.work-card .card-meta{font-size:.8125rem;line-height:1.4;gap:10px}
+.work-card .research-illustration{aspect-ratio:2.2;height:144px;margin:12px 0 14px;border-radius:8px}
+.work-card .research-illustration img{padding:5px}
+.work-card .card-venue{margin:0;font-size:.6875rem;line-height:1.5;letter-spacing:.06em}
+.work-card h3{margin:10px 0 8px;font-size:1.3125rem;line-height:1.3;letter-spacing:-.02em}
+.work-card>p:not(.card-venue){margin:0;font-size:.9375rem;line-height:1.55;color:var(--body)}
+.work-card .card-link{min-height:34px;margin-top:16px;padding-top:10px;font-size:.875rem;line-height:1.5}
+.work-card .card-link span{font-size:1.125rem}
+.work-card:hover{transform:translateY(-3px)}
+@media(max-width:1050px){.work-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.work-card .research-illustration{height:140px}}
+@media(max-width:640px){.work-grid{grid-template-columns:1fr;gap:16px}.work-card{padding:18px}.work-card .research-illustration{height:112px;margin:10px 0 12px}.work-card h3{font-size:1.25rem;margin:8px 0}.work-card>p:not(.card-venue){font-size:.9375rem;line-height:1.5}.work-card .card-link{margin-top:12px;min-height:36px}}
+
+/* Make every research topic clearly visible in either theme. */
+.interest-header{color:var(--body)}
+.interest-topic{background:#1c2c48;border-color:#617da9;color:#edf3ff;font-weight:600}
+.interest-topic:hover{background:#2a4167;border-color:#a7c2ef;color:#fff}
+.interest-topic[aria-pressed=true]{background:#adc6ff;border-color:#c7d7ff;color:#142139;box-shadow:0 0 0 1px #adc6ff30}
+.interest-topic:focus-visible{outline:3px solid #c7d7ff;outline-offset:3px}
+html[data-theme=light] .interest-topic{background:#eef3ff;border-color:#8fa6ce;color:#253f6a}
+html[data-theme=light] .interest-topic:hover{background:#dbe6ff;border-color:#5375b0;color:#142139}
+html[data-theme=light] .interest-topic[aria-pressed=true]{background:#3159ca;border-color:#2547a9;color:#fff;box-shadow:none}
+html[data-theme=light] .interest-topic:focus-visible{outline-color:#3159ca}
