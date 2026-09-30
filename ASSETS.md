@@ -13,11 +13,11 @@ The five newer interests now use more topic-specific scenes while preserving the
 | Robustness | `assets/robustness-sketch.webp` | Transferring robustness from teacher to student |
 | Robust statistics | `assets/robust-statistics-aligned.webp` | A little robot marks the center of a cluster of observations while a distant outlier tugs at it. |
 | Uncertainty quantification | `assets/uncertainty-aligned.webp` | A robot predicts a moving ball with a central trajectory and a widening fan of possible future positions. |
-| Training dynamics | `assets/training-dynamics-aligned.webp` | A robot updates a neural network as successive model states follow an optimization path toward a basin. |
+| Training dynamics | `assets/sgd-minibatch-sketch.webp` | Mini-batch sampling drives neural-network updates along a noisy path down a loss landscape. |
 | LLM reasoning | `assets/llm-reasoning-aligned.webp` | A robot reads a question, works through linked reasoning cards, checks a step, and produces an answer bubble. |
 | Scientific deep learning | `assets/scientific-learning-aligned.webp` | A scientist robot connects a neural network to a fluid-flow experiment around a cylinder. |
 
-The original SGD and scientific-learning card illustrations remain specific to those research projects. Earlier hero-image versions are retained in the repository but are no longer used for these five selector topics.
+The SGD card shares its mini-batch sketch with Training dynamics. The scientific-learning card retains its paper-specific illustration. Earlier hero-image versions are retained in the repository but are no longer used for these five selector topics.
 
 ### Final prompts for the current replacements
 
@@ -65,7 +65,7 @@ These illustrations are visual metaphors, not technical diagrams or experimental
 
 The four research cards use privacy-sketch.webp, robustness-sketch.webp, scientific-sketch.webp and sampling-sketch.webp. The two additional original images were generated with the built-in image tool: a cheerful scientist rolling a crumpled residual surface smooth, and a statistician scooping sample marbles from a bell-shaped private-data jar. These are playful conceptual illustrations, not technical figures.
 
-## SGD and covariance estimation
+## SGD and covariance estimation — earlier iteration
 
 Two additional built-in image-generation sketches complete the six-card research gallery:
 - covariance-sketch.webp: two private feature holders and an analyst assembling a four-part matrix, a visual metaphor for covariance estimation with vertically partitioned data.
@@ -102,3 +102,17 @@ Saved asset: `assets/llm-reasoning-sketch.webp`
 Final prompt:
 
 Use case: illustration-story. Asset type: a single research-interest sketch for the existing academic portfolio's image selector. The supplied image is a STYLE REFERENCE ONLY; create a completely different companion scene. Match its charming tiny white robot, thin navy pencil outlines, subtle colored-pencil/watercolor shading, periwinkle, pale blue and teal accents, abundant clear space, lightly sketched ground shadow. Transparent background, 3:2 landscape composition, complete unclipped figures, generous 10% margins. Cute, clever, hand-drawn, sparse, sophisticated. One coherent scene, no panels, text, labels, formulas, axes, logos, watermark, interface or background scenery. This is a playful conceptual metaphor, not an exact technical diagram. Subject: language-model reasoning. The little robot sits cross-legged thoughtfully assembling three chunky interlocking puzzle pieces into a little arched bridge between two stacks of tiny books. Above its head are three small connected empty thought bubbles ending in a warm pale-yellow lightbulb. Keep books blank, puzzle shapes simple, no letters or numbers. The robot smiles as the final teal piece fits. Visual metaphor for building a chain of reasoning step by step, with a playful miniature engineering puzzle.
+
+## Clearer SGD illustration
+
+Current asset: `assets/sgd-minibatch-sketch.webp`, used in both the Training dynamics selector and the SGD research card. Generated with the built-in image tool using the previous training-dynamics sketch as a style reference. Transparent WebP, 1200 × 800.
+
+The scene explicitly connects sampling a mini-batch, updating a neural network, and following an irregular sequence of parameter steps on a loss landscape. It is a qualitative illustration, not experimental data or a convergence guarantee.
+
+Final prompt:
+
+Use case: illustration-story. Create one clearer, more technically relevant conceptual illustration of STOCHASTIC GRADIENT DESCENT for an academic portfolio. The reference is STYLE AND ROBOT IDENTITY ONLY. Keep the same adorable white robot, navy hand-drawn pencil outlines, watercolor/colored-pencil texture, periwinkle and teal palette with small amber accents. Replace the entire scene; do not preserve the carts. Transparent background, 3:2 landscape, generous clear margins, no cropping, no dark vignette. Readable at a 500px-wide website card.
+The scene should communicate this single causal story: sample a mini-batch → estimate an update for a neural network → take a noisy downhill parameter step.
+On the left, a compact open tray holds many little sample cards with tiny abstract dot patterns. The seated robot has picked just THREE cards out of that larger collection and is feeding this small handful into a small upright neural-network panel with connected nodes. The selected handful is visually distinct from the full tray. Above this handful only, write the small legible label “mini-batch”.
+On the right, occupying about half the composition, show a small sculpted bowl-shaped loss landscape with light contour strokes. A sequence of small teal parameter markers follows ONE visibly irregular, zigzagging path down the side toward the basin. Short arrowheads between consecutive markers make discrete gradient updates unmistakable. Include a little sideways wobble, not a smooth slide or a perfect straight path. A curved amber arrow from the neural-network panel points to one update on this path, tying the sampled data to the parameter step. On the rim of the landscape, write the small label “loss”.
+This is a qualitative editorial sketch, not a quantitative scientific plot. No numeric axes, coordinates, empirical data, equations, guarantees of convergence, or exact technical diagram. No hiking, stepping stones, rivers, bridges, wheeled carts, large scenic mountains, or generic repair activity. Do not imply that larger batches mean larger steps. Keep the scene sparse: one robot, one dataset tray, the small selected batch and network panel, one loss basin and one update trail. The only text is “mini-batch” and “loss”.
