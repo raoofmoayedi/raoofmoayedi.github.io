@@ -1,6 +1,55 @@
 # Visual assets
 
-The three research illustrations in assets were generated for this portfolio; their subjects are documented below.
+The research illustrations in assets were generated for this portfolio; their subjects and iteration history are documented below.
+
+## Current hero illustrations
+
+The five newer interests now use more topic-specific scenes while preserving the original robot, pencil outlines, watercolor texture, and navy, teal, and periwinkle palette. These are conceptual editorial illustrations, not quantitative charts or technical results. All five were created with the built-in image-generation tool using `assets/privacy-sketch.webp` as a style reference, then encoded as transparent WebP assets for the site.
+
+| Interest | Current asset | Visible concept |
+| --- | --- | --- |
+| Privacy | `assets/privacy-sketch.webp` | Protected original data and similarly structured synthetic data |
+| Unlearning | `assets/unlearning-sketch.webp` | Selectively removing a memory while retaining the others |
+| Robustness | `assets/robustness-sketch.webp` | Transferring robustness from teacher to student |
+| Robust statistics | `assets/robust-statistics-aligned.webp` | A little robot marks the center of a cluster of observations while a distant outlier tugs at it. |
+| Uncertainty quantification | `assets/uncertainty-aligned.webp` | A robot predicts a moving ball with a central trajectory and a widening fan of possible future positions. |
+| Training dynamics | `assets/training-dynamics-aligned.webp` | A robot updates a neural network as successive model states follow an optimization path toward a basin. |
+| LLM reasoning | `assets/llm-reasoning-aligned.webp` | A robot reads a question, works through linked reasoning cards, checks a step, and produces an answer bubble. |
+| Scientific deep learning | `assets/scientific-learning-aligned.webp` | A scientist robot connects a neural network to a fluid-flow experiment around a cylinder. |
+
+The original SGD and scientific-learning card illustrations remain specific to those research projects. Earlier hero-image versions are retained in the repository but are no longer used for these five selector topics.
+
+### Final prompts for the current replacements
+
+#### robust-statistics
+
+Saved asset: `assets/robust-statistics-aligned.webp`
+
+Use case: illustration-story. Create one replacement hero illustration for an academic machine-learning portfolio. Input image: STYLE AND ROBOT-CHARACTER REFERENCE ONLY. Preserve this exact appealing hand-drawn look: tiny rounded white robot, navy pencil outlines, visible colored-pencil/watercolor texture, restrained periwinkle and teal, a few warm amber details, expressive but tasteful. Keep the scene sparse and readable at small website size. Transparent background, landscape 3:2 canvas, entire subject visible with 10% clear margins, subtle ground shadow only, no glow or dark vignette. The new scene must visibly communicate the named research topic rather than a generic cute activity. This is conceptual editorial illustration, not a quantitative chart or precise scientific diagram: no data plots, axes, coordinates, numerical results, equations, logos, or watermark. Topic: ROBUST STATISTICS. Show a compact cluster of small teal observation tokens on a low circular research workbench, with a little upright estimate marker planted at the center. Far to the right, a conspicuous isolated amber observation token with a mischievous face pulls a loose elastic thread attached to the center marker. The marker stays upright in the main cluster. The robot uses a small measuring caliper to check the stable central estimate, looking calmly toward the noisy outlier. The main visual relationship must be unmistakable: clustered observations, one distant outlier, and a stable estimate. Do not use balancing scales, shields, or piles of crystals under a dome. No text.
+
+#### uncertainty
+
+Saved asset: `assets/uncertainty-aligned.webp`
+
+Use case: illustration-story. Create one replacement hero illustration for an academic machine-learning portfolio. Input image: STYLE AND ROBOT-CHARACTER REFERENCE ONLY. Preserve this exact appealing hand-drawn look: tiny rounded white robot, navy pencil outlines, visible colored-pencil/watercolor texture, restrained periwinkle and teal, a few warm amber details, expressive but tasteful. Keep the scene sparse and readable at small website size. Transparent background, landscape 3:2 canvas, entire subject visible with 10% clear margins, subtle ground shadow only, no glow or dark vignette. The new scene must visibly communicate the named research topic rather than a generic cute activity. This is conceptual editorial illustration, not a quantitative chart or precise scientific diagram: no data plots, axes, coordinates, numerical results, equations, logos, or watermark. Topic: UNCERTAINTY QUANTIFICATION. A thoughtful robot observes a small teal ball just leaving a short tabletop ramp. In the air ahead of the real ball, show a single central suggested future trajectory and a translucent fan of possible future ball positions. The possibilities start close together and spread farther apart into the future, making an uncertain forecast visually explicit. The possible future balls should be pale ghost outlines, while the one observed ball is solid. The robot holds a small blank prediction card and points toward the translucent forecast envelope. Make this a charming physical prediction scene, not an axes-based chart. Do not show a cloud being measured, weather symbols, or a generic thought bubble. No text.
+
+#### training-dynamics
+
+Saved asset: `assets/training-dynamics-aligned.webp`
+
+Use case: illustration-story. Create one replacement hero illustration for an academic machine-learning portfolio. Input image: STYLE AND ROBOT-CHARACTER REFERENCE ONLY. Preserve this exact appealing hand-drawn look: tiny rounded white robot, navy pencil outlines, visible colored-pencil/watercolor texture, restrained periwinkle and teal, a few warm amber details, expressive but tasteful. Keep the scene sparse and readable at small website size. Transparent background, landscape 3:2 canvas, entire subject visible with 10% clear margins, subtle ground shadow only, no glow or dark vignette. The new scene must visibly communicate the named research topic rather than a generic cute activity. This is conceptual editorial illustration, not a quantitative chart or precise scientific diagram: no data plots, axes, coordinates, numerical results, equations, logos, or watermark. Topic: TRAINING DYNAMICS. Show a small neural-network model as a freestanding rounded frame containing several layers of connected teal and periwinkle nodes. It rests on a tiny wheeled sled on a softly sketched bowl-shaped optimization surface. The robot stands beside it and adjusts one connection with a little tool. A short curved trail of update arrows descends toward the basin; two faint earlier ghost positions of the SAME neural-network frame along the trail reveal successive training states. Main visual: neural-network parameters being updated over training, with an optimization trajectory. Keep the network, robot, and curved update path large and clear. The surface is an illustrative sculpture, not a quantitative graph. Do not use hiking gear, a river, bridges, stepping stones, books, or a generic exercise scene. No text.
+
+#### llm-reasoning
+
+Saved asset: `assets/llm-reasoning-aligned.webp`
+
+Use case: illustration-story. Create one replacement hero illustration for an academic machine-learning portfolio. Input image: STYLE AND ROBOT-CHARACTER REFERENCE ONLY. Preserve this exact appealing hand-drawn look: tiny rounded white robot, navy pencil outlines, visible colored-pencil/watercolor texture, restrained periwinkle and teal, a few warm amber details, expressive but tasteful. Keep the scene sparse and readable at small website size. Transparent background, landscape 3:2 canvas, entire subject visible with 10% clear margins, subtle ground shadow only, no glow or dark vignette. The new scene must visibly communicate the named research topic rather than a generic cute activity. This is conceptual editorial illustration, not a quantitative chart or precise scientific diagram: no data plots, axes, coordinates, numerical results, equations, logos, or watermark. Topic: LLM REASONING. Show the robot seated at a small desk working specifically with LANGUAGE. To its left is a speech bubble with the exact single word “Question”. In front of it are three overlapping paper reasoning cards with a few clean abstract handwriting strokes, connected in sequence by short pencil arrows. The robot holds a pencil and checks one intermediate card using a tiny teal check mark. To the right is its finished speech bubble with the exact single word “Answer”. A small connected-node language-model motif sits on the corner of the desk. The visual narrative is question → intermediate reasoning → checked answer. Preserve the cute thoughtful robot, but do not use puzzles, bridges, lightbulbs, or books as the main concept. Only the two words Question and Answer should be readable; all other strokes are illustrative lines, not invented gibberish.
+
+#### scientific-learning
+
+Saved asset: `assets/scientific-learning-aligned.webp`
+
+Use case: illustration-story. Create one replacement hero illustration for an academic machine-learning portfolio. Input image: STYLE AND ROBOT-CHARACTER REFERENCE ONLY. Preserve this exact appealing hand-drawn look: tiny rounded white robot, navy pencil outlines, visible colored-pencil/watercolor texture, restrained periwinkle and teal, a few warm amber details, expressive but tasteful. Keep the scene sparse and readable at small website size. Transparent background, landscape 3:2 canvas, entire subject visible with 10% clear margins, subtle ground shadow only, no glow or dark vignette. The new scene must visibly communicate the named research topic rather than a generic cute activity. This is conceptual editorial illustration, not a quantitative chart or precise scientific diagram: no data plots, axes, coordinates, numerical results, equations, logos, or watermark. Topic: SCIENTIFIC DEEP LEARNING. Show the robot scientist beside a miniature transparent water channel containing a small cylinder. Teal flow ribbons divide around the cylinder and form a few gentle downstream swirls. Suspended just above the channel is a clear glass panel holding a simple layered neural network of connected teal and periwinkle nodes. Fine softly sketched links connect a few measured flow locations to the network panel, visibly joining PHYSICAL SYSTEM and LEARNING MODEL. The robot compares the flow experiment with the neural model using a tiny probe. The scientific apparatus and network must both be immediately recognizable, but this is a charming conceptual illustration rather than an exact fluid-simulation diagram. No ironing, rollers, crumpled fabric, books, formulas, or text.
 
 ## Research-specific sketches
 
@@ -24,7 +73,7 @@ Two additional built-in image-generation sketches complete the six-card research
 
 The prompts keep the navy, periwinkle and teal hand-drawn style and transparent backgrounds, without formulas or empirical charts. Both illustrations are conceptual rather than exact scientific diagrams.
 
-## Expanded hero interest selector
+## Expanded hero interest selector — first iteration
 
 The original hero selector now has eight topics, each with its own image and caption. Privacy, Unlearning and Robustness retain their existing sketches. Training dynamics uses `assets/sgd-sketch.webp`; Scientific deep learning uses `assets/scientific-sketch.webp`. Robust statistics, Uncertainty quantification and LLM reasoning use three new companion illustrations, generated with the built-in image tool using `assets/privacy-sketch.webp` as a style reference. The separate research-interest cards have been removed.
 
