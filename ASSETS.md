@@ -1,5 +1,60 @@
 # Visual assets
 
+## September 30: requested style alignment
+
+Five illustrations were edited or generated with the built-in image-generation tool and encoded as transparent WebP, without changing other illustration files. The robustness replacement is limited to the interest selector. Unlearning retains its original eraser and connected memory-card concept. PINN, sampling, and covariance assets are paper-card illustrations. These are conceptual editorial sketches, not quantitative diagrams.
+
+### robustness
+
+Saved asset: `assets/robustness-robot-aligned.webp`
+
+References: `assets/privacy-sketch.webp`
+
+Final prompt:
+
+Use case: illustration-story. Asset type: small research website illustration. Match the supplied privacy-sketch STYLE REFERENCE: the same adorable rounded white robot with small navy oval eyes and teal joints, delicate navy pencil outlines, soft colored-pencil and watercolor shading, restrained teal and periwinkle with tiny amber accents. Hand drawn, warm, quietly funny, cohesive with the reference. This is a conceptual editorial sketch, not a precise technical diagram or quantitative chart. Landscape 3:2 canvas, transparent background, whole composition visible with about 8% clear margins, no background panel, no glow, no text, no equations, no logos, no watermark. Sparse composition readable at small card size. Input image 1 is STYLE AND CHARACTER REFERENCE ONLY. New subject: robustness to adversarial perturbations. A calm little robot tests two square picture cards side by side on a low easel: both contain the same simple teal leaf silhouette, but the second has a few tiny amber noise speckles and a mischievous tiny wind puff nudging its corner. The robot compares them with a short double-ended pointer. Above each card is the same small leaf-shaped result token with a discreet check, conveying that a small input change leaves the prediction unchanged. Make the input pair and unchanged output visibly connected, not scattered props. No shield or umbrella metaphor, no human teacher, no crystal domes. The robot has an attentive slight smile, robot same proportions and material as reference.
+
+### unlearning
+
+Saved asset: `assets/unlearning-pencil-aligned.webp`
+
+References: `assets/unlearning-sketch.webp`, `assets/privacy-sketch.webp`
+
+Final prompt:
+
+Use case: illustration-story. Asset type: small research website illustration. Match the supplied privacy-sketch STYLE REFERENCE: the same adorable rounded white robot with small navy oval eyes and teal joints, delicate navy pencil outlines, soft colored-pencil and watercolor shading, restrained teal and periwinkle with tiny amber accents. Hand drawn, warm, quietly funny, cohesive with the reference. This is a conceptual editorial sketch, not a precise technical diagram or quantitative chart. Landscape 3:2 canvas, transparent background, whole composition visible with about 8% clear margins, no background panel, no glow, no text, no equations, no logos, no watermark. Sparse composition readable at small card size. Input image 1 is the EDIT TARGET; input image 2 is STYLE REFERENCE ONLY. Restyle image 1 ONLY. Preserve its wonderful exact concept and overall arrangement: the smiling periwinkle-and-white eraser character at left rubs out one selected purple memory card; four remaining botanical landscape memory cards stay intact, connected by navy cords and teal round nodes. Keep the eraser character, its pose, expression, the number of memory cards, their connected scrapbook arrangement, plant/landscape imagery and the selective erasure. Do NOT replace the eraser with a robot, do NOT change the concept, do NOT add props. Change only rendering to the finer navy pencil, soft watercolor washes, textured colored pencil and more dimensional white shading of input 2. Retain subtle pink cheeks and muted teal/periwinkle. Natural pencil crumbs by the one partly erased card. Preserve the clear intact connections elsewhere.
+
+### pinn
+
+Saved asset: `assets/pinn-robot-aligned.webp`
+
+References: `assets/privacy-sketch.webp`
+
+Final prompt:
+
+Use case: illustration-story. Asset type: small research website illustration. Match the supplied privacy-sketch STYLE REFERENCE: the same adorable rounded white robot with small navy oval eyes and teal joints, delicate navy pencil outlines, soft colored-pencil and watercolor shading, restrained teal and periwinkle with tiny amber accents. Hand drawn, warm, quietly funny, cohesive with the reference. This is a conceptual editorial sketch, not a precise technical diagram or quantitative chart. Landscape 3:2 canvas, transparent background, whole composition visible with about 8% clear margins, no background panel, no glow, no text, no equations, no logos, no watermark. Sparse composition readable at small card size. Input image 1 is STYLE AND CHARACTER REFERENCE ONLY. New subject: physics-informed neural networks and residual curvature. One little robot scientist is adjusting a small neural-network instrument with three tiny layers of linked teal and periwinkle beads. The instrument is visibly connected by a short cable to a shallow wave tank on the right; a smooth teal mesh wave surface spans the tank. The robot holds a curved measuring template just above a short wiggly purple error ribbon beside the instrument; a small second, flatter error ribbon rests beside it, suggesting controlled residual curvature, separate from the physical wave. Make it a single connected tabletop experiment, with the network and physical wave the main legible relationship. The robot is examining a neural physical model, not ironing a sheet, not holding a paint roller. No human scientist. No floating unrelated objects or large dashboard. Three or four simple scene elements only.
+
+### sampling
+
+Saved asset: `assets/private-sampling-robot-aligned.webp`
+
+References: `assets/privacy-sketch.webp`
+
+Final prompt:
+
+Use case: illustration-story. Asset type: small research website illustration. Match the supplied privacy-sketch STYLE REFERENCE: the same adorable rounded white robot with small navy oval eyes and teal joints, delicate navy pencil outlines, soft colored-pencil and watercolor shading, restrained teal and periwinkle with tiny amber accents. Hand drawn, warm, quietly funny, cohesive with the reference. This is a conceptual editorial sketch, not a precise technical diagram or quantitative chart. Landscape 3:2 canvas, transparent background, whole composition visible with about 8% clear margins, no background panel, no glow, no text, no equations, no logos, no watermark. Sparse composition readable at small card size. Input image 1 is STYLE AND CHARACTER REFERENCE ONLY. New subject: differentially private Gaussian multi-sampling. A tiny robot operates a charming compact bell-shaped sampling machine. A small closed input drawer on the left bears a tiny amber padlock and holds private record cards safely inside; above it is a translucent bell-shaped teal chamber suggesting a Gaussian distribution. On the right, a short spout produces several NEW teal and periwinkle sample marbles into a shallow tray. The robot gently counts the fresh batch with a little pencil, looking pleased. The connection between protected input drawer, bell-shaped chamber, and output spout must be obvious as ONE coherent machine. Keep the private records in the closed drawer; do not show original data being scooped or leaked from storage. No text, no actual plotted bell curve, no mathematical axes. Small friendly grounded scene, same robot character as reference.
+
+### covariance
+
+Saved asset: `assets/private-covariance-robot-aligned.webp`
+
+References: `assets/privacy-sketch.webp`, `assets/covariance-sketch.webp`
+
+Final prompt:
+
+Use case: illustration-story. Asset type: small research website illustration. Match the supplied privacy-sketch STYLE REFERENCE: the same adorable rounded white robot with small navy oval eyes and teal joints, delicate navy pencil outlines, soft colored-pencil and watercolor shading, restrained teal and periwinkle with tiny amber accents. Hand drawn, warm, quietly funny, cohesive with the reference. This is a conceptual editorial sketch, not a precise technical diagram or quantitative chart. Landscape 3:2 canvas, transparent background, whole composition visible with about 8% clear margins, no background panel, no glow, no text, no equations, no logos, no watermark. Sparse composition readable at small card size. Input image 1 is STYLE AND ROBOT CHARACTER REFERENCE. Input image 2 is CONCEPT REFERENCE ONLY, replace its simplified humanoid characters with the little rounded robots of image 1. New subject: private covariance estimation across holders of different features. Two tiny white robots sit beside separate closed data folders: left folder periwinkle, right folder teal, each with a little amber padlock. Each keeps a slim feature table tucked inside its own folder. Between them, a third smaller robot carefully assembles a single small square mosaic of teal and periwinkle tiles on a low stand, representing the shared covariance estimate. Thin soft dotted paths carry only a few small summary tokens from each closed folder toward that common mosaic; full source tables stay with their holders. Keep one cohesive scene, readable symmetry and a few warmly funny expressions. The center mosaic should mix both colors, unlike two isolated halves. No human-like ghosts, no shield, no large charts or axes.
+
+
 The research illustrations in assets were generated for this portfolio; their subjects and iteration history are documented below.
 
 ## Current hero illustrations
@@ -9,12 +64,12 @@ The five newer interests now use more topic-specific scenes while preserving the
 | Interest | Current asset | Visible concept |
 | --- | --- | --- |
 | Privacy | `assets/privacy-sketch.webp` | Protected original data and similarly structured synthetic data |
-| Unlearning | `assets/unlearning-sketch.webp` | Selectively removing a memory while retaining the others |
-| Robustness | `assets/robustness-sketch.webp` | Transferring robustness from teacher to student |
+| Unlearning | `assets/unlearning-pencil-aligned.webp` | Selectively removing a memory while retaining the others |
+| Robustness | `assets/robustness-robot-aligned.webp` | Unchanged predictions for clean and perturbed inputs |
 | Robust statistics | `assets/robust-statistics-aligned.webp` | A little robot marks the center of a cluster of observations while a distant outlier tugs at it. |
 | Uncertainty quantification | `assets/uncertainty-aligned.webp` | A robot predicts a moving ball with a central trajectory and a widening fan of possible future positions. |
-| Training dynamics | `assets/sgd-minibatch-sketch.webp` | Mini-batch sampling drives neural-network updates along a noisy path down a loss landscape. |
-| LLM reasoning | `assets/llm-reasoning-aligned.webp` | A robot reads a question, works through linked reasoning cards, checks a step, and produces an answer bubble. |
+| Training dynamics | `assets/sgd-noisy-steps.webp` | Mini-batch sampling drives neural-network updates along a noisy path down a loss landscape. |
+| LLM reasoning | `assets/llm-reasoning-paths.webp` | A robot reads a question, works through linked reasoning cards, checks a step, and produces an answer bubble. |
 | Scientific deep learning | `assets/scientific-learning-aligned.webp` | A scientist robot connects a neural network to a fluid-flow experiment around a cylinder. |
 
 The SGD card shares its mini-batch sketch with Training dynamics. The scientific-learning card retains its paper-specific illustration. Earlier hero-image versions are retained in the repository but are no longer used for these five selector topics.
