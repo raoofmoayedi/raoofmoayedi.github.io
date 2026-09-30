@@ -35,6 +35,7 @@
    interestButtons.forEach((button,index)=>{
      button.addEventListener('click',()=>selectInterest(index));
      button.addEventListener('keydown',event=>{
+       if(event.altKey||event.ctrlKey||event.metaKey)return;
        let next;
        if(event.key==='ArrowRight')next=(index+1)%interestButtons.length;
        if(event.key==='ArrowLeft')next=(index-1+interestButtons.length)%interestButtons.length;
