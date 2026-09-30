@@ -100,3 +100,32 @@ html[data-theme=light] .interest-topic{background:#eef3ff;border-color:#8fa6ce;c
 html[data-theme=light] .interest-topic:hover{background:#dbe6ff;border-color:#5375b0;color:#142139}
 html[data-theme=light] .interest-topic[aria-pressed=true]{background:#3159ca;border-color:#2547a9;color:#fff;box-shadow:none}
 html[data-theme=light] .interest-topic:focus-visible{outline-color:#3159ca}
+
+/* Stronger separation between the page, content panels, and secondary text. */
+:root{--paper:#0b1323;--surface:#1c2c46;--surface-alt:#243954;--nav-surface:#132238;--ink:#f7faff;--body:#e0e8f5;--muted:#b5c5dc;--line:#61799b;--accent:#b4ccff;--blue:#4164d3;--audit-bg:#e6eeff;--audit-ink:#192e52;--audit-detail:#40577b;--audit-border:#a1b9e6}
+html[data-theme=light]{--paper:#edf2f8;--surface:#fff;--surface-alt:#e5edf9;--nav-surface:#fff;--ink:#14243b;--body:#30445f;--muted:#475c79;--line:#a9bad1;--accent:#3159ca;--blue:#3159ca;--audit-bg:#dfeaff;--audit-ink:#192e52;--audit-detail:#40577b;--audit-border:#809ece}
+.header{background:color-mix(in srgb,var(--nav-surface) 96%,transparent);border-bottom:1px solid var(--line)}
+.hero-description,.hero-affiliation span,.email-address{color:var(--body)}
+.section-heading .eyebrow{color:var(--accent)}
+.work-card,.education-row,.academic-panel,.paper-insight{background:var(--surface);border-color:var(--line);box-shadow:0 4px 18px #00000012}
+.academic-grid>.academic-panel:nth-child(2){background:var(--surface-alt)}
+.card-meta,.card-venue,.academic-panel-heading>span,.education-row .position-date{color:var(--muted)}
+.course-list li>span:first-child{color:var(--ink)}
+.course-list .course-detail{color:var(--accent)}
+.journey{padding:24px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;background:var(--surface);margin-bottom:12px}
+.journey[open]{background:var(--surface-alt)}
+.journey:last-child{border-bottom:1px solid var(--line)}
+.journey .journey-name{color:var(--ink)}
+.journey .journey-name small{color:var(--body)}
+.contact-panel{background:var(--surface-alt);border-color:var(--line)}
+.button.secondary,.theme-button,.menu-button{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.footer{background:var(--nav-surface);border-top:1px solid var(--line);color:var(--body)}
+.search-field input::placeholder{color:var(--muted);opacity:1}
+
+/* Audited courses are a distinct, readable academic record. */
+.audited-courses{display:block;margin-top:20px;padding:22px 24px;background:var(--audit-bg);border:1px solid var(--audit-border);border-left:4px solid #6389d9;border-radius:12px;box-shadow:0 4px 18px #00000012}
+.audited-courses h3{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 16px;margin:0 0 14px;color:var(--audit-ink);font-size:1.125rem;font-weight:650;line-height:1.4}
+.audited-courses h3 span{color:var(--audit-detail);font-size:.875rem;font-weight:500}
+.audited-courses ul{gap:10px;align-items:stretch}
+.audited-courses li{padding:9px 14px;border:1px solid var(--audit-border);border-radius:7px;background:#fff;color:var(--audit-ink);font-size:1rem;line-height:1.45;font-weight:500}
+@media(max-width:760px){.journey{padding:20px}.journey-description{margin:16px 0 0}.audited-courses{padding:20px}.audited-courses ul{gap:9px}.audited-courses li{padding:9px 12px}}
