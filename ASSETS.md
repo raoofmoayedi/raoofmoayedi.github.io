@@ -129,3 +129,7 @@ Locally hosted, unmodified university identifiers used beside the corresponding 
 - Amirkabir University of Technology: https://raw.githubusercontent.com/AUT-CRLab/AUT-CRLab.github.io/master/images/aut.png
 
 The marks remain the property of their respective institutions. They identify education and research affiliations, not sponsorship or endorsement.
+
+## Site monogram
+
+`assets/monogram.svg` and the matching inline header mark are an original vector drawing of a lowercase r with an open orbit. The header uses the active palette; the favicon uses the default dark colours. University assets are unchanged; CSS adjusts their compositing for light and dark surfaces.
