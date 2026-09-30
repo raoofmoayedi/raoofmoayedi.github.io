@@ -17,11 +17,24 @@
  const search=$('#paper-search');let selected='all';
  function filter(){const q=search.value.trim().toLowerCase();let n=0;$$('.library-paper').forEach(p=>{p.hidden=!((selected==='all'||p.dataset.topic===selected)&&p.textContent.toLowerCase().includes(q));if(!p.hidden)n++});$('#result-count').textContent=`${n} publication${n===1?'':'s'}`;$('#empty-state').hidden=n!==0}
  if(search){search.addEventListener('input',filter);$$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.filter;$$('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));filter()}));$('#reset-search').addEventListener('click',()=>{search.value='';$('[data-filter="all"]').click();search.focus()})}
- const descriptions=['Private synthetic data that adapts to the geometry of the original data.','Transferring robustness from a teacher model to a smaller student.','A research interest: forgetting selected information while retaining useful knowledge.'];
- $$('[data-landscape]').forEach(b=>b.addEventListener('click',()=>{
-   $$('[data-landscape]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-   $('#art-description').textContent=descriptions[+b.dataset.landscape];
-   $('.sketch-panel').dataset.interest=b.dataset.landscape;
-   $$('[data-sketch]').forEach(img=>{img.hidden=img.dataset.sketch!==b.dataset.landscape});
- }));
+ const interestButtons=$$('[data-landscape]');
+ function selectInterest(button){
+   interestButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+   $('#art-description').textContent=button.dataset.description;
+   $('#interest-count').textContent=`${String(interestButtons.indexOf(button)+1).padStart(2,'0')} / ${String(interestButtons.length).padStart(2,'0')}`;
+   $('.sketch-panel').dataset.interest=button.dataset.landscape;
+   $$('[data-sketch]').forEach(img=>{img.hidden=img.dataset.sketch!==button.dataset.landscape});
+ }
+ interestButtons.forEach((button,index)=>{
+   button.addEventListener('click',()=>selectInterest(button));
+   button.addEventListener('keydown',event=>{
+     let next;
+     if(event.key==='ArrowRight')next=(index+1)%interestButtons.length;
+     if(event.key==='ArrowLeft')next=(index-1+interestButtons.length)%interestButtons.length;
+     if(event.key==='Home')next=0;
+     if(event.key==='End')next=interestButtons.length-1;
+     if(next===undefined)return;
+     event.preventDefault();interestButtons[next].focus();selectInterest(interestButtons[next]);
+   });
+ });
 })();
