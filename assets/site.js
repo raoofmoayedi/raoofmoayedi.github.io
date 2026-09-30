@@ -17,24 +17,34 @@
  const search=$('#paper-search');let selected='all';
  function filter(){const q=search.value.trim().toLowerCase();let n=0;$$('.library-paper').forEach(p=>{p.hidden=!((selected==='all'||p.dataset.topic===selected)&&p.textContent.toLowerCase().includes(q));if(!p.hidden)n++});$('#result-count').textContent=`${n} publication${n===1?'':'s'}`;$('#empty-state').hidden=n!==0}
  if(search){search.addEventListener('input',filter);$$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.filter;$$('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));filter()}));$('#reset-search').addEventListener('click',()=>{search.value='';$('[data-filter="all"]').click();search.focus()})}
- const interestButtons=$$('[data-landscape]');
- function selectInterest(button){
-   interestButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
-   $('#art-description').textContent=button.dataset.description;
-   $('#interest-count').textContent=`${String(interestButtons.indexOf(button)+1).padStart(2,'0')} / ${String(interestButtons.length).padStart(2,'0')}`;
-   $('.sketch-panel').dataset.interest=button.dataset.landscape;
-   $$('[data-sketch]').forEach(img=>{img.hidden=img.dataset.sketch!==button.dataset.landscape});
+ const interestSelect=$('#interest-select');
+ if(interestSelect){
+   const options=[...interestSelect.options],stage=$('.interest-stage');
+   let current=interestSelect.selectedIndex;
+   function selectInterest(index){
+     current=(index+options.length)%options.length;
+     interestSelect.selectedIndex=current;
+     const option=options[current];
+     $('#art-description').textContent=option.dataset.description;
+     $('#interest-count').textContent=`${String(current+1).padStart(2,'0')} / ${String(options.length).padStart(2,'0')}`;
+     $('#interests').dataset.interest=option.value;
+     $$('[data-sketch]').forEach(img=>{img.hidden=img.dataset.sketch!==option.value});
+     $('#interest-status').textContent=`${option.textContent}, ${current+1} of ${options.length}. ${option.dataset.description}`;
+   }
+   interestSelect.addEventListener('change',()=>selectInterest(interestSelect.selectedIndex));
+   $$('[data-interest-step]').forEach(button=>button.addEventListener('click',()=>selectInterest(current+Number(button.dataset.interestStep))));
+   // Touch gestures leave vertical page scrolling to the browser.
+   let touchStart;
+   stage.addEventListener('touchstart',event=>{
+     if(event.touches.length!==1||event.target.closest('button')){touchStart=null;return}
+     const touch=event.touches[0];touchStart={x:touch.clientX,y:touch.clientY};
+   },{passive:true});
+   stage.addEventListener('touchend',event=>{
+     if(!touchStart||!event.changedTouches.length)return;
+     const touch=event.changedTouches[0],dx=touch.clientX-touchStart.x,dy=touch.clientY-touchStart.y;
+     touchStart=null;
+     if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5)selectInterest(current+(dx<0?1:-1));
+   },{passive:true});
+   stage.addEventListener('touchcancel',()=>{touchStart=null},{passive:true});
  }
- interestButtons.forEach((button,index)=>{
-   button.addEventListener('click',()=>selectInterest(button));
-   button.addEventListener('keydown',event=>{
-     let next;
-     if(event.key==='ArrowRight')next=(index+1)%interestButtons.length;
-     if(event.key==='ArrowLeft')next=(index-1+interestButtons.length)%interestButtons.length;
-     if(event.key==='Home')next=0;
-     if(event.key==='End')next=interestButtons.length-1;
-     if(next===undefined)return;
-     event.preventDefault();interestButtons[next].focus();selectInterest(interestButtons[next]);
-   });
- });
 })();

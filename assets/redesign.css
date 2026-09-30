@@ -28,20 +28,32 @@ body{font-size:1.125rem;line-height:1.75}.wrap{width:min(1280px,calc(100% - 96px
 @media(max-width:760px){.hero + #research{padding-top:36px}.journey{padding:25px 0 25px 20px}.journey summary{grid-template-columns:minmax(0,1fr) 25px;gap:10px 18px}.journey .journey-date{grid-column:1;grid-row:1}.journey .journey-name{grid-column:1;grid-row:2}.journey .expand{grid-column:2;grid-row:1/3}.journey-description{margin:18px 18px 0 0}.education-list{grid-template-columns:1fr;gap:24px}.education-row{padding:26px}.education-copy h3{font-size:1.45rem}.academic-record{gap:18px 32px}}
 @media(max-width:380px){.journey{padding-left:16px}.education-row{padding:23px}.academic-record{gap:16px 24px}.education-copy h3{font-size:1.3rem}}
 
-/* Eight illustrated interests in the original hero panel. */
+/* One compact interest card keeps the picker, sketch, and caption together. */
 #interests{scroll-margin-top:110px}
-.sketch-panel .art-bottom{width:100%;padding:0;min-height:0}
-.sketch-panel .art-selector-label{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:0;max-width:none;margin:0 0 12px;text-align:left;font-size:.875rem;font-weight:500;color:var(--muted)}
-.art-selector-label #interest-count{font: .8125rem/1.5 ui-monospace,monospace;font-variant-numeric:tabular-nums;letter-spacing:.06em}
-.sketch-panel .art-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 18px}
-.sketch-panel .art-tabs button{display:flex;align-items:center;justify-content:center;min-height:52px;padding:10px 12px;border-radius:9px;white-space:normal;text-wrap:balance;font-size:1rem;line-height:1.35;letter-spacing:-.015em;transition:background .2s,border-color .2s,color .2s}
-.sketch-panel .art-tabs button:hover{color:var(--ink);border-color:var(--accent);background:var(--surface)}
-.sketch-panel .art-tabs button[aria-pressed=true]{color:var(--ink);border-color:var(--accent);background:color-mix(in srgb,var(--blue) 16%,var(--surface));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 28%,transparent)}
-.sketch-panel .art-tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.sketch-panel #art-description{max-width:460px;min-height:5em;font-size:1.0625rem;line-height:1.65}
-@media(max-width:900px){#interests{scroll-margin-top:100px}.sketch-panel{gap:22px}}
-@media(max-width:480px){.sketch-panel .art-tabs button{min-height:58px;font-size:1rem;padding:10px 9px}.sketch-panel #art-description{font-size:1rem;min-height:5em}}
-@media(prefers-reduced-motion:reduce){.sketch-panel .art-tabs button{transition:none}}
+.interest-carousel.sketch-panel{display:block;min-width:0;min-height:0;width:100%;height:auto;padding:22px;gap:0;border:1px solid var(--line);border-radius:24px;background:var(--surface);overflow:hidden}
+.interest-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+.interest-header label{font-size:.875rem;font-weight:500;letter-spacing:.01em;color:var(--muted)}
+#interest-count{font:.8125rem/1.5 ui-monospace,monospace;font-variant-numeric:tabular-nums;color:var(--muted);letter-spacing:.06em}
+.interest-picker{position:relative}
+#interest-select{appearance:none;-webkit-appearance:none;width:100%;min-height:52px;padding:11px 42px 11px 16px;border:1px solid var(--accent);border-radius:10px;color:var(--ink);background:var(--paper);font:500 1.125rem/1.4 var(--sans);cursor:pointer;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 6%,transparent)}
+.interest-picker>svg{pointer-events:none;position:absolute;right:15px;top:50%;width:19px;height:19px;transform:translateY(-50%);fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#interest-help{margin:10px 0 16px;color:var(--muted);font-size:.8125rem;line-height:1.5}
+.swipe-hint{display:none}
+.interest-stage{position:relative;touch-action:pan-y pinch-zoom}
+.interest-carousel .sketch-paper{aspect-ratio:3/2;width:100%;max-height:none;border-radius:16px;background:#f7f9ff}
+.interest-carousel .hero-sketch{padding:12px 26px;width:100%;height:100%;object-fit:contain}
+.interest-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;min-width:44px;min-height:44px;padding:0;display:grid;place-items:center;border:1px solid #cad3e6;border-radius:50%;background:#fffffff0;color:#38549e;box-shadow:0 3px 12px #14213912;cursor:pointer;transition:background .2s,box-shadow .2s}
+.interest-previous{left:8px}.interest-next{right:8px}
+.interest-arrow svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.interest-arrow:hover{background:#eaf0ff;box-shadow:0 3px 16px #14213924}
+.interest-arrow:active{background:#dbe5ff}
+.interest-arrow:focus-visible,#interest-select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.interest-caption{padding:18px 4px 0}
+.interest-carousel #art-description{margin:0;max-width:none;min-height:4.8em;color:var(--body);font-size:1rem;line-height:1.6;text-align:left}
+@media(max-width:900px){.interest-carousel.sketch-panel{max-width:550px;margin:auto}}
+@media(max-width:600px){#interests{scroll-margin-top:94px}.interest-carousel.sketch-panel{padding:16px;border-radius:20px}#interest-select{font-size:1.0625rem;min-height:48px}.interest-header{margin-bottom:10px}#interest-help{margin:8px 0 12px}.interest-carousel .sketch-paper{aspect-ratio:3/2;height:clamp(160px,30svh,260px);max-height:none}.interest-caption{padding:14px 0 0}.interest-carousel #art-description{font-size:.9375rem;min-height:4.8em}.interest-previous{left:5px}.interest-next{right:5px}}
+@media(hover:none) and (pointer:coarse){.swipe-hint{display:inline}}
+@media(prefers-reduced-motion:reduce){.interest-arrow{transition:none}}
 
 /* Coursework and teaching records. */
 #coursework,#teaching{scroll-margin-top:110px}
