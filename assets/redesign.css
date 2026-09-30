@@ -57,3 +57,15 @@ body{font-size:1.125rem;line-height:1.75}.wrap{width:min(1280px,calc(100% - 96px
 .course-list .course-detail{flex-shrink:0;color:var(--accent);font-size:.9375rem;font-variant-numeric:tabular-nums}
 @media(max-width:760px){.academic-grid{grid-template-columns:1fr;gap:24px}.academic-panel{padding:24px}.academic-panel-heading h3{font-size:1.3rem}.course-list li{gap:14px;font-size:1rem}.course-list .course-detail{font-size:.875rem}}
 @media(max-width:380px){.academic-panel{padding:20px}.course-list li{flex-wrap:wrap;gap:4px 14px}.course-list .course-detail{margin-left:auto}}
+
+/* Compact grade lists; teaching records retain their term spacing. */
+.coursework-grid .academic-panel{padding:24px 28px}
+.coursework-grid .academic-panel-heading{padding-bottom:14px}
+.coursework-grid .course-list li{padding:10px 0;font-size:1rem;gap:16px}
+.coursework-grid .course-list li:last-child{padding-bottom:0}
+.coursework-grid .course-detail{min-width:38px;text-align:right;font-weight:600}
+.audited-courses{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px 28px;margin-top:22px;padding:20px 0;border-bottom:1px solid var(--line)}
+.audited-courses h3{margin:0;font-size:.9375rem;font-weight:500;color:var(--muted)}
+.audited-courses ul{display:flex;flex-wrap:wrap;gap:10px 24px;list-style:none;padding:0;margin:0}
+.audited-courses li{margin:0;font-size:1rem;color:var(--body)}
+@media(max-width:760px){.coursework-grid .academic-panel{padding:22px}.coursework-grid .course-list li{font-size:1rem;flex-wrap:nowrap}.audited-courses{gap:12px}.audited-courses ul{gap:10px 20px}}
