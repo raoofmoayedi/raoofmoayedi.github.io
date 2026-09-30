@@ -116,3 +116,16 @@ The scene should communicate this single causal story: sample a mini-batch → e
 On the left, a compact open tray holds many little sample cards with tiny abstract dot patterns. The seated robot has picked just THREE cards out of that larger collection and is feeding this small handful into a small upright neural-network panel with connected nodes. The selected handful is visually distinct from the full tray. Above this handful only, write the small legible label “mini-batch”.
 On the right, occupying about half the composition, show a small sculpted bowl-shaped loss landscape with light contour strokes. A sequence of small teal parameter markers follows ONE visibly irregular, zigzagging path down the side toward the basin. Short arrowheads between consecutive markers make discrete gradient updates unmistakable. Include a little sideways wobble, not a smooth slide or a perfect straight path. A curved amber arrow from the neural-network panel points to one update on this path, tying the sampled data to the parameter step. On the rim of the landscape, write the small label “loss”.
 This is a qualitative editorial sketch, not a quantitative scientific plot. No numeric axes, coordinates, empirical data, equations, guarantees of convergence, or exact technical diagram. No hiking, stepping stones, rivers, bridges, wheeled carts, large scenic mountains, or generic repair activity. Do not imply that larger batches mean larger steps. Keep the scene sparse: one robot, one dataset tray, the small selected batch and network panel, one loss basin and one update trail. The only text is “mini-batch” and “loss”.
+
+## University marks (September 2026)
+
+Locally hosted, unmodified university identifiers used beside the corresponding academic records. Original colours and aspect ratios are preserved.
+
+- EPFL: https://rezaei-parham.github.io/images/experiences/optimized/epfl-160.webp
+- University of Cambridge: https://www.cam.ac.uk/sites/default/files/styles/cke_media_resize_medium/public/university-cambridge-full-colour-preferred-logo-transparency-2362x491.png.webp?itok=8IjbTEtE
+- Nanyang Technological University: https://www.logo.wine/a/logo/Nanyang_Technological_University/Nanyang_Technological_University-Logo.wine.svg
+- Imperial College London: profile mark from the official GitHub organisation, https://avatars.githubusercontent.com/u/1220306?v=4
+- Sharif University of Technology: https://rezaei-parham.github.io/images/experiences/optimized/sharif-160.webp
+- Amirkabir University of Technology: https://raw.githubusercontent.com/AUT-CRLab/AUT-CRLab.github.io/master/images/aut.png
+
+The marks remain the property of their respective institutions. They identify education and research affiliations, not sponsorship or endorsement.
