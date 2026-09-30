@@ -1,5 +1,18 @@
 # Visual assets
 
+## October 1: orbital identity and robot unlearning
+
+The unlearning selector now uses `assets/unlearning-robot-aligned.webp`, created with the built-in image-generation tool. It features the same white robot as the other interest illustrations, selectively erasing a memory while retaining the others. All other research illustrations remain unchanged.
+
+References: `assets/privacy-sketch.webp` (character and rendering style), `assets/unlearning-pencil-aligned.webp` (selective-erasure concept).
+
+Final prompt:
+
+Use case: illustration-story. Asset type: unlearning interest illustration for an academic machine-learning portfolio. Input image 1 is the ROBOT CHARACTER AND STYLE REFERENCE. Input image 2 is the CONCEPT REFERENCE: selective erasure of one connected memory, keeping the others. Create a fresh cohesive scene featuring the exact cute rounded white researcher robot from image 1: small navy oval eyes, short antenna, teal ear joints, a pencil tucked by its ear, hand-drawn navy pencil outlines and gentle colored-pencil/watercolor shading. The robot kneels at the left, holding a small ordinary periwinkle eraser and carefully erasing ONE highlighted purple memory card from a connected arrangement of four little picture cards on a low tabletop. A tiny part of the selected card's picture has become blank, with a few eraser crumbs nearby. The remaining three cards show intact simple botanical pictures and remain connected by thin navy threads with teal round joints. The relationship must read as selectively forgetting one item while retaining the others, not wiping the entire network or destroying the robot. Robot is the expressive central character, not an anthropomorphic eraser. A thoughtful kind expression and a tiny playful touch in its pose. Match the reference white robot and restrained teal/periwinkle palette exactly, small amber detail only. Sparse scene legible at small website size, landscape 3:2 composition, entire scene within 8 percent clear margins, transparent background with a delicate ground shadow only. No labels, text, equations, axes, logos, watermark, glow, frame, or large empty board. This is a conceptual editorial sketch, not a technical diagram.
+
+The logo is a vector initial with an orbital line and a small satellite, saved in `assets/monogram.svg` and repeated in the header by `build.py`. The lowercase r outline uses the locally installed P052 Italic glyph (URW++, Copyright 2014 URW++ Design & Development); no runtime font dependency is added. The outer composition and color treatment are site-specific.
+
+
 ## September 30: requested style alignment
 
 Five illustrations were edited or generated with the built-in image-generation tool and encoded as transparent WebP, without changing other illustration files. The robustness replacement is limited to the interest selector. Unlearning retains its original eraser and connected memory-card concept. PINN, sampling, and covariance assets are paper-card illustrations. These are conceptual editorial sketches, not quantitative diagrams.
@@ -64,7 +77,7 @@ The five newer interests now use more topic-specific scenes while preserving the
 | Interest | Current asset | Visible concept |
 | --- | --- | --- |
 | Privacy | `assets/privacy-sketch.webp` | Protected original data and similarly structured synthetic data |
-| Unlearning | `assets/unlearning-pencil-aligned.webp` | Selectively removing a memory while retaining the others |
+| Unlearning | `assets/unlearning-robot-aligned.webp` | A robot selectively erases one memory while retaining the others |
 | Robustness | `assets/robustness-robot-aligned.webp` | Unchanged predictions for clean and perturbed inputs |
 | Robust statistics | `assets/robust-statistics-aligned.webp` | A little robot marks the center of a cluster of observations while a distant outlier tugs at it. |
 | Uncertainty quantification | `assets/uncertainty-aligned.webp` | A robot predicts a moving ball with a central trajectory and a widening fan of possible future positions. |

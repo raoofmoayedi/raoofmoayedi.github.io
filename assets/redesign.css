@@ -230,15 +230,15 @@ html[data-theme=light] .university-emblem img{mix-blend-mode:multiply;filter:non
 @media(max-width:380px){.brand .monogram{width:38px;height:38px;flex-basis:38px}.brand .monogram svg{width:37px;height:37px}.brand .brand-name,.brand-name>span{font-size:.8125rem}}
 @media print{.university-emblem{background:#fff!important}.university-emblem img{filter:none!important;mix-blend-mode:normal!important}}
 
-/* A friendly, compact rm signature, shared with the favicon. */
-.brand .monogram{border:1px solid color-mix(in srgb,var(--chip-active) 70%,var(--accent));background:var(--chip-active);color:var(--chip-active-ink);border-radius:16px 16px 16px 7px;box-shadow:0 3px 12px #00000015}
-.brand .monogram svg{width:44px;height:44px}
-.brand:hover .monogram{background:var(--chip-active);border-color:var(--ink)}
-.mark-smile{opacity:.55}
-.mark-spark{opacity:.8;transform-origin:48px 18px;transition:transform .25s}
-.brand:hover .mark-spark{transform:rotate(25deg)}
-@media(max-width:760px){.brand .monogram svg{width:39px;height:39px}}
-@media(max-width:380px){.brand .monogram svg{width:35px;height:35px}}
+/* Orbital r: an italic initial with a fine scientific orbit. */
+.brand .monogram{padding:0;border:0;background:radial-gradient(circle at 28% 20%,var(--surface-alt),var(--paper));color:var(--ink);border-radius:50%;box-shadow:0 2px 8px #00000014;transform:none;transition:box-shadow .25s ease}
+.brand .monogram svg{width:100%;height:100%;overflow:visible}
+.brand .mark-rim,.brand .mark-orbit{stroke:var(--accent)}
+.brand .mark-satellite{fill:color-mix(in srgb,var(--accent) 45%,#8cdbc7);stroke:var(--paper);stroke-width:1.8;transition:fill .3s ease}
+.brand:hover .monogram{transform:none;background:radial-gradient(circle at 28% 20%,var(--surface-alt),var(--paper));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
+.brand:hover .mark-satellite{fill:var(--accent)}
+@media(max-width:760px){.brand .monogram{border-radius:50%}.brand .monogram svg{width:100%;height:100%}}
+@media(max-width:380px){.brand .monogram{border-radius:50%}.brand .monogram svg{width:100%;height:100%}}
 
 /* Optional pointer companion: decoration only; the native cursor is retained. */
 .pointer-option{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);font:500 .875rem/1.4 var(--sans);cursor:pointer;text-align:left}
@@ -249,11 +249,18 @@ html[data-theme=light] .university-emblem img{mix-blend-mode:multiply;filter:non
 .pointer-option[aria-pressed=false] .pointer-option-state{background:var(--surface-alt);color:var(--muted)}
 .pointer-companion{position:fixed;top:0;left:0;width:18px;height:18px;z-index:1200;pointer-events:none;user-select:none;color:var(--chip-active-ink);opacity:0;will-change:transform;transition:opacity .26s ease}
 .pointer-companion.is-visible{opacity:.9}
-.pointer-core{position:absolute;inset:0;display:block;border:1px solid var(--accent);border-radius:50%;background:var(--chip-active);box-shadow:inset 0 1px 3px #ffffff45,0 2px 7px #00000018}
+.pointer-core{position:absolute;inset:0;display:block;border:1px solid var(--accent);border-radius:50%;background:var(--chip-active);box-shadow:inset 0 1px 3px #ffffff55,0 2px 7px #00000018}
+.pointer-core:before{content:'';position:absolute;top:-4px;left:8px;width:1px;height:3px;background:var(--accent)}
+.pointer-core:after{content:'';position:absolute;top:-6px;left:7px;width:3px;height:3px;border-radius:50%;background:var(--accent)}
+.pointer-face{position:absolute;inset:0;transform:translate(var(--look-x,0px),var(--look-y,0px));transition:transform .14s ease-out}
 .pointer-eyes{position:absolute;left:4px;top:4px;width:2px;height:3px;border-radius:50%;background:currentColor;box-shadow:5px 0 currentColor}
-.pointer-smile{position:absolute;left:6px;top:9px;width:4px;height:2px;border:0 solid currentColor;border-bottom-width:1px;border-radius:0 0 50% 50%;opacity:.7}
+.pointer-smile{position:absolute;left:6px;top:9px;width:4px;height:2px;border:0 solid currentColor;border-bottom-width:1px;border-radius:0 0 50% 50%;opacity:.7;transition:height .25s ease,width .25s ease}
 .pointer-halo{position:absolute;inset:-5px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:50%;transition:transform .3s ease,border-color .3s ease}
-.pointer-halo:after{content:'';position:absolute;right:-2px;top:-3px;width:6px;height:6px;background:var(--accent);clip-path:polygon(50% 0,62% 37%,100% 50%,62% 63%,50% 100%,38% 63%,0 50%,38% 37%)}
+.pointer-satellite:after{content:'';position:absolute;right:-2px;top:-3px;width:6px;height:6px;background:var(--accent);clip-path:polygon(50% 0,62% 37%,100% 50%,62% 63%,50% 100%,38% 63%,0 50%,38% 37%)}
+.pointer-satellite{position:absolute;inset:-5px;animation:pointer-orbit 16s linear infinite paused}
+.pointer-companion.is-visible .pointer-satellite{animation-play-state:running}
+@keyframes pointer-orbit{to{transform:rotate(360deg)}}
+.pointer-companion[data-interactive=true] .pointer-smile{width:5px;height:3px}
 .pointer-companion[data-interactive=true] .pointer-halo{transform:scale(1.1);border-color:color-mix(in srgb,var(--accent) 65%,transparent)}
 @media(pointer:coarse),(hover:none),(prefers-reduced-motion:reduce){.pointer-companion,.pointer-option{display:none!important}}
 @media print{.pointer-companion{display:none!important}}

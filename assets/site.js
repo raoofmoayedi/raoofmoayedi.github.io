@@ -86,7 +86,7 @@
  const finePointer=matchMedia('(hover: hover) and (pointer: fine)');
  let playful=true;
  try{playful=localStorage.getItem('playful-pointer')!=='off'}catch{}
- let companion,core,frame=0,idleTimer=0,lastFrame=0,tracking=false,lastMouse=null,pressAnimation;
+ let companion,core,eyes,frame=0,idleTimer=0,lastFrame=0,tracking=false,lastMouse=null,pressAnimation,blinkAnimation;
  const target={x:0,y:0},point={x:0,y:0};
  const editable='input,textarea,select,[contenteditable="true"],[role="textbox"],pre,code';
  const pointerAllowed=()=>finePointer.matches&&!reduced.matches&&playful;
@@ -100,7 +100,7 @@
    pointerButton.hidden=!finePointer.matches||reduced.matches;
    pointerButton.setAttribute('aria-pressed',String(playful));
    pointerButton.querySelector('[data-pointer-state]').textContent=playful?'On':'Off';
-   if(!pointerAllowed()){hidePointer();pressAnimation?.cancel()}
+   if(!pointerAllowed()){hidePointer();pressAnimation?.cancel();blinkAnimation?.cancel()}
  }
  function drawPointer(now){
    frame=0;if(!tracking||!pointerAllowed())return;
@@ -112,6 +112,8 @@
    const settled=Math.hypot(target.x-point.x,target.y-point.y)<.15;
    if(settled){point.x=target.x;point.y=target.y}
    companion.style.transform=`translate3d(${point.x}px,${point.y}px,0)`;
+   companion.style.setProperty('--look-x',`${Math.max(-.9,Math.min(.9,(target.x-point.x)/28))}px`);
+   companion.style.setProperty('--look-y',`${Math.max(-.7,Math.min(.7,(target.y-point.y)/28))}px`);
    if(!settled)frame=requestAnimationFrame(drawPointer);else lastFrame=0;
  }
  pointerButton.addEventListener('click',()=>{
@@ -126,8 +128,8 @@
    lastMouse={x:event.clientX,y:event.clientY};
    if(!companion){
      companion=document.createElement('div');companion.className='pointer-companion';companion.setAttribute('aria-hidden','true');
-     companion.innerHTML='<span class="pointer-halo"></span><span class="pointer-core"><span class="pointer-eyes"></span><span class="pointer-smile"></span></span>';
-     document.body.append(companion);core=companion.querySelector('.pointer-core');
+     companion.innerHTML='<span class="pointer-halo"></span><span class="pointer-satellite"></span><span class="pointer-core"><span class="pointer-face"><span class="pointer-eyes"></span><span class="pointer-smile"></span></span></span>';
+     document.body.append(companion);core=companion.querySelector('.pointer-core');eyes=companion.querySelector('.pointer-eyes');
    }
    target.x=Math.max(10,Math.min(innerWidth-32,event.clientX+20));
    target.y=Math.max(10,Math.min(innerHeight-32,event.clientY+22));
@@ -140,7 +142,8 @@
  },{passive:true});
  document.addEventListener('pointerdown',event=>{
    if(event.pointerType!=='mouse'||event.button!==0||!pointerAllowed()||!tracking||event.target.closest(editable))return;
-   pressAnimation?.cancel();
+   pressAnimation?.cancel();blinkAnimation?.cancel();
+   blinkAnimation=eyes.animate([{transform:"scaleY(1)"},{transform:"scaleY(.15)",offset:.35},{transform:"scaleY(1)"}],{duration:280,easing:"ease-out"});
    pressAnimation=core.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.3},{transform:'scale(1)'}],{duration:260,easing:'ease-out'});
  },{passive:true});
  document.addEventListener('pointerout',event=>{if(!event.relatedTarget)hidePointer()});
