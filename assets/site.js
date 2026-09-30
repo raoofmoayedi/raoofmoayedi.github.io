@@ -1,9 +1,31 @@
 (() => {
  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- const theme=$('.theme-button');
- function themeLabel(){theme.setAttribute('aria-label',`Switch to ${document.documentElement.dataset.theme==='light'?'dark':'light'} theme`)}
- themeLabel();theme.addEventListener('click',()=>{let t=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=t;try{localStorage.setItem('theme',t)}catch{}themeLabel()});
+ const theme=$('.theme-button'),appearance=$('.appearance-picker'),paletteButtons=$$('button[data-palette]');
+ function syncAppearance(){
+   const next=document.documentElement.dataset.theme==='light'?'dark':'light';
+   theme.setAttribute('aria-label',`Switch to ${next} theme`);
+   theme.querySelector('[data-theme-label]').textContent=`Switch to ${next} mode`;
+   paletteButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.palette===(document.documentElement.dataset.palette||'midnight'))));
+   const meta=$('meta[name="theme-color"]');
+   if(meta)meta.content=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
+ }
+ syncAppearance();
+ theme.addEventListener('click',()=>{
+   const t=document.documentElement.dataset.theme==='light'?'dark':'light';
+   document.documentElement.dataset.theme=t;
+   try{localStorage.setItem('theme',t)}catch{}
+   syncAppearance();
+ });
+ paletteButtons.forEach(button=>button.addEventListener('click',()=>{
+   document.documentElement.dataset.palette=button.dataset.palette;
+   try{localStorage.setItem('palette',button.dataset.palette)}catch{}
+   syncAppearance();
+ }));
+ document.addEventListener('click',event=>{if(appearance.open&&!appearance.contains(event.target))appearance.open=false});
+ document.addEventListener('keydown',event=>{
+   if(event.key==='Escape'&&appearance.open){appearance.open=false;appearance.querySelector('summary').focus()}
+ });
  const menu=$('.menu-button');menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',open);$('#navigation').classList.toggle('open',open)});
  $$('#navigation a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');$('#navigation').classList.remove('open')}));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.setAttribute('aria-expanded','false');$('#navigation').classList.remove('open')}});
