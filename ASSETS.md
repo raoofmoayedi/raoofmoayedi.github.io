@@ -1,5 +1,26 @@
 # Visual assets
 
+## October 1: teacher–student and robustness replacements
+
+Both illustrations were created with the built-in image-generation tool, using `assets/privacy-sketch.webp` as the robot and rendering-style reference. The teacher–student scene is used on the robust-learning paper card. The noisy-view scene is used for the Robustness interest. They are conceptual editorial illustrations.
+
+### teacher-student
+
+Saved asset: `assets/teacher-student-robots.webp`
+
+Final prompt:
+
+Use case: illustration-story. Asset type: small illustration for a personal machine-learning research website. Input image 1 is STYLE AND ROBOT CHARACTER REFERENCE ONLY. Keep this exact visual family: adorable rounded white robot, navy oval eyes, little antenna, teal ear joints, small pencil tucked at its ear, delicate navy pencil outlines, soft textured colored-pencil and watercolor shading. Restrained teal, periwinkle and white, tiny warm amber accents. Landscape 3:2 composition, transparent background, delicate ground shadow only, entire subject within 8 percent clear margins. Readable at small website size. Warm, funny and charming, but not busy or generic stock clip art. No words, letters, equations, axes, logo, watermark, panel background, dark vignette or glow. This is a conceptual editorial illustration, not a quantitative scientific diagram. Subject: transferring robust knowledge from a teacher model to a smaller student. Make an intimate, delightful scene of TWO robots learning together: a larger knowledgeable robot kneels at the left, with a smaller eager student robot beside it on the right, about half its size. They share a low open sketchbook, angled toward the viewer. The teacher uses a small pencil to point out the outline of a teal cat in a picture dotted with a few amber noisy pixels; the smaller robot carefully traces the same recognizable cat in its own little notebook. The larger robot has a gentle encouraging expression and the student looks focused and happy, with one tiny foot lifted in concentration. Their gestures, shared example and exchanged glance must make the teaching relationship instantly clear. A few connected periwinkle and teal beads along the top edge of the shared book subtly suggest a neural model. Keep their bodies recognizable as robots from the reference, not ghost-like people. No classroom blackboard, no giant easel, no swirling sheets, no extra floating badges. The attention is on a bigger model helping a smaller one learn from a useful example.
+
+### robustness
+
+Saved asset: `assets/robustness-noisy-view.webp`
+
+Final prompt:
+
+Use case: illustration-story. Asset type: small illustration for a personal machine-learning research website. Input image 1 is STYLE AND ROBOT CHARACTER REFERENCE ONLY. Keep this exact visual family: adorable rounded white robot, navy oval eyes, little antenna, teal ear joints, small pencil tucked at its ear, delicate navy pencil outlines, soft textured colored-pencil and watercolor shading. Restrained teal, periwinkle and white, tiny warm amber accents. Landscape 3:2 composition, transparent background, delicate ground shadow only, entire subject within 8 percent clear margins. Readable at small website size. Warm, funny and charming, but not busy or generic stock clip art. No words, letters, equations, axes, logo, watermark, panel background, dark vignette or glow. This is a conceptual editorial illustration, not a quantitative scientific diagram. Subject: recognizing the same object despite an adversarially altered input. Design a fresh narrative scene, NOT two before-and-after cards and NOT a board with arrows or ticks. A little white robot sits on the left and calmly peers through a small upright translucent pane at a cute teal toy cat on the right. On that pane is a cluster of mischievous little amber square pixel speckles that partially distort and interrupt the VIEW of the cat, while its recognizable silhouette remains visible. One tiny square pixel character at the lower corner is playfully nudging a speckle, suggesting a deliberate perturbation. The robot's small thought bubble contains only a clean, simple teal cat silhouette, showing that it still recognizes the cat correctly. Make the pane clearly between the robot and the cat, with the toy cat visibly behind it and the thoughtful robot confidently focused on it. Keep the thought bubble small and integrated, no arrows, checkmarks, shields, umbrellas or generic weather metaphors. The transparent pane, toy cat, and robot should form one cohesive grounded scene, not an infographic. The robot has an endearing attentive expression. Prioritize a beautiful little story and a strong readable silhouette over technical detail.
+
+
 ## October 1: orbital identity and robot unlearning
 
 The unlearning selector now uses `assets/unlearning-robot-aligned.webp`, created with the built-in image-generation tool. It features the same white robot as the other interest illustrations, selectively erasing a memory while retaining the others. All other research illustrations remain unchanged.
@@ -78,7 +99,7 @@ The five newer interests now use more topic-specific scenes while preserving the
 | --- | --- | --- |
 | Privacy | `assets/privacy-sketch.webp` | Protected original data and similarly structured synthetic data |
 | Unlearning | `assets/unlearning-robot-aligned.webp` | A robot selectively erases one memory while retaining the others |
-| Robustness | `assets/robustness-robot-aligned.webp` | Unchanged predictions for clean and perturbed inputs |
+| Robustness | `assets/robustness-noisy-view.webp` | A robot recognizes a cat despite pixel noise altering its view |
 | Robust statistics | `assets/robust-statistics-aligned.webp` | A little robot marks the center of a cluster of observations while a distant outlier tugs at it. |
 | Uncertainty quantification | `assets/uncertainty-aligned.webp` | A robot predicts a moving ball with a central trajectory and a widening fan of possible future positions. |
 | Training dynamics | `assets/sgd-noisy-steps.webp` | Mini-batch sampling drives neural-network updates along a noisy path down a loss landscape. |
