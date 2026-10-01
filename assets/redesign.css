@@ -248,7 +248,7 @@ html[data-theme=light] .university-emblem img{mix-blend-mode:multiply;filter:non
 .pointer-option-state{margin-left:auto;font-size:.75rem;padding:2px 7px;border-radius:20px;background:var(--chip-active);color:var(--chip-active-ink)}
 .pointer-option[aria-pressed=false] .pointer-option-state{background:var(--surface-alt);color:var(--muted)}
 .pointer-companion{position:fixed;top:0;left:0;width:18px;height:18px;z-index:1200;pointer-events:none;user-select:none;color:var(--chip-active-ink);opacity:0;will-change:transform;transition:opacity .26s ease}
-.pointer-companion.is-visible{opacity:.9}
+.pointer-companion.is-visible{opacity:1}
 .pointer-core{position:absolute;inset:0;display:block;border:1px solid var(--accent);border-radius:50%;background:var(--chip-active);box-shadow:inset 0 1px 3px #ffffff55,0 2px 7px #00000018}
 .pointer-core:before{content:'';position:absolute;top:-4px;left:8px;width:1px;height:3px;background:var(--accent)}
 .pointer-core:after{content:'';position:absolute;top:-6px;left:7px;width:3px;height:3px;border-radius:50%;background:var(--accent)}
@@ -262,7 +262,7 @@ html[data-theme=light] .university-emblem img{mix-blend-mode:multiply;filter:non
 @keyframes pointer-orbit{to{transform:rotate(360deg)}}
 .pointer-companion[data-interactive=true] .pointer-smile{width:5px;height:3px}
 .pointer-companion[data-interactive=true] .pointer-halo{transform:scale(1.1);border-color:color-mix(in srgb,var(--accent) 65%,transparent)}
-@media(pointer:coarse),(hover:none),(prefers-reduced-motion:reduce){.pointer-companion,.pointer-option{display:none!important}}
+@media(prefers-reduced-motion:reduce){.pointer-companion,.pointer-option{display:none!important}}
 @media print{.pointer-companion{display:none!important}}
 
 /* Menus are contained by the full header, including small and short viewports. */
@@ -295,4 +295,18 @@ html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
  .nav{min-height:60px;padding-top:6px;padding-bottom:6px}
  .appearance-panel{padding:10px}
  .appearance-title{margin-bottom:8px}
+}
+
+/* Bring the opening content closer to the navigation without changing its layout. */
+@media screen{
+ .hero{padding-top:28px}
+ .page-hero{padding-top:32px}
+ .project-hero,.cv{padding-top:28px}
+ .cv-top{margin-bottom:24px}
+ .cv-interests h2{margin-top:0}
+ .cv strong{font-weight:700;color:var(--ink)}
+}
+@media screen and (max-width:760px){
+ .hero,.project-hero,.cv{padding-top:24px}
+ .page-hero{padding-top:28px}
 }

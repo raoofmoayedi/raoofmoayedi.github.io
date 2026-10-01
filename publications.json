@@ -1,5 +1,28 @@
 [
   {
+    "id": "raoof_synthetic",
+    "type": "unpublished",
+    "title": "Geometry-Adaptive Mechanisms for Private Synthetic Data",
+    "authors": [
+      "R. Zare Moayedi",
+      "A. R. Asadi",
+      "M. H. Yassaee",
+      "G. Aminian"
+    ],
+    "year": 2026,
+    "venue": "",
+    "status": "Preprint · Under review",
+    "arxiv": "2609.33363",
+    "url": "https://arxiv.org/abs/2609.33363",
+    "project": "research/private-data.html",
+    "bib_authors": [
+      "Zare Moayedi, Raoof",
+      "Asadi, Amir R.",
+      "Yassaee, Mohammad Hossein",
+      "Aminian, Gholamali"
+    ]
+  },
+  {
     "id": "Junhao_raoof",
     "type": "article",
     "title": "Allies Teach Better Than Enemies: Inverse Adversaries for Robust Knowledge Distillation",
@@ -84,29 +107,6 @@
     "project": "research/private-sampling.html"
   },
   {
-    "id": "raoof_synthetic",
-    "type": "unpublished",
-    "title": "Geometry-Adaptive Mechanisms for Private Synthetic Data",
-    "authors": [
-      "R. Zare Moayedi",
-      "A. R. Asadi",
-      "M. H. Yassaee",
-      "G. Aminian"
-    ],
-    "year": 2026,
-    "venue": "",
-    "status": "Preprint · Under review",
-    "arxiv": "2609.33363",
-    "url": "https://arxiv.org/abs/2609.33363",
-    "project": "research/private-data.html",
-    "bib_authors": [
-      "Zare Moayedi, Raoof",
-      "Asadi, Amir R.",
-      "Yassaee, Mohammad Hossein",
-      "Aminian, Gholamali"
-    ]
-  },
-  {
     "id": "raoof_spurious",
     "type": "unpublished",
     "title": "Transient Implicit Regularization in SGD: Understanding When SGD Improves Robustness to Spurious Correlations",
@@ -152,4 +152,3 @@
     ]
   }
 ]
-

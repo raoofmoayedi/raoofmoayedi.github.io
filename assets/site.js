@@ -93,9 +93,9 @@
    },{passive:true});
    stage.addEventListener('touchcancel',()=>{touchStart=null},{passive:true});
  }
- // A quiet mouse companion: time-based easing, stable hover, and an idle fade.
+ // Mouse companion with stable easing, hybrid-device support, and an idle fade.
  const pointerButton=$('.pointer-option');
- const finePointer=matchMedia('(hover: hover) and (pointer: fine)');
+ const finePointer=matchMedia('(any-hover: hover) and (any-pointer: fine)');
  let playful=true;
  try{playful=localStorage.getItem('playful-pointer')!=='off'}catch{}
  let companion,core,eyes,frame=0,idleTimer=0,lastFrame=0,tracking=false,lastMouse=null,pressAnimation,blinkAnimation;
@@ -128,15 +128,16 @@
    companion.style.setProperty('--look-y',`${Math.max(-.7,Math.min(.7,(target.y-point.y)/28))}px`);
    if(!settled)frame=requestAnimationFrame(drawPointer);else lastFrame=0;
  }
- pointerButton.addEventListener('click',()=>{
+ pointerButton.addEventListener('click',event=>{
    playful=!playful;try{localStorage.setItem('playful-pointer',playful?'on':'off')}catch{}
    syncPointer();
+   if(playful)showPointer(event);
  });
  finePointer.addEventListener('change',syncPointer);reduced.addEventListener('change',syncPointer);syncPointer();
- document.addEventListener('pointermove',event=>{
+ function showPointer(event){
    if(event.pointerType!=='mouse'||!pointerAllowed()||event.target.closest(editable)){hidePointer();return}
    // Ignore stationary events and sub-pixel input jitter; neither should prevent the idle fade.
-   if(lastMouse&&Math.hypot(event.clientX-lastMouse.x,event.clientY-lastMouse.y)<1)return;
+   if(event.type==='pointermove'&&lastMouse&&Math.hypot(event.clientX-lastMouse.x,event.clientY-lastMouse.y)<1)return;
    lastMouse={x:event.clientX,y:event.clientY};
    if(!companion){
      companion=document.createElement('div');companion.className='pointer-companion';companion.setAttribute('aria-hidden','true');
@@ -149,10 +150,12 @@
    const interactive=String(!!event.target.closest('a,button,summary,[role="button"],label'));
    if(companion.dataset.interactive!==interactive)companion.dataset.interactive=interactive;
    companion.classList.add('is-visible');
-   clearTimeout(idleTimer);idleTimer=setTimeout(hidePointer,750);
+   clearTimeout(idleTimer);idleTimer=setTimeout(hidePointer,1800);
    if(!frame)frame=requestAnimationFrame(drawPointer);
- },{passive:true});
+ }
+ document.addEventListener('pointermove',showPointer,{passive:true});
  document.addEventListener('pointerdown',event=>{
+   if(event.button===0)showPointer(event);
    if(event.pointerType!=='mouse'||event.button!==0||!pointerAllowed()||!tracking||event.target.closest(editable))return;
    pressAnimation?.cancel();blinkAnimation?.cancel();
    blinkAnimation=eyes.animate([{transform:"scaleY(1)"},{transform:"scaleY(.15)",offset:.35},{transform:"scaleY(1)"}],{duration:280,easing:"ease-out"});
