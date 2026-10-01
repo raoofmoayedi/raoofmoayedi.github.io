@@ -105,9 +105,9 @@
  const pointerButton=$('.pointer-option');
  const finePointer=matchMedia('(any-hover: hover) and (any-pointer: fine)');
  let mouseDetected=finePointer.matches;
- // The companion is opt-in; only an explicit saved On preference enables it.
+ // Always start disabled, including for visitors with an older saved On setting.
  let playful=false;
- try{playful=localStorage.getItem('playful-pointer')==='on'}catch{}
+ try{localStorage.removeItem('playful-pointer')}catch{}
  let companion,core,eyes,frame=0,idleTimer=0,lastFrame=0,tracking=false,lastMouse=null,pressAnimation,blinkAnimation;
  let positioned=false,resumeOnFocus=false;
  const target={x:0,y:0},point={x:0,y:0};
@@ -142,7 +142,7 @@
    if(!settled)frame=requestAnimationFrame(drawPointer);else lastFrame=0;
  }
  pointerButton.addEventListener('click',event=>{
-   playful=!playful;try{localStorage.setItem('playful-pointer',playful?'on':'off')}catch{}
+   playful=!playful;
    syncPointer();
    if(playful)showPointer(event);
  });

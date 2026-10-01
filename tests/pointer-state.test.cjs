@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../assets/site.js'), 'utf8');
 const pointerSource = source.slice(source.indexOf('// Mouse capability stays established'));
 
-function harness({ fine = true, reduce = false, preference = 'on' } = {}) {
+function harness({ fine = true, reduce = false, preference = null } = {}) {
   function events(target = {}) {
     const handlers = new Map();
     target.addEventListener = (name, fn) => {
@@ -41,7 +41,7 @@ function harness({ fine = true, reduce = false, preference = 'on' } = {}) {
   const context = {
     document, innerWidth: 1200, innerHeight: 800,
     matchMedia: () => fineMedia, reducedMedia,
-    localStorage: { getItem: () => preference, setItem: (_, value) => { preference = value; } },
+    localStorage: { getItem: () => preference, setItem: (_, value) => { preference = value; }, removeItem: () => { preference = null; } },
     addEventListener: win.addEventListener,
     requestAnimationFrame: fn => { frames.set(++nextId, fn); return nextId; },
     cancelAnimationFrame: id => frames.delete(id),
@@ -61,27 +61,34 @@ function harness({ fine = true, reduce = false, preference = 'on' } = {}) {
   };
 }
 
-// New visitors get the native cursor until they explicitly enable the companion.
-const newVisitor = harness({ preference: null });
-newVisitor.move(100, 100);
-newVisitor.win.emit('focus');
-assert.equal(newVisitor.visible(), false, 'The companion is off without a saved preference');
-assert.equal(newVisitor.button.attributes['aria-pressed'], 'false');
-assert.equal(newVisitor.button.hidden, false, 'The opt-in control remains available');
-newVisitor.clickToggle();
-assert.equal(newVisitor.visible(), true);
-assert.equal(newVisitor.preference, 'on', 'Opting in is remembered');
-const returningVisitor = harness({ preference: newVisitor.preference });
-returningVisitor.move(100, 100);
-assert.equal(returningVisitor.visible(), true, 'An explicit On preference survives a new visit');
-returningVisitor.clickToggle();
-assert.equal(returningVisitor.preference, 'off');
-const disabledVisitor = harness({ preference: returningVisitor.preference });
-disabledVisitor.move(100, 100);
-assert.equal(disabledVisitor.visible(), false, 'An explicit Off preference is respected');
+// Every page load starts Off, including when an older visit stored On.
+for (const preference of [null, 'on', 'off']) {
+  const visitor = harness({ preference });
+  visitor.move(100, 100);
+  visitor.win.emit('focus');
+  visitor.win.emit('pageshow');
+  assert.equal(visitor.visible(), false, 'A saved setting must never activate the pointer');
+  assert.equal(visitor.button.attributes['aria-pressed'], 'false');
+  assert.equal(visitor.button.hidden, false, 'The opt-in control remains available');
+  assert.equal(visitor.preference, null, 'The legacy preference is cleared');
+  visitor.clickToggle();
+  assert.equal(visitor.visible(), true, 'Visitors can enable the pointer explicitly');
+  assert.equal(visitor.preference, null, 'Opting in does not persist into another visit');
+  const reloaded = harness({ preference: visitor.preference });
+  reloaded.move(100, 100);
+  assert.equal(reloaded.visible(), false, 'Reloading starts with the pointer Off again');
+  visitor.clickToggle();
+  assert.equal(visitor.visible(), false);
+}
+
+function enabledHarness(options) {
+  const page = harness(options);
+  page.clickToggle();
+  return page;
+}
 
 // A background capability change must not erase the option or recovery state.
-const tab = harness();
+const tab = enabledHarness();
 tab.move(100, 100);
 tab.document.hidden = true;
 tab.fineMedia.matches = false;
@@ -124,7 +131,7 @@ tab.clickToggle();
 assert.equal(tab.visible(), true);
 
 // Genuine mouse input works even when the initial capability query says touch-only.
-const hybrid = harness({ fine: false });
+const hybrid = enabledHarness({ fine: false });
 assert.equal(hybrid.button.hidden, false);
 hybrid.move(100, 100);
 assert.equal(hybrid.visible(), true);
@@ -136,10 +143,10 @@ for (let frame = 2; frame <= 80; frame++) hybrid.tick(frame * 16.67);
 assert.match(hybrid.companion.style.transform, /translate3d\(720px,122px,0\)/);
 
 // Reduced motion keeps the companion visible and removes the trailing animation.
-const reduced = harness({ reduce: true });
+const reduced = enabledHarness({ reduce: true });
 reduced.move(100, 100);
 reduced.move(700, 100);
 reduced.tick(16.67);
 assert.equal(reduced.visible(), true);
 assert.match(reduced.companion.style.transform, /translate3d\(720px,122px,0\)/);
-console.log('Pointer regression checks passed: default off, saved preferences, tab return, capability changes, focus, idle, scroll, toggle, trailing, reduced motion.');
+console.log('Pointer regression checks passed: always starts off, legacy settings, explicit opt-in, tab return, capability changes, focus, idle, scroll, toggle, trailing, reduced motion.');
