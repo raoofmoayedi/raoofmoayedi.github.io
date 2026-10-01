@@ -1,12 +1,11 @@
 (() => {
  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- const theme=$('.theme-button'),appearance=$('.appearance-picker'),paletteButtons=$$('button[data-palette]');
+ const theme=$('.theme-button'),appearance=$('.appearance-picker');
  function syncAppearance(){
    const next=document.documentElement.dataset.theme==='light'?'dark':'light';
    theme.setAttribute('aria-label',`Switch to ${next} theme`);
    theme.querySelector('[data-theme-label]').textContent=`Switch to ${next} mode`;
-   paletteButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.palette===(document.documentElement.dataset.palette||'midnight'))));
    const meta=$('meta[name="theme-color"]');
    if(meta)meta.content=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
  }
@@ -17,11 +16,6 @@
    try{localStorage.setItem('theme',t)}catch{}
    syncAppearance();
  });
- paletteButtons.forEach(button=>button.addEventListener('click',()=>{
-   document.documentElement.dataset.palette=button.dataset.palette;
-   try{localStorage.setItem('palette',button.dataset.palette)}catch{}
-   syncAppearance();
- }));
  document.addEventListener('click',event=>{if(appearance.open&&!appearance.contains(event.target))appearance.open=false});
  document.addEventListener('keydown',event=>{
    if(event.key==='Escape'&&appearance.open){appearance.open=false;appearance.querySelector('summary').focus()}
@@ -101,50 +95,53 @@
    },{passive:true});
    stage.addEventListener('touchcancel',()=>{touchStart=null},{passive:true});
  }
- // Publication sketches start closed. A title reveals a temporary preview;
- // the Sketch control keeps one open until dismissed, including on touchscreens.
+ // Sketches unfold within the paper being explored; there is no separate control.
  const paperCards=$$('.paper-card');
- const sketchHover=matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)');
- const paperPreviews=paperCards.map(card=>({card,title:card.querySelector('.paper-title'),details:card.querySelector('.paper-preview'),pinned:false,timer:0}));
- function closePaperPreview(item){clearTimeout(item.timer);item.details.open=false;item.pinned=false}
- function openPaperPreview(item,pinned=false){
-   paperPreviews.forEach(other=>{if(other!==item)closePaperPreview(other)});
-   clearTimeout(item.timer);item.pinned=pinned;item.details.open=true;
-   if(sketchHover.matches){
-     const top=item.card.getBoundingClientRect().top;
-     const headerBottom=header.getBoundingClientRect().bottom;
-     const headingBottom=$('#research .section-heading').getBoundingClientRect().bottom;
-     const artHeight=item.details.querySelector('.paper-preview-art').getBoundingClientRect().height;
-     item.card.dataset.previewPlacement=top-artHeight>Math.max(headerBottom,headingBottom)+16?'above':'below';
-   }
+ const sketchHover=matchMedia('(hover: hover) and (pointer: fine)');
+ const paperTimers=new Map();
+ function setPaperSketch(card,open){
+   clearTimeout(paperTimers.get(card));
+   card.dataset.sketchOpen=String(open);
+   card.querySelector('.paper-art-reveal').setAttribute('aria-hidden',String(!open));
  }
- paperPreviews.forEach(item=>{
-   const summary=item.details.querySelector('summary');
-   item.title.addEventListener('pointerenter',event=>{
+ function closePaperSketches(){paperCards.forEach(card=>setPaperSketch(card,false))}
+ function revealPaperSketch(card){
+   if(sketchHover.matches)paperCards.forEach(other=>{if(other!==card)setPaperSketch(other,false)});
+   setPaperSketch(card,true);
+ }
+ paperCards.forEach(card=>{
+   card.addEventListener('pointerenter',event=>{
      if(event.pointerType!=='mouse'||!sketchHover.matches)return;
-     clearTimeout(item.timer);
-     item.timer=setTimeout(()=>openPaperPreview(item,item.pinned),140);
+     clearTimeout(paperTimers.get(card));
+     paperTimers.set(card,setTimeout(()=>revealPaperSketch(card),90));
    });
-   item.title.addEventListener('pointerleave',()=>clearTimeout(item.timer));
-   item.title.addEventListener('focus',()=>{if(sketchHover.matches&&item.title.matches(':focus-visible'))openPaperPreview(item,item.pinned)});
-   item.card.addEventListener('pointerenter',()=>clearTimeout(item.timer));
-   item.card.addEventListener('pointerleave',()=>{
-     clearTimeout(item.timer);
-     if(!item.pinned&&!item.card.contains(document.activeElement))item.timer=setTimeout(()=>closePaperPreview(item),140);
+   card.addEventListener('pointerleave',()=>{
+     clearTimeout(paperTimers.get(card));
+     if(sketchHover.matches&&!card.contains(document.activeElement))paperTimers.set(card,setTimeout(()=>setPaperSketch(card,false),160));
    });
-   item.card.addEventListener('focusout',event=>{
-     if(!item.card.contains(event.relatedTarget)&&!item.pinned)closePaperPreview(item);
-   });
-   summary.addEventListener('click',event=>{
-     event.preventDefault();
-     if(item.details.open&&item.pinned)closePaperPreview(item);
-     else openPaperPreview(item,true);
+   card.addEventListener('focusin',()=>revealPaperSketch(card));
+   card.addEventListener('focusout',event=>{
+     if(!card.contains(event.relatedTarget)&&sketchHover.matches&&!card.matches(':hover'))setPaperSketch(card,false);
    });
  });
- document.addEventListener('keydown',event=>{if(event.key==='Escape')paperPreviews.forEach(closePaperPreview)});
- document.addEventListener('pointerdown',event=>{paperPreviews.forEach(item=>{if(!item.card.contains(event.target))closePaperPreview(item)})});
- document.addEventListener('visibilitychange',()=>{if(document.hidden)paperPreviews.forEach(closePaperPreview)});
- sketchHover.addEventListener('change',()=>paperPreviews.forEach(closePaperPreview));
+ // Touch visitors see each sketch as they reach its card. Revealing once avoids
+ // repeatedly opening and closing cards while someone is scrolling past them.
+ let paperObserver;
+ function observeTouchPapers(){
+   paperObserver?.disconnect();
+   if(sketchHover.matches)return;
+   if(!('IntersectionObserver'in window)){paperCards.forEach(revealPaperSketch);return}
+   paperObserver=new IntersectionObserver(entries=>{
+     entries.forEach(entry=>{
+       if(entry.isIntersecting){revealPaperSketch(entry.target);paperObserver.unobserve(entry.target)}
+     });
+   },{rootMargin:'0px 0px -18% 0px',threshold:.2});
+   paperCards.forEach(card=>paperObserver.observe(card));
+ }
+ observeTouchPapers();
+ document.addEventListener('keydown',event=>{if(event.key==='Escape')closePaperSketches()});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&sketchHover.matches)closePaperSketches()});
+ sketchHover.addEventListener('change',()=>{closePaperSketches();observeTouchPapers()});
  // Mouse capability stays established across focus and visibility changes.
  const pointerButton=$('.pointer-option');
  const finePointer=matchMedia('(any-hover: hover) and (any-pointer: fine)');
