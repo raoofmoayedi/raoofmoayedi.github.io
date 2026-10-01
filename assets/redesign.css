@@ -410,3 +410,81 @@ html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
 }
 @media(max-width:360px){.geometry-rates{grid-template-columns:1fr}.geometry-rate h3{min-height:0}.geometry-sketch{height:100px}.geometry-rate .rate-explanation{max-width:none}.geometry-takeaway{flex-direction:column;gap:6px}}
 @media print{.insight-assumptions:not([open])>p{display:block}.geometry-sketch{height:90px}.covariance-copy{color:#111}.covariance-cell{break-inside:avoid}}
+
+/* A balanced introduction and a single, self-contained interest card. */
+.hero{grid-template-columns:minmax(0,1fr) minmax(0,1.03fr);align-items:center;gap:clamp(32px,4.5vw,64px);padding:30px 0 58px}
+.hero-copy{min-width:0;max-width:600px}
+.hero-copy>.eyebrow{font-size:.75rem;letter-spacing:.105em;margin:0}
+.hero h1{font-size:clamp(3.25rem,5.05vw,4.65rem);line-height:1.05;letter-spacing:-.055em;margin:20px 0 20px;font-weight:500}
+.hero .hero-affiliation{border-left:2px solid var(--accent);padding-left:14px;margin:0 0 28px;font-size:1.0625rem;line-height:1.5}
+.hero .hero-affiliation span{font-size:.9375rem;margin-top:5px;color:var(--body)}
+.hero-lead{font-size:clamp(1.65rem,2.35vw,2rem);line-height:1.4;letter-spacing:-.03em;margin:0}
+.hero-lead em{display:inline-block;font-weight:400}
+.hero-description{font-size:1rem;line-height:1.8;max-width:48ch;margin:20px 0 25px;color:var(--body)}
+.hero-actions{gap:10px 12px;align-items:center}
+.hero-actions .button{min-height:48px;padding:11px 18px;border-radius:9px;white-space:nowrap}
+.hero-actions .hero-cv{font-size:.875rem;min-height:42px;margin:0;text-underline-offset:5px}
+.interest-gallery.sketch-panel{width:100%;max-width:none;margin:0;padding:24px;border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:0 16px 42px #0000000c,0 2px 8px #00000008;overflow:hidden}
+.interest-gallery .interest-header{align-items:center;margin-bottom:18px;gap:16px;color:var(--ink)}
+#interests-heading{margin:0;font-size:1.125rem;line-height:1.35;letter-spacing:-.025em;font-weight:600}
+.interest-hint{margin:4px 0 0;font-size:.75rem;line-height:1.5;font-weight:400;color:var(--muted)}
+.interest-gallery #interest-count{font-size:.6875rem;line-height:1.3;letter-spacing:.05em;white-space:nowrap;padding:7px 9px;border:1px solid var(--line);border-radius:8px;color:var(--muted);background:var(--paper)}
+.interest-gallery .interest-topics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:0 0 18px}
+.interest-gallery .interest-topic{display:flex;align-items:center;justify-content:center;min-width:0;min-height:43px;padding:6px 7px;font-size:.75rem;line-height:1.35;font-weight:500;text-align:center;text-wrap:balance;border-radius:8px;border-color:var(--line);background:var(--paper);color:var(--body);box-shadow:none;overflow-wrap:normal}
+.interest-gallery .interest-topic:hover{background:color-mix(in srgb,var(--accent) 9%,var(--paper));border-color:var(--accent);color:var(--ink)}
+.interest-gallery .interest-topic[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:600;box-shadow:0 3px 9px #00000012}
+.interest-gallery .interest-topic:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.interest-gallery .sketch-paper{height:228px;aspect-ratio:auto;width:100%;border-radius:15px;background:#f7f9ff;border:1px solid color-mix(in srgb,var(--line) 25%,transparent)}
+.interest-gallery .hero-sketch{width:100%;height:100%;max-width:370px;padding:10px;object-fit:contain}
+.interest-gallery .interest-caption{padding:18px 1px 0;min-height:150px}
+.interest-gallery #interest-title{font-size:1.125rem;line-height:1.4;font-weight:600;letter-spacing:-.02em;margin:0 0 8px;color:var(--ink)}
+.interest-gallery #art-description{font-size:.9375rem;line-height:1.75;min-height:0;max-width:none;color:var(--body);margin:0}
+@media(min-width:981px) and (max-width:1150px){
+ .hero{gap:30px}
+ .hero h1{font-size:clamp(3.25rem,5.2vw,3.75rem)}
+ .hero-actions .hero-cv{width:100%;justify-content:flex-start}
+ .interest-gallery.sketch-panel{padding:20px}
+ .interest-gallery .interest-topics{gap:6px}
+ .interest-gallery .interest-topic{padding-inline:5px;font-size:.75rem}
+ .interest-gallery .interest-caption{min-height:172px}
+}
+@media(max-width:980px){
+ .hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-top:26px;padding-bottom:42px}
+ .hero-copy{width:100%;max-width:660px;margin-inline:auto}
+ .hero h1{font-size:clamp(3.5rem,7.5vw,4.5rem)}
+ .hero-description{max-width:56ch}
+ .interest-gallery.sketch-panel{max-width:660px;margin-inline:auto}
+ .interest-gallery .sketch-paper{height:216px}
+ .interest-gallery .interest-caption{min-height:132px}
+}
+@media(max-width:600px){
+ .hero{gap:30px;padding-top:24px;padding-bottom:34px}
+ .hero-copy>.eyebrow{font-size:.6875rem;letter-spacing:.075em}
+ .hero h1{font-size:clamp(2.85rem,11.6vw,4rem);margin:18px 0;letter-spacing:-.05em}
+ .hero .hero-affiliation{font-size:1rem;margin-bottom:24px;padding-left:12px}
+ .hero .hero-affiliation span{font-size:.875rem}
+ .hero-lead{font-size:1.65rem}
+ .hero-description{font-size:1rem;line-height:1.75;margin:18px 0 22px}
+ .hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .hero-actions .button{width:100%;padding:10px;font-size:.8125rem;gap:9px;min-height:47px}
+ .hero-actions .hero-cv{grid-column:1/-1;justify-content:flex-start;min-height:35px;width:auto;font-size:.875rem}
+ .interest-gallery.sketch-panel{padding:18px;border-radius:20px}
+ .interest-gallery .interest-header{margin-bottom:15px;gap:10px}
+ #interests-heading{font-size:1.0625rem}
+ .interest-hint{font-size:.6875rem}
+ .interest-gallery .interest-topics{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-bottom:15px}
+ .interest-gallery .interest-topic{grid-column:span 2;min-height:39px;padding:6px 4px;font-size:.75rem}
+ .interest-gallery .interest-topic:nth-last-child(-n+2){grid-column:span 3}
+ .interest-gallery .sketch-paper{height:clamp(155px,24svh,190px);border-radius:12px}
+ .interest-gallery .hero-sketch{max-width:310px;padding:8px}
+ .interest-gallery .interest-caption{padding-top:16px;min-height:178px}
+ .interest-gallery #interest-title{font-size:1.0625rem}
+ .interest-gallery #art-description{font-size:.9375rem;line-height:1.7}
+}
+@media(max-width:380px){
+ .interest-gallery.sketch-panel{padding:14px}
+ .interest-gallery .interest-topics{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .interest-gallery .interest-topic,.interest-gallery .interest-topic:nth-last-child(-n+2){grid-column:auto}
+ .hero-actions .button{font-size:.8125rem;padding-inline:7px}
+ .interest-gallery .interest-caption{min-height:202px}
+}

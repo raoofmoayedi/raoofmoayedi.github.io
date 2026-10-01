@@ -52,6 +52,7 @@ function harness({ fine = true, reduce = false, preference = 'on' } = {}) {
   return {
     document, win, fineMedia, button,
     get companion() { return companion; },
+    get preference() { return preference; },
     move(x, y) { document.emit('pointermove', { pointerType: 'mouse', clientX: x, clientY: y, target: surface }); },
     clickToggle() { button.emit('click', { pointerType: 'mouse', detail: 1, clientX: 300, clientY: 100, target: button }); },
     tick(time) { const batch = [...frames.values()]; frames.clear(); batch.forEach(fn => fn(time)); },
@@ -59,6 +60,25 @@ function harness({ fine = true, reduce = false, preference = 'on' } = {}) {
     visible() { return !!companion?.classList.contains('is-visible'); }
   };
 }
+
+// New visitors get the native cursor until they explicitly enable the companion.
+const newVisitor = harness({ preference: null });
+newVisitor.move(100, 100);
+newVisitor.win.emit('focus');
+assert.equal(newVisitor.visible(), false, 'The companion is off without a saved preference');
+assert.equal(newVisitor.button.attributes['aria-pressed'], 'false');
+assert.equal(newVisitor.button.hidden, false, 'The opt-in control remains available');
+newVisitor.clickToggle();
+assert.equal(newVisitor.visible(), true);
+assert.equal(newVisitor.preference, 'on', 'Opting in is remembered');
+const returningVisitor = harness({ preference: newVisitor.preference });
+returningVisitor.move(100, 100);
+assert.equal(returningVisitor.visible(), true, 'An explicit On preference survives a new visit');
+returningVisitor.clickToggle();
+assert.equal(returningVisitor.preference, 'off');
+const disabledVisitor = harness({ preference: returningVisitor.preference });
+disabledVisitor.move(100, 100);
+assert.equal(disabledVisitor.visible(), false, 'An explicit Off preference is respected');
 
 // A background capability change must not erase the option or recovery state.
 const tab = harness();
@@ -122,4 +142,4 @@ reduced.move(700, 100);
 reduced.tick(16.67);
 assert.equal(reduced.visible(), true);
 assert.match(reduced.companion.style.transform, /translate3d\(720px,122px,0\)/);
-console.log('Pointer regression checks passed: tab return, capability changes, focus, idle, scroll, toggle, trailing, reduced motion.');
+console.log('Pointer regression checks passed: default off, saved preferences, tab return, capability changes, focus, idle, scroll, toggle, trailing, reduced motion.');

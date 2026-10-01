@@ -105,8 +105,9 @@
  const pointerButton=$('.pointer-option');
  const finePointer=matchMedia('(any-hover: hover) and (any-pointer: fine)');
  let mouseDetected=finePointer.matches;
- let playful=true;
- try{playful=localStorage.getItem('playful-pointer')!=='off'}catch{}
+ // The companion is opt-in; only an explicit saved On preference enables it.
+ let playful=false;
+ try{playful=localStorage.getItem('playful-pointer')==='on'}catch{}
  let companion,core,eyes,frame=0,idleTimer=0,lastFrame=0,tracking=false,lastMouse=null,pressAnimation,blinkAnimation;
  let positioned=false,resumeOnFocus=false;
  const target={x:0,y:0},point={x:0,y:0};
