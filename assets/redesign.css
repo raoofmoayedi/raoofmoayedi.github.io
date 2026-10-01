@@ -518,13 +518,3 @@ html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
 }
 @media(prefers-reduced-motion:reduce){.paper-art-reveal,.paper-art,.paper-arrow{transition:none}}
 @media print{.paper-art-reveal{display:none!important}#research .work-grid{grid-template-columns:1fr}#research .paper-card{break-inside:avoid}.paper-body{min-height:0}}
-
-/* Calm automatic interest changes, with a visible pause control. */
-.interest-playback{display:flex;align-items:center;gap:7px;flex:none}
-.interest-gallery .interest-playback #interest-count{padding:0;border:0;background:none;min-width:44px;text-align:center}
-.interest-rotation{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--body);font:500 .6875rem/1.4 var(--sans);cursor:pointer}
-.interest-rotation svg{width:12px;height:12px;fill:currentColor}
-.interest-rotation[data-playing=true] .rotation-play-mark,.interest-rotation[data-playing=false] .rotation-pause-mark{display:none}
-.interest-rotation:hover{border-color:var(--accent);color:var(--ink)}
-.interest-rotation:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-@media(max-width:600px){.interest-playback{gap:4px}.interest-rotation{min-width:40px;min-height:40px;padding:7px}.interest-rotation [data-rotation-label]{display:none}.interest-gallery .interest-playback #interest-count{min-width:42px}}

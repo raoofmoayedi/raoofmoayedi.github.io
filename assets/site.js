@@ -53,25 +53,17 @@
    panel.querySelector('h3').textContent=button.dataset.title;
    panel.querySelector('.covariance-copy').textContent=button.dataset.description;
  }));
- // Research interests rotate only while visible and not being read or operated.
+ // Research interests advance automatically while the gallery is visible.
  const interestButtons=$$('[data-landscape]');
  if(interestButtons.length){
-   const stage=$('.interest-stage'),gallery=$('#interests'),rotationButton=$('.interest-rotation');
-   const rotationDelay=10000;
-   let current=0,rotationTimer=0,rotationEnabled=!reduced.matches;
-   let inView=false,hovered=false,focused=false,touching=false;
+   const stage=$('.interest-stage'),gallery=$('#interests');
+   const rotationDelay=3000;
+   let current=0,rotationTimer=0,inView=false;
    function queueInterestRotation(){
      clearTimeout(rotationTimer);rotationTimer=0;
-     const running=rotationEnabled&&inView&&!document.hidden&&!hovered&&!focused&&!touching;
+     const running=inView&&!document.hidden;
      gallery.dataset.rotating=String(running);
      if(running)rotationTimer=setTimeout(()=>selectInterest(current+1,false),rotationDelay);
-   }
-   function syncRotationControl(){
-     const label=rotationEnabled?'Pause automatic interest changes':'Resume automatic interest changes';
-     rotationButton.setAttribute('aria-label',label);
-     rotationButton.setAttribute('title',label);
-     rotationButton.dataset.playing=String(rotationEnabled);
-     rotationButton.querySelector('[data-rotation-label]').textContent=rotationEnabled?'Pause':'Play';
    }
    function selectInterest(index,announce=true){
      current=(index+interestButtons.length)%interestButtons.length;
@@ -99,25 +91,13 @@
        event.preventDefault();interestButtons[next].focus();selectInterest(next);
      });
    });
-   rotationButton.addEventListener('click',()=>{
-     rotationEnabled=!rotationEnabled;syncRotationControl();queueInterestRotation();
-   });
-   gallery.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'){hovered=true;queueInterestRotation()}});
-   gallery.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'){hovered=false;queueInterestRotation()}});
-   gallery.addEventListener('focusin',event=>{focused=event.target!==rotationButton;queueInterestRotation()});
-   gallery.addEventListener('focusout',event=>{if(!gallery.contains(event.relatedTarget)){focused=false;queueInterestRotation()}});
-   gallery.addEventListener('touchstart',()=>{touching=true;queueInterestRotation()},{passive:true});
-   const finishInterestTouch=()=>{touching=false;queueInterestRotation()};
-   gallery.addEventListener('touchend',finishInterestTouch,{passive:true});
-   gallery.addEventListener('touchcancel',finishInterestTouch,{passive:true});
    document.addEventListener('visibilitychange',queueInterestRotation);
-   reduced.addEventListener('change',()=>{if(reduced.matches)rotationEnabled=false;syncRotationControl();queueInterestRotation()});
    if('IntersectionObserver'in window){
      new IntersectionObserver(entries=>{
        const entry=entries[0];inView=entry.isIntersecting&&entry.intersectionRatio>=.35;queueInterestRotation();
      },{threshold:[0,.35]}).observe(gallery);
    }else{inView=true}
-   syncRotationControl();queueInterestRotation();
+   queueInterestRotation();
    // Touch gestures leave vertical page scrolling to the browser.
    let touchStart;
    stage.addEventListener('touchstart',event=>{
