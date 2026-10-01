@@ -113,8 +113,9 @@
    if(sketchHover.matches){
      const top=item.card.getBoundingClientRect().top;
      const headerBottom=header.getBoundingClientRect().bottom;
+     const headingBottom=$('#research .section-heading').getBoundingClientRect().bottom;
      const artHeight=item.details.querySelector('.paper-preview-art').getBoundingClientRect().height;
-     item.card.dataset.previewPlacement=top-artHeight>headerBottom+16?'above':'below';
+     item.card.dataset.previewPlacement=top-artHeight>Math.max(headerBottom,headingBottom)+16?'above':'below';
    }
  }
  paperPreviews.forEach(item=>{
