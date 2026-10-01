@@ -51,6 +51,14 @@
  const search=$('#paper-search');let selected='all';
  function filter(){const q=search.value.trim().toLowerCase();let n=0;$$('.library-paper').forEach(p=>{p.hidden=!((selected==='all'||p.dataset.topic===selected)&&p.textContent.toLowerCase().includes(q));if(!p.hidden)n++});$('#result-count').textContent=`${n} publication${n===1?'':'s'}`;$('#empty-state').hidden=n!==0}
  if(search){search.addEventListener('input',filter);$$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.filter;$$('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));filter()}));$('#reset-search').addEventListener('click',()=>{search.value='';$('[data-filter="all"]').click();search.focus()})}
+ const covarianceButtons=$$('[data-covariance-block]');
+ covarianceButtons.forEach(button=>button.addEventListener('click',()=>{
+   covarianceButtons.forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
+   const panel=$('#covariance-explanation');
+   panel.querySelector('.covariance-category').textContent=button.dataset.category;
+   panel.querySelector('h3').textContent=button.dataset.title;
+   panel.querySelector('.covariance-copy').textContent=button.dataset.description;
+ }));
  const interestButtons=$$('[data-landscape]');
  if(interestButtons.length){
    const stage=$('.interest-stage');
