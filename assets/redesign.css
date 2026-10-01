@@ -475,46 +475,56 @@ html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
 }
 
 /* Compact paper cards. Illustrations expand inside their own card. */
-#research .work-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
-#research .paper-card{position:relative;padding:18px;border-radius:13px;overflow:hidden;min-width:0;transition:border-color .22s,box-shadow .22s}
+#research .work-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+#research .paper-card{position:relative;padding:15px;border-radius:12px;overflow:hidden;min-width:0;transition:border-color .22s,box-shadow .22s}
 #research .paper-card:hover{transform:none}
 #research .paper-card[data-sketch-open=true]{border-color:var(--accent);box-shadow:0 8px 24px #00000016}
-.paper-body{display:flex;flex-direction:column;min-height:172px}
-#research .paper-card .card-meta{margin:0 0 11px;font-size:.75rem;line-height:1.5;letter-spacing:.015em;color:var(--accent);gap:8px}
+.paper-body{display:flex;flex-direction:column;min-height:150px}
+#research .paper-card .card-meta{margin:0 0 8px;font-size:.75rem;line-height:1.5;letter-spacing:.015em;color:var(--accent);gap:8px}
 .card-index{margin:0;color:var(--muted);font:500 .6875rem/1.5 var(--mono);font-variant-numeric:tabular-nums}
-#research .paper-card h3{max-width:none;margin:0 0 10px;font-size:1.125rem;line-height:1.42;font-weight:550;letter-spacing:-.012em}
+#research .paper-card h3{max-width:none;margin:0 0 8px;font-size:1.125rem;line-height:1.36;font-weight:550;letter-spacing:-.012em}
 .paper-title{text-decoration:none}
 .paper-title::after{content:'';position:absolute;inset:0;z-index:1;border-radius:inherit}
 .paper-title:hover{color:var(--accent)}
 .paper-title:focus-visible{outline:none}
 #research .paper-card:has(.paper-title:focus-visible){outline:2px solid var(--accent);outline-offset:4px}
-#research .paper-card .paper-summary{margin:0 0 14px;color:var(--body);font-size:.875rem;line-height:1.6}
+#research .paper-card .paper-summary{margin:0 0 10px;color:var(--body);font-size:.875rem;line-height:1.5}
 .paper-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
 #research .paper-card .card-venue{margin:0;font-size:.6875rem;line-height:1.5;letter-spacing:.055em;color:var(--muted)}
-.paper-arrow{display:grid;place-items:center;width:24px;height:24px;border:1px solid var(--line);border-radius:50%;color:var(--accent);font-size:.8125rem;transition:background .2s,border-color .2s}
+.paper-arrow{display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--line);border-radius:50%;color:var(--accent);font-size:.8125rem;transition:background .2s,border-color .2s}
 .paper-card[data-sketch-open=true] .paper-arrow{background:var(--paper);border-color:var(--accent)}
 .paper-art-reveal{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .28s ease,opacity .22s ease}
 .paper-art-clip{min-height:0;overflow:hidden}
-.paper-art{margin:13px 0 0;padding:7px;border-radius:10px;background:#f7f9ff;border:1px solid #cad4e6;transform:translateY(8px);transition:transform .28s ease}
-.paper-art img{display:block;width:100%;height:132px;object-fit:contain;object-position:center}
+.paper-art{margin:10px 0 0;padding:6px;border-radius:10px;background:#f7f9ff;border:1px solid #cad4e6;transform:translateY(8px);transition:transform .28s ease}
+.paper-art img{display:block;width:100%;height:110px;object-fit:contain;object-position:center}
 .paper-card[data-sketch-open=true] .paper-art-reveal{grid-template-rows:1fr;opacity:1}
 .paper-card[data-sketch-open=true] .paper-art{transform:none}
 @media(max-width:1100px){
  #research .work-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .paper-body{min-height:168px}
+ .paper-body{min-height:146px}
 }
 @media(max-width:640px){
  #research .work-grid{grid-template-columns:minmax(0,1fr);gap:12px}
- #research .paper-card{padding:18px}
+ #research .paper-card{padding:16px}
  .paper-body{min-height:0}
  #research .paper-card h3{font-size:1.0625rem;line-height:1.45}
  #research .paper-card .paper-summary{font-size:.875rem}
  #research .paper-card .card-meta{font-size:.75rem}
  #research .paper-card .card-venue{font-size:.6875rem}
- .paper-art img{height:135px}
+ .paper-art img{height:112px}
  .publications-section .section-heading{align-items:flex-start;flex-wrap:wrap;gap:12px}
  .publications-section .section-heading h2{font-size:clamp(1.75rem,6vw,2.4rem)}
  .publications-section .section-heading .text-link{font-size:.875rem}
 }
 @media(prefers-reduced-motion:reduce){.paper-art-reveal,.paper-art,.paper-arrow{transition:none}}
 @media print{.paper-art-reveal{display:none!important}#research .work-grid{grid-template-columns:1fr}#research .paper-card{break-inside:avoid}.paper-body{min-height:0}}
+
+/* Calm automatic interest changes, with a visible pause control. */
+.interest-playback{display:flex;align-items:center;gap:7px;flex:none}
+.interest-gallery .interest-playback #interest-count{padding:0;border:0;background:none;min-width:44px;text-align:center}
+.interest-rotation{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--body);font:500 .6875rem/1.4 var(--sans);cursor:pointer}
+.interest-rotation svg{width:12px;height:12px;fill:currentColor}
+.interest-rotation[data-playing=true] .rotation-play-mark,.interest-rotation[data-playing=false] .rotation-pause-mark{display:none}
+.interest-rotation:hover{border-color:var(--accent);color:var(--ink)}
+.interest-rotation:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:600px){.interest-playback{gap:4px}.interest-rotation{min-width:40px;min-height:40px;padding:7px}.interest-rotation [data-rotation-label]{display:none}.interest-gallery .interest-playback #interest-count{min-width:42px}}

@@ -53,20 +53,38 @@
    panel.querySelector('h3').textContent=button.dataset.title;
    panel.querySelector('.covariance-copy').textContent=button.dataset.description;
  }));
+ // Research interests rotate only while visible and not being read or operated.
  const interestButtons=$$('[data-landscape]');
  if(interestButtons.length){
-   const stage=$('.interest-stage');
-   let current=0;
-   function selectInterest(index){
+   const stage=$('.interest-stage'),gallery=$('#interests'),rotationButton=$('.interest-rotation');
+   const rotationDelay=10000;
+   let current=0,rotationTimer=0,rotationEnabled=!reduced.matches;
+   let inView=false,hovered=false,focused=false,touching=false;
+   function queueInterestRotation(){
+     clearTimeout(rotationTimer);rotationTimer=0;
+     const running=rotationEnabled&&inView&&!document.hidden&&!hovered&&!focused&&!touching;
+     gallery.dataset.rotating=String(running);
+     if(running)rotationTimer=setTimeout(()=>selectInterest(current+1,false),rotationDelay);
+   }
+   function syncRotationControl(){
+     const label=rotationEnabled?'Pause automatic interest changes':'Resume automatic interest changes';
+     rotationButton.setAttribute('aria-label',label);
+     rotationButton.setAttribute('title',label);
+     rotationButton.dataset.playing=String(rotationEnabled);
+     rotationButton.querySelector('[data-rotation-label]').textContent=rotationEnabled?'Pause':'Play';
+   }
+   function selectInterest(index,announce=true){
      current=(index+interestButtons.length)%interestButtons.length;
      const button=interestButtons[current];
      interestButtons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===current)));
      $('#interest-title').textContent=button.dataset.label;
      $('#art-description').textContent=button.dataset.description;
      $('#interest-count').textContent=`${String(current+1).padStart(2,'0')} / ${String(interestButtons.length).padStart(2,'0')}`;
-     $('#interests').dataset.interest=button.dataset.landscape;
+     gallery.dataset.interest=button.dataset.landscape;
      $$('[data-sketch]').forEach(img=>{img.hidden=img.dataset.sketch!==button.dataset.landscape});
-     $('#interest-status').textContent=`${button.dataset.label}, ${current+1} of ${interestButtons.length}. ${button.dataset.description}`;
+     // Automatic changes stay quiet for screen readers; manual choices are announced.
+     $('#interest-status').textContent=announce?`${button.dataset.label}, ${current+1} of ${interestButtons.length}. ${button.dataset.description}`:'';
+     queueInterestRotation();
    }
    interestButtons.forEach((button,index)=>{
      button.addEventListener('click',()=>selectInterest(index));
@@ -81,6 +99,25 @@
        event.preventDefault();interestButtons[next].focus();selectInterest(next);
      });
    });
+   rotationButton.addEventListener('click',()=>{
+     rotationEnabled=!rotationEnabled;syncRotationControl();queueInterestRotation();
+   });
+   gallery.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'){hovered=true;queueInterestRotation()}});
+   gallery.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'){hovered=false;queueInterestRotation()}});
+   gallery.addEventListener('focusin',event=>{focused=event.target!==rotationButton;queueInterestRotation()});
+   gallery.addEventListener('focusout',event=>{if(!gallery.contains(event.relatedTarget)){focused=false;queueInterestRotation()}});
+   gallery.addEventListener('touchstart',()=>{touching=true;queueInterestRotation()},{passive:true});
+   const finishInterestTouch=()=>{touching=false;queueInterestRotation()};
+   gallery.addEventListener('touchend',finishInterestTouch,{passive:true});
+   gallery.addEventListener('touchcancel',finishInterestTouch,{passive:true});
+   document.addEventListener('visibilitychange',queueInterestRotation);
+   reduced.addEventListener('change',()=>{if(reduced.matches)rotationEnabled=false;syncRotationControl();queueInterestRotation()});
+   if('IntersectionObserver'in window){
+     new IntersectionObserver(entries=>{
+       const entry=entries[0];inView=entry.isIntersecting&&entry.intersectionRatio>=.35;queueInterestRotation();
+     },{threshold:[0,.35]}).observe(gallery);
+   }else{inView=true}
+   syncRotationControl();queueInterestRotation();
    // Touch gestures leave vertical page scrolling to the browser.
    let touchStart;
    stage.addEventListener('touchstart',event=>{
