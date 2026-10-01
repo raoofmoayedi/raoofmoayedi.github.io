@@ -320,3 +320,9 @@ html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
 .experience-projects li{padding-left:4px;line-height:1.7}
 .experience-projects li+li{margin-top:12px}
 .experience-projects strong{color:var(--ink)}
+
+/* Identify the researcher directly beneath the name. */
+.hero h1{margin-bottom:14px}
+.hero .hero-affiliation{margin:0 0 26px;color:var(--ink);font-size:1.125rem;font-weight:550;line-height:1.55}
+.hero .hero-affiliation span{margin-top:3px;color:var(--body);font-size:1rem;font-weight:400}
+@media(max-width:760px){.hero .hero-affiliation{font-size:1.0625rem;margin-bottom:24px}.hero .hero-affiliation span{font-size:.9375rem}}

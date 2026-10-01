@@ -11,6 +11,7 @@ A responsive academic portfolio with six illustrated research cards, searchable 
 - Research explanations and the full CV are retained in `content/research/` and `content/cv.html`; homepage experience is sourced from `content/index.html`.
 - The shared base stylesheet is `content/assets/site.css`; design refinements live in `assets/redesign.css`, interactions in `assets/site.js`.
 - Run `python3 build.py`, then `python3 package_preview.py`.
+- Run `node tests/pointer-state.test.cjs` to check pointer focus recovery, visibility, preferences, and trailing motion.
 - Commit generated root pages, scripts, source content, assets, and `preview.html` together.
 
 No framework or external font service is needed. Illustrations are optimized local WebP assets; no university logos or external image requests are used. The `ASSETS.md` file describes the conceptual illustrations.

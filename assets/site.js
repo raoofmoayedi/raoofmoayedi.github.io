@@ -93,16 +93,17 @@
    },{passive:true});
    stage.addEventListener('touchcancel',()=>{touchStart=null},{passive:true});
  }
- // Keep the companion visible for mouse users; pause its decoration when still.
+ // Mouse capability stays established across focus and visibility changes.
  const pointerButton=$('.pointer-option');
  const finePointer=matchMedia('(any-hover: hover) and (any-pointer: fine)');
  let mouseDetected=finePointer.matches;
  let playful=true;
  try{playful=localStorage.getItem('playful-pointer')!=='off'}catch{}
  let companion,core,eyes,frame=0,idleTimer=0,lastFrame=0,tracking=false,lastMouse=null,pressAnimation,blinkAnimation;
+ let positioned=false,resumeOnFocus=false;
  const target={x:0,y:0},point={x:0,y:0};
  const editable='input,textarea,select,[contenteditable="true"],[role="textbox"]';
- const pointerAllowed=()=>mouseDetected&&playful;
+ const pointerAllowed=()=>mouseDetected&&playful&&!document.hidden;
  function hidePointer(){
    tracking=false;lastFrame=0;
    clearTimeout(idleTimer);
@@ -110,10 +111,11 @@
    companion?.classList.remove('is-visible','is-moving');
  }
  function syncPointer(){
-   pointerButton.hidden=!mouseDetected;
+   // The control is always available, even if the browser temporarily reports no mouse.
+   pointerButton.hidden=false;
    pointerButton.setAttribute('aria-pressed',String(playful));
    pointerButton.querySelector('[data-pointer-state]').textContent=playful?'On':'Off';
-   if(!pointerAllowed())hidePointer();
+   if(!pointerAllowed()){if(document.hidden)suspendPointer();else hidePointer()}
    if(!pointerAllowed()||reduced.matches){pressAnimation?.cancel();blinkAnimation?.cancel()}
  }
  function drawPointer(now){
@@ -121,7 +123,7 @@
    const dt=lastFrame?Math.min(now-lastFrame,40):16.67;
    lastFrame=now;
    // The same response at 60 Hz and 120 Hz, without velocity-driven tilting.
-   const ease=reduced.matches?1:1-Math.exp(-dt/65);
+   const ease=reduced.matches?1:1-Math.exp(-dt/100);
    point.x+=(target.x-point.x)*ease;point.y+=(target.y-point.y)*ease;
    const settled=Math.hypot(target.x-point.x,target.y-point.y)<.15;
    if(settled){point.x=target.x;point.y=target.y}
@@ -135,7 +137,7 @@
    syncPointer();
    if(playful)showPointer(event);
  });
- finePointer.addEventListener('change',()=>{mouseDetected=finePointer.matches;syncPointer()});reduced.addEventListener('change',syncPointer);syncPointer();
+ finePointer.addEventListener('change',()=>{mouseDetected=mouseDetected||finePointer.matches;syncPointer()});reduced.addEventListener('change',syncPointer);syncPointer();
  function showPointer(event){
    const mouseInput=event.pointerType==='mouse'||(!event.pointerType&&event.type==='click'&&event.detail>0);
    if(!mouseInput){if(event.pointerType==='touch')hidePointer();return}
@@ -152,7 +154,9 @@
    }
    target.x=Math.max(10,Math.min(innerWidth-32,event.clientX+20));
    target.y=Math.max(10,Math.min(innerHeight-32,event.clientY+22));
-   if(!tracking){point.x=target.x;point.y=target.y;tracking=true;companion.style.transform=`translate3d(${point.x}px,${point.y}px,0)`}
+   if(!positioned){point.x=target.x;point.y=target.y;positioned=true}
+   tracking=true;resumeOnFocus=false;
+   companion.style.transform=`translate3d(${point.x}px,${point.y}px,0)`;
    const interactive=String(!!event.target.closest('a,button,summary,[role="button"],label'));
    if(companion.dataset.interactive!==interactive)companion.dataset.interactive=interactive;
    companion.classList.add('is-visible','is-moving');
@@ -167,8 +171,23 @@
    blinkAnimation=eyes.animate([{transform:"scaleY(1)"},{transform:"scaleY(.15)",offset:.35},{transform:"scaleY(1)"}],{duration:280,easing:"ease-out"});
    pressAnimation=core.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.3},{transform:'scale(1)'}],{duration:260,easing:'ease-out'});
  },{passive:true});
- document.addEventListener('pointerout',event=>{if(!event.relatedTarget)hidePointer()});
- document.addEventListener('keydown',event=>{if(event.key==='Tab')hidePointer()});
- document.addEventListener('visibilitychange',()=>{if(document.hidden)hidePointer()});
- addEventListener('blur',hidePointer);
+ function suspendPointer(){
+   resumeOnFocus=resumeOnFocus||tracking;
+   hidePointer();
+ }
+ function restorePointer(){
+   syncPointer();
+   if(document.hidden||!playful||!resumeOnFocus||!lastMouse)return;
+   const element=document.elementFromPoint(lastMouse.x,lastMouse.y);
+   if(!element||element.closest(editable))return;
+   showPointer({type:'resume',pointerType:'mouse',clientX:lastMouse.x,clientY:lastMouse.y,target:element});
+ }
+ document.addEventListener('pointerout',event=>{if(!event.relatedTarget)suspendPointer()});
+ document.addEventListener('keydown',event=>{
+   if(event.key==='Tab'&&!event.ctrlKey&&!event.metaKey&&!event.altKey){resumeOnFocus=false;hidePointer()}
+ });
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)suspendPointer();else restorePointer()});
+ addEventListener('blur',suspendPointer);
+ addEventListener('focus',restorePointer);
+ addEventListener('pageshow',restorePointer);
 })();
