@@ -101,6 +101,49 @@
    },{passive:true});
    stage.addEventListener('touchcancel',()=>{touchStart=null},{passive:true});
  }
+ // Publication sketches start closed. A title reveals a temporary preview;
+ // the Sketch control keeps one open until dismissed, including on touchscreens.
+ const paperCards=$$('.paper-card');
+ const sketchHover=matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)');
+ const paperPreviews=paperCards.map(card=>({card,title:card.querySelector('.paper-title'),details:card.querySelector('.paper-preview'),pinned:false,timer:0}));
+ function closePaperPreview(item){clearTimeout(item.timer);item.details.open=false;item.pinned=false}
+ function openPaperPreview(item,pinned=false){
+   paperPreviews.forEach(other=>{if(other!==item)closePaperPreview(other)});
+   clearTimeout(item.timer);item.pinned=pinned;item.details.open=true;
+   if(sketchHover.matches){
+     const top=item.card.getBoundingClientRect().top;
+     const headerBottom=header.getBoundingClientRect().bottom;
+     const artHeight=item.details.querySelector('.paper-preview-art').getBoundingClientRect().height;
+     item.card.dataset.previewPlacement=top-artHeight>headerBottom+16?'above':'below';
+   }
+ }
+ paperPreviews.forEach(item=>{
+   const summary=item.details.querySelector('summary');
+   item.title.addEventListener('pointerenter',event=>{
+     if(event.pointerType!=='mouse'||!sketchHover.matches)return;
+     clearTimeout(item.timer);
+     item.timer=setTimeout(()=>openPaperPreview(item,item.pinned),140);
+   });
+   item.title.addEventListener('pointerleave',()=>clearTimeout(item.timer));
+   item.title.addEventListener('focus',()=>{if(sketchHover.matches&&item.title.matches(':focus-visible'))openPaperPreview(item,item.pinned)});
+   item.card.addEventListener('pointerenter',()=>clearTimeout(item.timer));
+   item.card.addEventListener('pointerleave',()=>{
+     clearTimeout(item.timer);
+     if(!item.pinned&&!item.card.contains(document.activeElement))item.timer=setTimeout(()=>closePaperPreview(item),140);
+   });
+   item.card.addEventListener('focusout',event=>{
+     if(!item.card.contains(event.relatedTarget)&&!item.pinned)closePaperPreview(item);
+   });
+   summary.addEventListener('click',event=>{
+     event.preventDefault();
+     if(item.details.open&&item.pinned)closePaperPreview(item);
+     else openPaperPreview(item,true);
+   });
+ });
+ document.addEventListener('keydown',event=>{if(event.key==='Escape')paperPreviews.forEach(closePaperPreview)});
+ document.addEventListener('pointerdown',event=>{paperPreviews.forEach(item=>{if(!item.card.contains(event.target))closePaperPreview(item)})});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)paperPreviews.forEach(closePaperPreview)});
+ sketchHover.addEventListener('change',()=>paperPreviews.forEach(closePaperPreview));
  // Mouse capability stays established across focus and visibility changes.
  const pointerButton=$('.pointer-option');
  const finePointer=matchMedia('(any-hover: hover) and (any-pointer: fine)');
