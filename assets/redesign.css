@@ -230,15 +230,18 @@ html[data-theme=light] .university-emblem img{mix-blend-mode:multiply;filter:non
 @media(max-width:380px){.brand .monogram{width:38px;height:38px;flex-basis:38px}.brand .monogram svg{width:37px;height:37px}.brand .brand-name,.brand-name>span{font-size:.8125rem}}
 @media print{.university-emblem{background:#fff!important}.university-emblem img{filter:none!important;mix-blend-mode:normal!important}}
 
-/* Orbital r: an italic initial with a fine scientific orbit. */
-.brand .monogram{padding:0;border:0;background:radial-gradient(circle at 28% 20%,var(--surface-alt),var(--paper));color:var(--ink);border-radius:50%;box-shadow:0 2px 8px #00000014;transform:none;transition:box-shadow .25s ease}
-.brand .monogram svg{width:100%;height:100%;overflow:visible}
-.brand .mark-rim,.brand .mark-orbit{stroke:var(--accent)}
-.brand .mark-satellite{fill:color-mix(in srgb,var(--accent) 45%,#8cdbc7);stroke:var(--paper);stroke-width:1.8;transition:fill .3s ease}
-.brand:hover .monogram{transform:none;background:radial-gradient(circle at 28% 20%,var(--surface-alt),var(--paper));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
-.brand:hover .mark-satellite{fill:var(--accent)}
-@media(max-width:760px){.brand .monogram{border-radius:50%}.brand .monogram svg{width:100%;height:100%}}
-@media(max-width:380px){.brand .monogram{border-radius:50%}.brand .monogram svg{width:100%;height:100%}}
+/* A rounded r and a full stop, drawn for clarity at favicon size. */
+.brand .monogram{padding:0;border:0;border-radius:15px;background:none;color:var(--paper);box-shadow:none;transform:none;transition:box-shadow .2s ease}
+.brand .monogram svg{display:block;width:100%;height:100%;overflow:visible}
+.brand .mark-tile{fill:var(--ink);transition:fill .2s ease}
+.brand .mark-letter{fill:var(--paper);transition:fill .2s ease}
+.brand .mark-point{fill:var(--blue);transform-origin:43px 46.5px;transition:fill .2s ease,transform .2s ease}
+html[data-theme=light] .brand .mark-point{fill:color-mix(in srgb,var(--accent) 45%,white)}
+.brand:hover .monogram{transform:none;background:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
+.brand:hover .mark-point{transform:scale(1.1)}
+@media(max-width:760px){.brand .monogram{border-radius:13px}}
+@media(max-width:380px){.brand .monogram{border-radius:12px}}
+@media(prefers-reduced-motion:reduce){.brand:hover .mark-point{transform:none}}
 
 /* Optional pointer companion: decoration only; the native cursor is retained. */
 .pointer-option{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);font:500 .875rem/1.4 var(--sans);cursor:pointer;text-align:left}

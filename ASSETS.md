@@ -249,3 +249,8 @@ Edit only the trail and background treatment of this SGD illustration. Keep the 
 ## rm site mark and playful pointer
 
 `assets/monogram.svg` and the inline header use a custom drawn lowercase **rm** signature, a small smile underline, and a four-point spark. These are original code-native vector assets. The optional pointer is a small orbiting character with two eyes, a hover reaction, and four brief click sparks. It keeps the native cursor and is disabled on coarse pointers and with reduced motion. Its preference is available in the Style menu and persists locally.
+
+
+## Current site mark: rounded r
+
+The header and `assets/monogram.svg` now use an original code-native lowercase r and accent dot in a rounded-square badge. This replaces the earlier orbital and signature treatments. The shape uses filled vector paths with no font dependency; the header follows the selected palette and the favicon adapts to the browser color scheme. The favicon URL is versioned from the asset contents.
