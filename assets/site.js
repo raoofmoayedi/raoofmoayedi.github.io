@@ -93,33 +93,35 @@
    },{passive:true});
    stage.addEventListener('touchcancel',()=>{touchStart=null},{passive:true});
  }
- // Mouse companion with stable easing, hybrid-device support, and an idle fade.
+ // Keep the companion visible for mouse users; pause its decoration when still.
  const pointerButton=$('.pointer-option');
  const finePointer=matchMedia('(any-hover: hover) and (any-pointer: fine)');
+ let mouseDetected=finePointer.matches;
  let playful=true;
  try{playful=localStorage.getItem('playful-pointer')!=='off'}catch{}
  let companion,core,eyes,frame=0,idleTimer=0,lastFrame=0,tracking=false,lastMouse=null,pressAnimation,blinkAnimation;
  const target={x:0,y:0},point={x:0,y:0};
- const editable='input,textarea,select,[contenteditable="true"],[role="textbox"],pre,code';
- const pointerAllowed=()=>finePointer.matches&&!reduced.matches&&playful;
+ const editable='input,textarea,select,[contenteditable="true"],[role="textbox"]';
+ const pointerAllowed=()=>mouseDetected&&playful;
  function hidePointer(){
    tracking=false;lastFrame=0;
    clearTimeout(idleTimer);
    if(frame){cancelAnimationFrame(frame);frame=0}
-   companion?.classList.remove('is-visible');
+   companion?.classList.remove('is-visible','is-moving');
  }
  function syncPointer(){
-   pointerButton.hidden=!finePointer.matches||reduced.matches;
+   pointerButton.hidden=!mouseDetected;
    pointerButton.setAttribute('aria-pressed',String(playful));
    pointerButton.querySelector('[data-pointer-state]').textContent=playful?'On':'Off';
-   if(!pointerAllowed()){hidePointer();pressAnimation?.cancel();blinkAnimation?.cancel()}
+   if(!pointerAllowed())hidePointer();
+   if(!pointerAllowed()||reduced.matches){pressAnimation?.cancel();blinkAnimation?.cancel()}
  }
  function drawPointer(now){
    frame=0;if(!tracking||!pointerAllowed())return;
    const dt=lastFrame?Math.min(now-lastFrame,40):16.67;
    lastFrame=now;
    // The same response at 60 Hz and 120 Hz, without velocity-driven tilting.
-   const ease=1-Math.exp(-dt/65);
+   const ease=reduced.matches?1:1-Math.exp(-dt/65);
    point.x+=(target.x-point.x)*ease;point.y+=(target.y-point.y)*ease;
    const settled=Math.hypot(target.x-point.x,target.y-point.y)<.15;
    if(settled){point.x=target.x;point.y=target.y}
@@ -133,11 +135,15 @@
    syncPointer();
    if(playful)showPointer(event);
  });
- finePointer.addEventListener('change',syncPointer);reduced.addEventListener('change',syncPointer);syncPointer();
+ finePointer.addEventListener('change',()=>{mouseDetected=finePointer.matches;syncPointer()});reduced.addEventListener('change',syncPointer);syncPointer();
  function showPointer(event){
-   if(event.pointerType!=='mouse'||!pointerAllowed()||event.target.closest(editable)){hidePointer();return}
-   // Ignore stationary events and sub-pixel input jitter; neither should prevent the idle fade.
-   if(event.type==='pointermove'&&lastMouse&&Math.hypot(event.clientX-lastMouse.x,event.clientY-lastMouse.y)<1)return;
+   const mouseInput=event.pointerType==='mouse'||(!event.pointerType&&event.type==='click'&&event.detail>0);
+   if(!mouseInput){if(event.pointerType==='touch')hidePointer();return}
+   // An actual mouse event is more reliable than media queries on hybrid devices.
+   if(!mouseDetected){mouseDetected=true;syncPointer()}
+   if(!pointerAllowed()||event.target.closest(editable)){hidePointer();return}
+   // Ignore input jitter once the companion is visible.
+   if(tracking&&event.type==='pointermove'&&lastMouse&&Math.hypot(event.clientX-lastMouse.x,event.clientY-lastMouse.y)<1)return;
    lastMouse={x:event.clientX,y:event.clientY};
    if(!companion){
      companion=document.createElement('div');companion.className='pointer-companion';companion.setAttribute('aria-hidden','true');
@@ -149,21 +155,20 @@
    if(!tracking){point.x=target.x;point.y=target.y;tracking=true;companion.style.transform=`translate3d(${point.x}px,${point.y}px,0)`}
    const interactive=String(!!event.target.closest('a,button,summary,[role="button"],label'));
    if(companion.dataset.interactive!==interactive)companion.dataset.interactive=interactive;
-   companion.classList.add('is-visible');
-   clearTimeout(idleTimer);idleTimer=setTimeout(hidePointer,1800);
+   companion.classList.add('is-visible','is-moving');
+   clearTimeout(idleTimer);idleTimer=setTimeout(()=>companion.classList.remove('is-moving'),220);
    if(!frame)frame=requestAnimationFrame(drawPointer);
  }
  document.addEventListener('pointermove',showPointer,{passive:true});
  document.addEventListener('pointerdown',event=>{
    if(event.button===0)showPointer(event);
-   if(event.pointerType!=='mouse'||event.button!==0||!pointerAllowed()||!tracking||event.target.closest(editable))return;
+   if(event.pointerType!=='mouse'||event.button!==0||reduced.matches||!pointerAllowed()||!tracking||event.target.closest(editable))return;
    pressAnimation?.cancel();blinkAnimation?.cancel();
    blinkAnimation=eyes.animate([{transform:"scaleY(1)"},{transform:"scaleY(.15)",offset:.35},{transform:"scaleY(1)"}],{duration:280,easing:"ease-out"});
    pressAnimation=core.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.3},{transform:'scale(1)'}],{duration:260,easing:'ease-out'});
  },{passive:true});
  document.addEventListener('pointerout',event=>{if(!event.relatedTarget)hidePointer()});
- document.addEventListener('keydown',hidePointer);
+ document.addEventListener('keydown',event=>{if(event.key==='Tab')hidePointer()});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)hidePointer()});
- addEventListener('scroll',hidePointer,{passive:true});
  addEventListener('blur',hidePointer);
 })();
