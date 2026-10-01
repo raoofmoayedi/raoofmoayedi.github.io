@@ -264,3 +264,35 @@ html[data-theme=light] .university-emblem img{mix-blend-mode:multiply;filter:non
 .pointer-companion[data-interactive=true] .pointer-halo{transform:scale(1.1);border-color:color-mix(in srgb,var(--accent) 65%,transparent)}
 @media(pointer:coarse),(hover:none),(prefers-reduced-motion:reduce){.pointer-companion,.pointer-option{display:none!important}}
 @media print{.pointer-companion{display:none!important}}
+
+/* Menus are contained by the full header, including small and short viewports. */
+html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
+#interests,#coursework,#teaching{scroll-margin-top:0}
+.nav{position:relative}
+.appearance-picker{position:static}
+.appearance-panel{top:calc(100% + 8px);right:0;left:auto;width:300px;max-width:100%;max-height:max(80px,calc(100vh - var(--header-height,96px) - 24px));max-height:max(80px,calc(100dvh - var(--header-height,96px) - 24px));overscroll-behavior:contain;scrollbar-gutter:stable}
+.nav-right{min-width:0}
+.work-card h3,.project-hero h1,.library-paper h3,.education-heading h3{overflow-wrap:anywhere}
+@media(max-width:900px){
+ .nav{flex-direction:row;align-items:center;flex-wrap:nowrap;gap:10px;min-height:76px;padding-top:10px;padding-bottom:10px}
+ .nav-right{width:auto;gap:8px;flex-shrink:0}
+ .menu-button{display:block;min-height:44px;font-size:.875rem;border-radius:8px;padding:0 10px}
+ .menu-button[aria-expanded=true]{border-color:var(--accent);background:var(--surface-alt)}
+ .nav-links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;width:auto;max-height:calc(100dvh - var(--header-height,76px) - 24px);overflow-y:auto;overscroll-behavior:contain;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 16px 48px #0005;gap:2px;align-items:stretch;flex-direction:column;flex-wrap:nowrap;z-index:100}
+ .nav-links.open{display:flex}
+ .nav-links a{display:flex;padding:8px 12px;min-height:44px;font-size:1rem}
+ .appearance-panel{padding:14px}
+ .brand{min-width:0}
+ .brand .brand-name{min-width:0}
+}
+@media(max-width:359px){
+ .nav{flex-wrap:wrap;row-gap:8px}
+ .brand{flex-basis:100%}
+ .nav-right{width:100%;justify-content:flex-end}
+ .appearance-panel{width:100%}
+}
+@media(max-height:480px) and (max-width:900px){
+ .nav{min-height:60px;padding-top:6px;padding-bottom:6px}
+ .appearance-panel{padding:10px}
+ .appearance-title{margin-bottom:8px}
+}

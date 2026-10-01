@@ -26,9 +26,21 @@
  document.addEventListener('keydown',event=>{
    if(event.key==='Escape'&&appearance.open){appearance.open=false;appearance.querySelector('summary').focus()}
  });
- const menu=$('.menu-button');menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',open);$('#navigation').classList.toggle('open',open)});
- $$('#navigation a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');$('#navigation').classList.remove('open')}));
- document.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.setAttribute('aria-expanded','false');$('#navigation').classList.remove('open')}});
+ const menu=$('.menu-button'),navigation=$('#navigation'),header=$('.header');
+ function closeNavigation(){menu.setAttribute('aria-expanded','false');navigation.classList.remove('open')}
+ menu.addEventListener('click',()=>{
+   const open=menu.getAttribute('aria-expanded')!=='true';
+   if(open)appearance.open=false;
+   menu.setAttribute('aria-expanded',String(open));navigation.classList.toggle('open',open);
+ });
+ appearance.addEventListener('toggle',()=>{if(appearance.open)closeNavigation()});
+ $$('#navigation a').forEach(a=>a.addEventListener('click',closeNavigation));
+ document.addEventListener('click',event=>{if(!navigation.contains(event.target)&&!menu.contains(event.target))closeNavigation()});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.getAttribute('aria-expanded')==='true'){closeNavigation();menu.focus()}});
+ const updateHeaderSize=()=>document.documentElement.style.setProperty('--header-height',`${Math.ceil(header.getBoundingClientRect().height)}px`);
+ updateHeaderSize();
+ if('ResizeObserver'in window)new ResizeObserver(updateHeaderSize).observe(header);
+ else addEventListener('resize',updateHeaderSize,{passive:true});
  const progress=()=>{$('.progress').style.width=`${100*scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)}%`};addEventListener('scroll',progress,{passive:true});progress();
  if(!reduced.matches&&'IntersectionObserver'in window){document.documentElement.classList.add('js-motion');const ob=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');ob.unobserve(e.target)}}),{threshold:.08});$$('.reveal').forEach(el=>ob.observe(el))}
  let toastTimer;function toast(t){const el=$('.toast');el.textContent=t;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),2800)}
