@@ -1,28 +1,5 @@
 [
   {
-    "id": "raoof_synthetic",
-    "type": "unpublished",
-    "title": "Geometry-Adaptive Mechanisms for Private Synthetic Data",
-    "authors": [
-      "R. Zare Moayedi",
-      "A. R. Asadi",
-      "M. H. Yassaee",
-      "G. Aminian"
-    ],
-    "year": 2026,
-    "venue": "",
-    "status": "Preprint · Under review",
-    "arxiv": "2609.33363",
-    "url": "https://arxiv.org/abs/2609.33363",
-    "project": "research/private-data.html",
-    "bib_authors": [
-      "Zare Moayedi, Raoof",
-      "Asadi, Amir R.",
-      "Yassaee, Mohammad Hossein",
-      "Aminian, Gholamali"
-    ]
-  },
-  {
     "id": "Junhao_raoof",
     "type": "article",
     "title": "Allies Teach Better Than Enemies: Inverse Adversaries for Robust Knowledge Distillation",
@@ -67,25 +44,27 @@
     ]
   },
   {
-    "id": "raoof_private_splt",
+    "id": "raoof_synthetic",
     "type": "unpublished",
-    "title": "Fundamental Limits of Private Covariance Estimation under Vertical Partitioning",
+    "title": "Geometry-Adaptive Mechanisms for Private Synthetic Data",
     "authors": [
-      "R. Zare Moayedi*",
-      "P. Halvachi*",
-      "A. Najafi",
-      "M. H. Yassaee"
+      "R. Zare Moayedi",
+      "A. R. Asadi",
+      "M. H. Yassaee",
+      "G. Aminian"
     ],
     "year": 2026,
     "venue": "",
-    "status": "Preprint",
+    "status": "Preprint · Under review",
+    "arxiv": "2609.33363",
+    "url": "https://arxiv.org/abs/2609.33363",
+    "project": "research/private-data.html",
     "bib_authors": [
       "Zare Moayedi, Raoof",
-      "Halvachi, Paniz",
-      "Najafi, Amir",
-      "Yassaee, Mohammad Hossein"
-    ],
-    "project": "research/private-covariance.html"
+      "Asadi, Amir R.",
+      "Yassaee, Mohammad Hossein",
+      "Aminian, Gholamali"
+    ]
   },
   {
     "id": "raoof_private_sampling",
@@ -105,6 +84,27 @@
       "Ebrahimi, Javad B."
     ],
     "project": "research/private-sampling.html"
+  },
+  {
+    "id": "raoof_private_splt",
+    "type": "unpublished",
+    "title": "Fundamental Limits of Private Covariance Estimation under Vertical Partitioning",
+    "authors": [
+      "R. Zare Moayedi*",
+      "P. Halvachi*",
+      "A. Najafi",
+      "M. H. Yassaee"
+    ],
+    "year": 2026,
+    "venue": "",
+    "status": "Preprint",
+    "bib_authors": [
+      "Zare Moayedi, Raoof",
+      "Halvachi, Paniz",
+      "Najafi, Amir",
+      "Yassaee, Mohammad Hossein"
+    ],
+    "project": "research/private-covariance.html"
   },
   {
     "id": "raoof_spurious",
