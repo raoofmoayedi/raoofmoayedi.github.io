@@ -109,7 +109,7 @@
   {
     "id": "raoof_spurious",
     "type": "unpublished",
-    "title": "Transient Implicit Regularization in SGD: Understanding When SGD Improves Robustness to Spurious Correlations",
+    "title": "Understanding When SGD Improves Robustness to Spurious Correlations",
     "authors": [
       "N. Mirzaie*",
       "R. Zare Moayedi*",

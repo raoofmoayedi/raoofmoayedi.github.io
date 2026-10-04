@@ -518,3 +518,21 @@ html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
 }
 @media(prefers-reduced-motion:reduce){.paper-art-reveal,.paper-art,.paper-arrow{transition:none}}
 @media print{.paper-art-reveal{display:none!important}#research .work-grid{grid-template-columns:1fr}#research .paper-card{break-inside:avoid}.paper-body{min-height:0}}
+
+/* A compact, typography-led project index. */
+.project-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
+.project-entry{display:grid;grid-template-columns:28px minmax(0,1fr);gap:18px;align-items:start;min-width:0;margin:0;padding:25px 28px;border-top:1px solid var(--line);transition:background .2s ease}
+.project-entry:nth-child(-n+2){border-top:0}
+.project-entry:nth-child(odd){border-right:1px solid var(--line)}
+.project-number{padding-top:2px;color:var(--accent);font:500 .8125rem/1.5 var(--mono);font-variant-numeric:tabular-nums}
+.project-entry .project-topic{margin:0 0 7px;color:var(--muted);font-size:.75rem;line-height:1.5;letter-spacing:.035em}
+.project-entry h3{margin:0;color:var(--ink);font-size:1.125rem;line-height:1.45;font-weight:600;letter-spacing:-.015em;overflow-wrap:break-word;text-wrap:pretty}
+@media(hover:hover){.project-entry:hover{background:var(--surface-alt)}}
+@media(max-width:640px){
+ .project-list{grid-template-columns:minmax(0,1fr);border-radius:12px}
+ .project-entry{grid-template-columns:24px minmax(0,1fr);gap:12px;padding:20px}
+ .project-entry:nth-child(odd){border-right:0}
+ .project-entry:nth-child(2){border-top:1px solid var(--line)}
+ .project-entry h3{font-size:1.0625rem}
+}
+@media(prefers-reduced-motion:reduce){.project-entry{transition:none}}
