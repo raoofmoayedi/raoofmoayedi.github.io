@@ -77,7 +77,7 @@
  const interestButtons=$$('[data-landscape]');
  if(interestButtons.length){
    const stage=$('.interest-stage'),gallery=$('#interests');
-   const rotationDelay=3000;
+   const rotationDelay=6000;
    let current=0,rotationTimer=0,inView=false;
    function queueInterestRotation(){
      clearTimeout(rotationTimer);rotationTimer=0;
