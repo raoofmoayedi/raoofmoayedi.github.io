@@ -58,9 +58,9 @@ education=f'''<section id="education" class="section"><div class="section-headin
 project_items=[
  ('Model geometry','Input-Space Geometry of CNNs and Transformers'),
  ('Data selection','Robust Data Pruning'),
- ('Sampling','A New Coupling for Sampling from Compact Convex Bodies'),
  ('Audio models','Task Arithmetic for Audio Foundation Models'),
- ('Vision & language','Robust Prompt Tuning for Vision–Language Models')
+ ('Vision & language','Robust Prompt Tuning for Vision–Language Models'),
+ ('Sampling','A New Coupling for Sampling from Compact Convex Bodies')
 ]
 project_routes={'Input-Space Geometry of CNNs and Transformers':'projects/input-space-geometry.html','Robust Data Pruning':'projects/robust-data-pruning.html','Task Arithmetic for Audio Foundation Models':'projects/audio-task-arithmetic.html','A New Coupling for Sampling from Compact Convex Bodies':'projects/convex-body-coupling.html','Robust Prompt Tuning for Vision–Language Models':'projects/robust-prompt-tuning.html'}
 project_entries=''
