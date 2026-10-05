@@ -63,7 +63,7 @@ project_items=[
  ('Model merging','Robust Task Arithmetic'),
  ('Vision & language','Prompt Tuning for Vision–Language Models')
 ]
-project_routes={'Input-Space Geometry of CNNs and Transformers':'projects/input-space-geometry.html','Robust Data Pruning':'projects/robust-data-pruning.html'}
+project_routes={'Input-Space Geometry of CNNs and Transformers':'projects/input-space-geometry.html','Robust Data Pruning':'projects/robust-data-pruning.html','Task Arithmetic for Audio Foundation Models':'projects/audio-task-arithmetic.html'}
 project_entries=''
 for i,(topic,title) in enumerate(project_items,1):
  project_title=f'<a class="project-title-link" href="{project_routes[title]}">{esc(title)}<span class="project-link-arrow" aria-hidden="true"> ↗</span></a>' if title in project_routes else esc(title)
