@@ -45,6 +45,26 @@
  const search=$('#paper-search');let selected='all';
  function filter(){const q=search.value.trim().toLowerCase();let n=0;$$('.library-paper').forEach(p=>{p.hidden=!((selected==='all'||p.dataset.topic===selected)&&p.textContent.toLowerCase().includes(q));if(!p.hidden)n++});$('#result-count').textContent=`${n} publication${n===1?'':'s'}`;$('#empty-state').hidden=n!==0}
  if(search){search.addEventListener('input',filter);$$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.filter;$$('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));filter()}));$('#reset-search').addEventListener('click',()=>{search.value='';$('[data-filter="all"]').click();search.focus()})}
+ // Close experiences only after a downward scroll takes the whole entry out of view.
+ const experienceCards=$$('.journey');
+ if(experienceCards.length){
+   let experienceScrollY=scrollY,experienceScrollFrame=0;
+   addEventListener('scroll',()=>{
+     if(experienceScrollFrame)return;
+     experienceScrollFrame=requestAnimationFrame(()=>{
+       experienceScrollFrame=0;
+       const movingDown=scrollY>experienceScrollY+1;
+       experienceScrollY=scrollY;
+       if(!movingDown)return;
+       const readingTop=header.getBoundingClientRect().bottom;
+       experienceCards.forEach(card=>{
+         const focusedDescription=card.querySelector('.journey-description')?.contains(document.activeElement);
+         if(card.open&&!focusedDescription&&card.getBoundingClientRect().bottom<=readingTop)card.open=false;
+       });
+     });
+   },{passive:true});
+ }
+ // End experience scroll behavior.
  const covarianceButtons=$$('[data-covariance-block]');
  covarianceButtons.forEach(button=>button.addEventListener('click',()=>{
    covarianceButtons.forEach(other=>other.setAttribute('aria-pressed',String(other===button)));

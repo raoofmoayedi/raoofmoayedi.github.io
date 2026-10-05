@@ -535,3 +535,8 @@ html{scroll-padding-top:calc(var(--header-height,96px) + 16px)}
 .pruning-stages h3{margin:0 0 10px;font-size:1.125rem;line-height:1.4;color:var(--ink)}
 .pruning-stages p{margin:0;font-size:1rem;line-height:1.8;color:var(--body)}
 @media(max-width:640px){.pruning-stages>li{grid-template-columns:24px minmax(0,1fr);gap:10px;padding:18px}.pruning-stages h3{font-size:1.0625rem}}
+
+/* Distinguish the two fields while retaining the Midnight palette. */
+.degree-field[data-field="computer-science"]{color:var(--accent);font-weight:600}
+.degree-field[data-field="mathematics"]{color:#85d8c4;font-weight:600}
+html[data-theme="light"] .degree-field[data-field="mathematics"]{color:#126957}
