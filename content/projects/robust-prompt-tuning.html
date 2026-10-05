@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Robust Prompt Tuning for Vision–Language Models | Raoof Zare Moayedi</title></head><body>
+<main id="main" class="wrap">
+<header class="project-hero">
+  <a class="back" href="../index.html#projects">Back to projects</a>
+  <p class="eyebrow">Vision–language models · Adversarial robustness</p>
+  <h1>Robust Prompt Tuning for Vision–Language Models</h1>
+  <p class="lead">Can small changes to prompts improve robustness while preserving clean accuracy?</p>
+</header>
+<div class="project-body">
+  <div class="project-context"><p>Nanyang Technological University</p><p>Research with <a class="supervisor-link" href="https://scholar.google.com/citations?user=h9oWOsEAAAAJ&amp;hl=en" title="Google Scholar — Prof. Yew-Soon Ong">Prof. Yew-Soon Ong</a></p></div>
+  <article class="project-copy">
+    <h2>Robustness with limited adaptation</h2>
+    <p>We investigated prompt tuning as a way to improve the adversarial robustness of vision–language models such as CLIP while retaining their accuracy on clean, unperturbed inputs. The appeal is to adapt a model through a small set of learned prompts, limiting how much of the pretrained model needs to change.</p>
+    <p>Methods such as <a href="#tecoa-reference">TeCoA [1]</a> and <a href="#fare-reference">FARE [2]</a> show that adversarial adaptation can make CLIP more robust. Their reported evaluations also illustrate a trade-off with clean accuracy: FARE preserves more clean performance than TeCoA in those comparisons, but can still fall below the original CLIP. This motivated us to investigate how prompt tuning could improve that balance.</p>
+    <section class="paper-insight" aria-labelledby="prompt-questions">
+      <h2 id="prompt-questions">Our research questions</h2>
+      <dl class="method-facts">
+        <div><dt>Clean accuracy</dt><dd>Can prompt tuning retain or improve performance on unperturbed inputs?</dd></div>
+        <div><dt>Adversarial robustness</dt><dd>How can the prompts be learned so that the adapted model is more resistant to adversarial perturbations?</dd></div>
+        <div><dt>Limited changes</dt><dd>How much robustness can we gain through prompt-based adaptation while preserving the pretrained model’s capabilities?</dd></div>
+      </dl>
+    </section>
+    <h2>References</h2>
+    <p id="tecoa-reference"><strong>[1] TeCoA</strong> · Chengzhi Mao, Scott Geng, Junfeng Yang, Xin Wang, and Carl Vondrick. <a href="https://arxiv.org/abs/2212.07016">Understanding Zero-Shot Adversarial Robustness for Large-Scale Models</a>. ICLR, 2023.</p>
+    <p id="fare-reference"><strong>[2] FARE</strong> · Christian Schlarmann, Naman Deep Singh, Francesco Croce, and Matthias Hein. <a href="https://proceedings.mlr.press/v235/schlarmann24a.html">Robust CLIP: Unsupervised Adversarial Fine-Tuning of Vision Embeddings for Robust Large Vision-Language Models</a>. ICML, 2024. <a href="https://github.com/chs20/RobustVLM#summary-of-results">Reported clean and adversarial results</a>.</p>
+  </article>
+</div>
+</main></body></html>
