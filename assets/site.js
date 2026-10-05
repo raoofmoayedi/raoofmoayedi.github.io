@@ -16,9 +16,21 @@
    try{localStorage.setItem('theme',t)}catch{}
    syncAppearance();
  });
- document.addEventListener('click',event=>{if(appearance.open&&!appearance.contains(event.target))appearance.open=false});
+ function closeAppearance(restoreFocus=false){
+   if(!appearance.open)return;
+   appearance.open=false;
+   if(restoreFocus)appearance.querySelector('summary').focus({preventScroll:true});
+ }
+ appearance.addEventListener('click',event=>{
+   if(event.target.closest('button'))closeAppearance(true);
+ });
+ document.addEventListener('click',event=>{if(!appearance.contains(event.target))closeAppearance()});
+ addEventListener('scroll',()=>closeAppearance(),{passive:true});
+ appearance.addEventListener('focusout',event=>{
+   if(event.relatedTarget&&!appearance.contains(event.relatedTarget))closeAppearance();
+ });
  document.addEventListener('keydown',event=>{
-   if(event.key==='Escape'&&appearance.open){appearance.open=false;appearance.querySelector('summary').focus()}
+   if(event.key==='Escape')closeAppearance(true);
  });
  const menu=$('.menu-button'),navigation=$('#navigation'),header=$('.header');
  function closeNavigation(){menu.setAttribute('aria-expanded','false');navigation.classList.remove('open')}

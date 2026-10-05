@@ -11,7 +11,9 @@
   <div class="project-context"><p>Audio learning</p><p>Supervisor: <a class="supervisor-link" href="https://scholar.google.com/citations?user=pRyJ6FkAAAAJ&amp;hl=en" title="Google Scholar — Mohammad Hossein Rohban">Mohammad Hossein Rohban</a></p></div>
   <article class="project-copy">
     <h2>Robustness after fine-tuning</h2>
-    <p>We studied how fine-tuning changes the robustness of audio foundation models. We explored task arithmetic, which combines task-specific model updates, as a way to transfer robustness to models adapted for individual audio tasks.</p>
+    <p>We studied whether the robustness of an audio foundation model can be transferred to a model fine-tuned for a particular audio task. Our starting hypothesis was that audio tasks share structure and may vary in fewer ways than the image tasks usually studied in this context. We wanted to understand whether those properties could help us preserve robustness during adaptation.</p>
+    <h2>Using task arithmetic</h2>
+    <p>Task arithmetic represents a task-specific change as the difference between a fine-tuned model’s parameters and those of the original foundation model. These updates can then be combined to modify another model. We explored whether this could carry robustness into fine-tuned audio models, and how properties of the audio data affect that transfer.</p>
   </article>
 </div>
 </main></body></html>

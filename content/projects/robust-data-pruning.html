@@ -11,11 +11,11 @@
   <div class="project-context"><p>Imperial College London</p><p>Research with <a class="supervisor-link" href="https://scholar.google.ch/citations?user=qosS83IAAAAJ&amp;hl=en" title="Google Scholar — Dr. Seyed-Mohsen Moosavi-Dezfooli">Dr. Seyed-Mohsen Moosavi-Dezfooli</a></p></div>
   <article class="project-copy">
     <h2>Three stages of pruning</h2>
-    <p>We studied whether pruning training data can improve adversarial robustness. We examined each stage separately to understand how its choices affect the final model.</p>
+    <p>We studied how data pruning affects adversarial robustness and whether it can be used to train a more robust model. Pruning involves more than deciding which examples to discard: the data must first be prepared for computing statistics, those statistics must be turned into selection scores, and the model must then be trained on the chosen subset. We examined how choices in each of these three stages affect robustness.</p>
     <ol class="pruning-stages" aria-label="Three stages of data pruning">
-      <li><span class="pruning-step" aria-hidden="true">01</span><div><h3>Prepare the data and compute statistics</h3><p>We examined how data preparation changes the statistics used to assess training examples.</p></div></li>
-      <li><span class="pruning-step" aria-hidden="true">02</span><div><h3>Score examples and select a subset</h3><p>We studied the scoring rules and selection choices that determine which examples to keep.</p></div></li>
-      <li><span class="pruning-step" aria-hidden="true">03</span><div><h3>Train on the pruned data</h3><p>We examined how the training procedure affects robustness once the subset has been selected.</p></div></li>
+      <li><span class="pruning-step" aria-hidden="true">01</span><div><h3>Prepare the data and compute statistics</h3><p>The preparation step determines the data on which the pruning statistics are computed. We investigated how this choice changes the information used to assess each training example, and what that means for robustness.</p></div></li>
+      <li><span class="pruning-step" aria-hidden="true">02</span><div><h3>Score examples and select a subset</h3><p>A scoring rule turns those statistics into a basis for choosing which examples to keep. We studied how the score and the resulting selection affect the robustness of a model trained on that subset.</p></div></li>
+      <li><span class="pruning-step" aria-hidden="true">03</span><div><h3>Train on the pruned data</h3><p>The selected data are then used to train the model. We examined how the training procedure affects the final robustness, alongside the choices made during preparation and selection.</p></div></li>
     </ol>
   </article>
 </div>
