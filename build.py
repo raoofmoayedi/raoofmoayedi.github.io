@@ -63,7 +63,11 @@ project_items=[
  ('Model merging','Robust Task Arithmetic'),
  ('Vision & language','Prompt Tuning for Vision–Language Models')
 ]
-project_entries=''.join(f'<li class="project-entry"><span class="project-number" aria-hidden="true">{i:02d}</span><div><p class="project-topic">{esc(topic)}</p><h3>{esc(title)}</h3></div></li>' for i,(topic,title) in enumerate(project_items,1))
+project_routes={'Input-Space Geometry of CNNs and Transformers':'projects/input-space-geometry.html','Robust Data Pruning':'projects/robust-data-pruning.html'}
+project_entries=''
+for i,(topic,title) in enumerate(project_items,1):
+ project_title=f'<a class="project-title-link" href="{project_routes[title]}">{esc(title)}<span class="project-link-arrow" aria-hidden="true"> ↗</span></a>' if title in project_routes else esc(title)
+ project_entries+=f'<li class="project-entry"><span class="project-number" aria-hidden="true">{i:02d}</span><div><p class="project-topic">{esc(topic)}</p><h3>{project_title}</h3></div></li>'
 projects=f'<section class="section projects-section" id="projects" aria-labelledby="projects-title"><div class="section-heading"><div><p class="eyebrow">04 / Projects</p><h2 id="projects-title">Projects</h2></div></div><ol class="project-list" role="list">{project_entries}</ol></section>'
 # Academic coursework and teaching, transcribed from the supplied CV.
 grad_courses=[('Generative Models','20'),('Learning Theory','20'),('Advanced Statistics','20'),('Information Theory','20'),('Bandit Learning','20'),('Measure Theory and Probability','20'),('Advanced Algorithms','18.2'),('Functional Analysis','17')]
@@ -81,6 +85,11 @@ for path in [Path('cv.html'),*Path('content/research').glob('*.html')]:
  rel=path if path.name=='cv.html' else Path('research')/path.name
  raw=(src/rel).read_text();body=re.search(r'<main[^>]*>(.*)</main>',raw,re.S).group(1);title=re.search('<title>(.*?)</title>',raw).group(1).split(' | ')[0]
  (out/rel).write_text(shell(title,body,'../' if rel.parent.name=='research' else '', 'CV' if rel.name=='cv.html' else 'Research'))
+# Project pages share the same layout and navigation as the research pages.
+(out/'projects').mkdir(exist_ok=True)
+for path in (src/'projects').glob('*.html'):
+ raw=path.read_text();body=re.search(r'<main[^>]*>(.*)</main>',raw,re.S).group(1);title=re.search('<title>(.*?)</title>',raw).group(1).split(' | ')[0]
+ (out/'projects'/path.name).write_text(shell(title,body,'../','Projects'))
 # Publication cards stay fully readable without JavaScript.
 body='''<header class="page-hero"><p class="eyebrow">Papers &amp; preprints</p><h1>Publications</h1><p>My work on differential privacy, robust learning, and scientific machine learning.</p></header><section class="publication-page"><div class="publication-tools"><label class="search-field"><span class="sr-only">Search publications</span><input id="paper-search" type="search" placeholder="Search by title, author, or topic…"></label><a class="text-link" href="papers.bib" download>Download BibTeX</a></div><div class="filter-row"><div class="filters" role="group" aria-label="Filter publications"><button class="filter" data-filter="all" aria-pressed="true">All work <span>7</span></button><button class="filter" data-filter="privacy" aria-pressed="false">Privacy</button><button class="filter" data-filter="robustness" aria-pressed="false">Robustness</button><button class="filter" data-filter="scientific" aria-pressed="false">Scientific ML</button></div><span id="result-count" role="status">7 publications</span></div><div id="paper-list">'''
 bib=(src/'papers.bib').read_text(); entries=re.split(r'\n\n',bib.strip())
@@ -95,4 +104,4 @@ body+='</div><div id="empty-state" hidden><h2>No matching publications</h2><p>Tr
 (out/'publications.html').write_text(shell('Publications',body,active='Publications'))
 (out/'papers.bib').write_text('\n\n'.join(bib_by_id[p['id']] for p in pubs)+'\n');shutil.copy(src/'assets/site.css',out/'assets/site.css')
 (out/'404.html').write_text(shell('Page not found','<div class="page-hero"><p class="eyebrow">404</p><h1>Page not found</h1><p>The link may be out of date.</p><a class="button primary" href="/index.html">Back to research</a></div>'))
-print('Generated 10 pages and bibliography.')
+print('Generated public pages and bibliography.')

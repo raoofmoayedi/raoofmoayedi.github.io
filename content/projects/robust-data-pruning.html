@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Robust Data Pruning | Raoof Zare Moayedi</title></head><body>
+<main id="main" class="wrap">
+<header class="project-hero">
+  <a class="back" href="../index.html#projects">Back to projects</a>
+  <p class="eyebrow">Data selection · Adversarial robustness</p>
+  <h1>Robust Data Pruning</h1>
+  <p class="lead">How do the choices we make before, during, and after data selection affect a model’s robustness?</p>
+</header>
+<div class="project-body">
+  <div class="project-context"><p>Imperial College London</p><p>Research with <a class="supervisor-link" href="https://scholar.google.ch/citations?user=qosS83IAAAAJ&amp;hl=en" title="Google Scholar — Dr. Seyed-Mohsen Moosavi-Dezfooli">Dr. Seyed-Mohsen Moosavi-Dezfooli</a></p></div>
+  <article class="project-copy">
+    <h2>Studying the full pruning process</h2>
+    <p>We studied how data pruning affects adversarial robustness and whether selecting a subset of the training data can help produce a more robust model. We separated the pruning process into three stages and examined how the choices at each stage affect the final model.</p>
+    <ol class="pruning-stages" aria-label="Three stages of data pruning">
+      <li><span class="pruning-step" aria-hidden="true">01</span><div><h3>Prepare the data and compute statistics</h3><p>First, prepare the data and compute the statistics that will guide pruning. We examined how this preparation affects the information used to judge each example and, ultimately, the robustness of the trained model.</p></div></li>
+      <li><span class="pruning-step" aria-hidden="true">02</span><div><h3>Score examples and select a subset</h3><p>Next, use those statistics to assign scores and decide which examples to keep. We studied how the scoring rule and selection choices influence robustness when the model is trained on the retained data.</p></div></li>
+      <li><span class="pruning-step" aria-hidden="true">03</span><div><h3>Train on the pruned data</h3><p>Finally, train the model using the selected subset. We examined how the training procedure affects the robustness achieved with that subset, alongside the choices made in the first two stages.</p></div></li>
+    </ol>
+    <p>By examining these stages separately, we aimed to understand where robustness is gained or lost and how data preparation, selection, and training work together.</p>
+  </article>
+</div>
+</main></body></html>

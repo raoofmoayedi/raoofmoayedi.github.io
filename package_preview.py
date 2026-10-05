@@ -1,10 +1,10 @@
-"""Validate public pages and build a self-contained, nine-page offline preview."""
+"""Validate public pages and build a self-contained offline preview."""
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit,unquote
 import base64,json,mimetypes,posixpath,re,zipfile
 ROOT=Path(__file__).resolve().parent
-ROUTES=['index.html','publications.html','research/private-data.html','research/private-sampling.html','research/private-covariance.html','research/robust-learning.html','research/sgd-robustness.html','research/scientific-learning.html','cv.html']
+ROUTES=['index.html','publications.html','research/private-data.html','research/private-sampling.html','research/private-covariance.html','research/robust-learning.html','research/sgd-robustness.html','research/scientific-learning.html','projects/robust-data-pruning.html','projects/input-space-geometry.html','cv.html']
 class Parser(HTMLParser):
  def __init__(self):super().__init__();self.ids=[];self.links=[];self.refs=[]
  def handle_starttag(self,tag,attrs):
@@ -48,4 +48,4 @@ with zipfile.ZipFile(out/'raoof-website.zip','w',zipfile.ZIP_DEFLATED) as z:
  for route in ROUTES+['404.html','papers.bib','.nojekyll']:z.write(ROOT/route,route)
  for p in (ROOT/'assets').iterdir():
   if p.is_file():z.write(p,p.relative_to(ROOT))
-print('Validated 10 public pages and built the self-contained offline preview.')
+print(f'Validated {len(ROUTES)+1} public pages and built the self-contained offline preview.')
