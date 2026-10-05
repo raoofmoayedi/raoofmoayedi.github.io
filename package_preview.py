@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 from urllib.parse import urlsplit,unquote
 import base64,json,mimetypes,posixpath,re,zipfile
 ROOT=Path(__file__).resolve().parent
-ROUTES=['index.html','publications.html','research/private-data.html','research/private-sampling.html','research/private-covariance.html','research/robust-learning.html','research/sgd-robustness.html','research/scientific-learning.html','projects/robust-data-pruning.html','projects/input-space-geometry.html','projects/audio-task-arithmetic.html','cv.html']
+ROUTES=['index.html','publications.html','research/private-data.html','research/private-sampling.html','research/private-covariance.html','research/robust-learning.html','research/sgd-robustness.html','research/scientific-learning.html','projects/robust-data-pruning.html','projects/input-space-geometry.html','projects/audio-task-arithmetic.html','projects/convex-body-coupling.html','cv.html']
 class Parser(HTMLParser):
  def __init__(self):super().__init__();self.ids=[];self.links=[];self.refs=[]
  def handle_starttag(self,tag,attrs):
